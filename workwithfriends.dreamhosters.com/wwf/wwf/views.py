@@ -200,6 +200,13 @@ def loginWithFacebook(request):
     return formattedResponse(data=data)
 
 
+'''
+addSkillToAccount:
+
+    Helper method for addSkillsToAccount
+'''
+
+
 def addSkillToAccount(skill, account):
     accountSkill, isCreated = UserSkill.objects.get_or_create(account=account, skill=skill['skill'])
     accountSkill.strength = skill['strength']
@@ -451,7 +458,8 @@ def takeJob(request):
     }
     return formattedResponse(data=data)
 
-def seeFriendProfile(request):
+
+def viewFriendProfile(request):
     '''
     Required fields:
 
@@ -475,9 +483,60 @@ def seeFriendProfile(request):
     if Account.objects.filter(userId=userId).exists():
         friendIsRegisteredUser = Account.objects.filter(userId=friendId).exists()
         if friendIsRegisteredUser:
-            pass
+            friend = Account.objects.get(userId=friendId)
+
+            friendName = friend.name
+            friendProfileImage = ProfileImage.objects.get(account=friend)
+
+            friendSkills = formatSkills(
+                UserSkill.objects.filter(account=friend),
+                hasStrength=True
+            )
+
+            friendPostedJobs = formatJobs(
+                PostedJob.objects.filter(employer=friend)
+            )
+
+            friendCurrentJobsAsEmployee = formatJobs(
+                CurrentJob.objects.filter(employee=friend),
+                hasEmployee=True
+            )
+            friendCurrentJobsAsEmployer = formatJobs(
+                CurrentJob.objects.filter(employer=friend),
+                hasEmployee=True
+            )
+
+            friendCompletedJobsAsEmployee = formatJobs(
+                CompletedJob.objects.filter(employee=friend),
+                hasEmployee=True
+            )
+            friendCompletedJobsAsEmployer = formatJobs(
+                CompletedJob.objects.filter(employer=friend),
+                hasEmployee=True
+            )
+
+
+
         else:
-            pass
-    else:
-            errorMessage = 'Unknown user'
+            # TODO: Add logic for a friend who has not used Work With Friends
+            errorMessage = 'Unknown friend'
             return formattedResponse(isError=True, errorMessage=errorMessage)
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    data = {
+        'friendIsRegisteredUser': friendIsRegisteredUser,
+        'friendProfileImage': friendProfileImage,
+        'friendSkills': friendSkills,
+        'friendName': friendName,
+        'friendJobs': {
+            'postedJobs': friendPostedJobs,
+            'currentJobsAsEmployee': friendCurrentJobsAsEmployee,
+            'currentJobsAsEmployer': friendCurrentJobsAsEmployer,
+            'completedJobsAsEmployee': friendCurrentJobsAsEmployee,
+            'completedJobsAsEmployer': friendCompletedJobsAsEmployer,
+        }
+    }
+
+    return formattedResponse(data=data)
