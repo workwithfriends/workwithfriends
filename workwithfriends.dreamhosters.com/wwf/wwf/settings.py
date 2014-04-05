@@ -86,7 +86,7 @@ DATABASES = {
         'PASSWORD': 'wwf789',
         'HOST': 'mysql.workwithfriends.dreamhosters.com',
         'PORT': '',
-        'TEST_NAME': 'wwfTest',
+        'TEST_NAME': 'wwftest',
         
     }
 }
