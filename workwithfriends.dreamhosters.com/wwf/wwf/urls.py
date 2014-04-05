@@ -17,5 +17,7 @@ urlpatterns = patterns('',
                        url(r'^addSkillsToAccount/', include('wwf.views.addSkillsToAccount')),
                        url(r'^removeSkillFromAccount/', include('wwf.views.removeSkillFromAccount')),
                        url(r'^postJob/', include('wwf.views.postJob')),
-                       url(r'^deleteJob/', include('wwf.views.deleteJob'))
-    )
+                       url(r'^deleteJob/', include('wwf.views.deleteJob')),
+                       url(r'^takeJob/', include('wwf.views.takeJob')),
+
+)
