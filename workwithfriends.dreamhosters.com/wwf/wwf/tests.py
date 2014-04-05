@@ -7,6 +7,8 @@ import json
 
 TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BAIXVYZCSSoDfYAdo2VDK4Y33QvPXdaIFD3X9yjeuT61eBparj3cEG0poLBXOOR0ZAyZBXCC3HO1QbOFFw6IyOZA8S05IOL5AZBLRL7ejXnUMgJn6Yf5cBj0LRYd7qbyi7OEv0jGfbJebUbI3szxbUfeDqkAuOQIzuE3x3efj8YVUuLTauzIypeGrX84dxjwZDZD'
 TEST_USER_ID = '570053410'
+TEST_ACCESS_TOKEN_2 = 'CAAIv2leQPu8BACZBWsFEwQogxu8evJQiUzwYfiVna4PlCieZCOeZCZA7QKELSeDw5wsUpCgHxqnqBLDcZB2JuSH3vBtrVVTLZCe7MTxdxT8fN5ETMvZBkpvLedbHhFFi7U5ZBL9tnZAvME8eKTfPrSu9LJkWWXMI1gDHZAFmbJZBCAtNT9c9WJ0j7IZB0CgDpr85ZCUk2r3c8zSNc7wZDZD'
+TEST_USER_ID_2 = '524156482'
 TEST_SKILLS = [{'skill': 'writer', 'strength': '5'}, {'skill': 'photographer', 'strength': '8'}]
 TEST_JOB = {"type": "photography", "skills": ["photography", "writer"],
             "description": "An easy job", "compensation": "dope herb"}
@@ -105,7 +107,7 @@ class testAllRequests(TestCase):
                          jobType=TEST_JOB['type'],
                          jobDescription=TEST_JOB['description'],
                          jobCompensation=TEST_JOB['compensation']).exists())
-        self.assertTrue(responseIsSuccess(response))
+        self.assertTrue(responseIsSuccess(response), response)
         
 
     def testDeleteJob(self):
@@ -117,13 +119,11 @@ class testAllRequests(TestCase):
                                 'userId': TEST_USER_ID,
                                 'jobId': jobId})
         response = deleteJob(request)
-        self.assertTrue(responseIsSuccess(response))
+        self.assertTrue(responseIsSuccess(response), response)
         self.assertTrue(not PostedJob.objects.filter(employer=self.account).exists())
 
 
     def testTakeJob(self):
-        TEST_ACCESS_TOKEN_2 = 'CAAIv2leQPu8BACZBWsFEwQogxu8evJQiUzwYfiVna4PlCieZCOeZCZA7QKELSeDw5wsUpCgHxqnqBLDcZB2JuSH3vBtrVVTLZCe7MTxdxT8fN5ETMvZBkpvLedbHhFFi7U5ZBL9tnZAvME8eKTfPrSu9LJkWWXMI1gDHZAFmbJZBCAtNT9c9WJ0j7IZB0CgDpr85ZCUk2r3c8zSNc7wZDZD'
-        TEST_USER_ID_2 = '524156482'
         request = self.factory.post('/loginWithFacebook',
                                     {'accessToken': TEST_ACCESS_TOKEN_2,
                                      'userId': TEST_USER_ID_2
@@ -141,4 +141,4 @@ class testAllRequests(TestCase):
                                      'employerId': TEST_USER_ID})
         response = takeJob(request)
         self.assertTrue(CurrentJob.objects.filter(employer=self.account, employee=secondAccount).exists())
-        self.assertTrue(responseIsSuccess(response))
+        self.assertTrue(responseIsSuccess(response), response)
