@@ -14,14 +14,25 @@ FBOpen = OpenFacebook
 
 APP_ACCESS_TOKEN = FBAuth.get_app_access_token()
 
+
 def verifyRequest(request, requiredFields):
     params = request.POST
+    isMissingFields = False
     missingFields = []
+    errorMessage = None
     for field in requiredFields:
         if not field in params:
+            isMissingFields = True
             missingFields.append(field)
-    return missingFields
-    
+
+    if isMissingFields:
+        errorMessage = 'Request is missing: ' + str(missingFields)
+
+    return {
+        'isMissingFields': isMissingFields,
+        'errorMessage': errorMessage
+    }
+
 
 def formattedResponse(isError=False, errorMessage=None, data=None):
     '''
@@ -84,6 +95,12 @@ def loginWithFacebook(request):
         userId
         
     '''
+    requiredFields = ['accessToken', 'userId']
+
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
 
@@ -161,6 +178,12 @@ def addSkillsToAccount(request):
         skills
 
     '''
+    requiredFields = ['accessToken', 'userId', 'skills']
+
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
     request = request.POST
 
     userId = request['userId']
@@ -189,6 +212,12 @@ def removeSkillFromAccount(request):
         skill
 
     '''
+    requiredFields = ['accessToken', 'userId', 'skill']
+
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
 
