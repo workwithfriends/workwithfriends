@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  JobsTableView.h
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/5/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface JobsTableView : UITableView
 
 @end
