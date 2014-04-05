@@ -15,6 +15,7 @@ urlpatterns = patterns('',
                        url(r'^accounts/', include('django_facebook.auth_urls')),
                        url(r'^loginWithFacebook/', include('wwf.views.loginWithFacebook')),
                        url(r'^addSkillsToAccount/', include('wwf.views.addSkillsToAccount')),
-                       url(r'^removeSkillFromAccount', include('wwf.views.removeSkillFromAccount')),
-                       url(r'^postJob', include('wwf.views.postJob'))
+                       url(r'^removeSkillFromAccount/', include('wwf.views.removeSkillFromAccount')),
+                       url(r'^postJob/', include('wwf.views.postJob')),
+                       url(r'^deleteJob/', include('wwf.views.deleteJob'))
     )

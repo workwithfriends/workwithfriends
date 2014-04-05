@@ -295,7 +295,7 @@ def postJob(request):
     request = request.POST
 
     userId = request['userId']
-    job = request['job']
+    job = json.load(request['job'])
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
@@ -331,4 +331,49 @@ def postJob(request):
     data = {
         'postedJobs': postedJobs
     }
+    return formattedResponse(data=data)
+
+
+def deleteJob(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        jobId
+    '''
+    requiredFields = ['accessToken', 'userId', 'jobId']
+
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    jobId = request['jobId']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+
+        if PostedJob.objects.filter(pk=jobId, employer=account).exists():
+            jobToDelete = PostedJob.objects.get(pk=jobId, employer=account)
+            jobToDelete.delete()
+
+            postedJobs = formatJobs(
+                PostedJob.objects.filter(employer=account)
+            )
+
+        else:
+            errorMessage = 'Unknown job'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    data = {
+        'postedJobs' : postedJobs
+    }
+
     return formattedResponse(data=data)
