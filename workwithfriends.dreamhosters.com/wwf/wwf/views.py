@@ -130,7 +130,7 @@ def loginWithFacebook(request):
     # if returning user
     else:
         name = account.name
-        profileImageUrl = str(ProfileImage.objects.get(account=account).profileImageurl)
+        profileImageUrl = str(ProfileImage.objects.get(account=account).profileImageUrl)
 
         # get jobs
         postedJobs = None if not PostedJob.objects.filter(account=account).exists() else formatJobs(
