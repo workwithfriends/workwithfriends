@@ -8,7 +8,7 @@ class Account(models.Model):
         return str(self.name) + ' ' +  str(self.userId)
 
 class ProfileImage(models.Model):
-    acccount = models.ForeignKey(Account)
+    account = models.ForeignKey(Account)
     profileImageUrl = models.CharField(max_length=200)
     
     def __unicode__(self):
