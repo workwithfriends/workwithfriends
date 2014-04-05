@@ -37,6 +37,7 @@ class CompletedJob(Job):
 
 class Skill(models.Model):
     skill = models.CharField(max_length=200)
+    strength = models.CharField(max_length=200)
 
     class Meta:
         abstract = True
