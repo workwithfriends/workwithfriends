@@ -5,7 +5,7 @@ from django.test.client import RequestFactory
 import json
 
 
-TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BAExhbFqZB4neiPCaoALM4OprByaKUGKhpfTNOQ5FG9vSZAxgKPfuxGL4HMjkH11QPfvfLqa1ZCyvdj3tSs8Oa9kgUmg0NZCIB1jAcuUl2uZALXiEo4VxzogxAypfhoYJir9tkhZAfPFe2tn4uQ6aUO3LNGoAt7trZClkv8c2EnASThjhuRXBy6owZBevVr32JAZDZD'
+TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BAFLI8z6ZAiujA7kUEe5DyRcxqKKRW5Oi4AFziZCBD2LOn9CQtHZBGmKMGVqtpDKAmsUPnZBkTp9awzXOZBO6ChZCKQvvYuVQjI68C7ngKiQ3RHe6XTAwyK2yZBKp2yEopdjJG9aNXwOJwzei99HyBYDhWITaQEHWCFe4n3xaN4TsRcOBqLUkKU22rY8ccXNcgZDZD'
 TEST_USER_ID = '570053410'
 TEST_SKILLS = ['writer', 'photographer']
 
@@ -29,9 +29,18 @@ def hasFields(data, fields):
 class testAllRequests(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
+        self.loginToFacebook()
 
     def tearDown(self):
         pass
+
+    def loginToFacebook(self):
+        request = self.factory.post('/loginWithFacebook',
+                                    {'accessToken': TEST_ACCESS_TOKEN,
+                                     'userId': TEST_USER_ID
+                                     }
+                                    )
+        response = loginWithFacebook(request)        
 
     def testLoginWithFacebook(self):
         request = self.factory.post('/loginWithFacebook',
@@ -44,9 +53,8 @@ class testAllRequests(TestCase):
         self.assertTrue(Account.objects.filter(userId=TEST_USER_ID).exists())
         self.assertTrue(hasFields(data, ['isNewUser', 'profileImageUrl',
                                          'name', 'skills', 'jobs']))
-        self.assertTrue(responseIsSuccess(response))
+        self.assertTrue(responseIsSuccess(response), str(response))
 
-    '''
     def testAddSkillsToAccount(self):
         request = self.factory.post('/addSkillsToAccount',
                                     {'accessToken': TEST_ACCESS_TOKEN,
@@ -55,9 +63,9 @@ class testAllRequests(TestCase):
                                      }
                                     )
         response = addSkillsToAccount(request)
-        self.assertTrue(responseIsSuccess(response))
+        self.assertTrue(responseIsSuccess(response), str(response))
 
-        
+        '''
     def removeSkillsFromAccount(self):
         request = self.factory.post('/removeSkillsFromAccount',
                                     {'accessToken': TEST_ACCESS_TOKEN,
