@@ -14,14 +14,21 @@
 		3FFCEF2618F076BE00FDD05A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF2518F076BE00FDD05A /* main.m */; };
 		3FFCEF2A18F076BE00FDD05A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF2918F076BE00FDD05A /* AppDelegate.m */; };
 		3FFCEF2D18F076BE00FDD05A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCEF2B18F076BE00FDD05A /* Main.storyboard */; };
-		3FFCEF3018F076BE00FDD05A /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF2F18F076BE00FDD05A /* FirstViewController.m */; };
-		3FFCEF3318F076BE00FDD05A /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF3218F076BE00FDD05A /* SecondViewController.m */; };
+		3FFCEF3018F076BE00FDD05A /* NewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF2F18F076BE00FDD05A /* NewsFeedViewController.m */; };
+		3FFCEF3318F076BE00FDD05A /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF3218F076BE00FDD05A /* FriendsViewController.m */; };
 		3FFCEF3518F076BE00FDD05A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCEF3418F076BE00FDD05A /* Images.xcassets */; };
 		3FFCEF3C18F076BE00FDD05A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF3B18F076BE00FDD05A /* XCTest.framework */; };
 		3FFCEF3D18F076BE00FDD05A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1918F076BE00FDD05A /* Foundation.framework */; };
 		3FFCEF3E18F076BE00FDD05A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1D18F076BE00FDD05A /* UIKit.framework */; };
 		3FFCEF4618F076BE00FDD05A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCEF4418F076BE00FDD05A /* InfoPlist.strings */; };
 		3FFCEF4818F076BE00FDD05A /* WorkWithFriendsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF4718F076BE00FDD05A /* WorkWithFriendsTests.m */; };
+		3FFCEF5618F098B600FDD05A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF5518F098B600FDD05A /* SettingsViewController.m */; };
+		3FFCEF5C18F0995500FDD05A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF5B18F0995500FDD05A /* ProfileViewController.m */; };
+		3FFCEF5F18F099D000FDD05A /* JobsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF5E18F099D000FDD05A /* JobsViewController.m */; };
+		3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */; };
+		3FFCEF6518F0AFA200FDD05A /* JobsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */; };
+		3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6718F0C29700FDD05A /* LoginViewController.m */; };
+		3FFCEF6A18F0C33C00FDD05A /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF6918F0C33C00FDD05A /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,16 +53,29 @@
 		3FFCEF2818F076BE00FDD05A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3FFCEF2918F076BE00FDD05A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3FFCEF2C18F076BE00FDD05A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3FFCEF2E18F076BE00FDD05A /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		3FFCEF2F18F076BE00FDD05A /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		3FFCEF3118F076BE00FDD05A /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		3FFCEF3218F076BE00FDD05A /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		3FFCEF2E18F076BE00FDD05A /* NewsFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsFeedViewController.h; sourceTree = "<group>"; };
+		3FFCEF2F18F076BE00FDD05A /* NewsFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsFeedViewController.m; sourceTree = "<group>"; };
+		3FFCEF3118F076BE00FDD05A /* FriendsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		3FFCEF3218F076BE00FDD05A /* FriendsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		3FFCEF3418F076BE00FDD05A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3FFCEF3A18F076BE00FDD05A /* WorkWithFriendsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkWithFriendsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCEF3B18F076BE00FDD05A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3FFCEF4318F076BE00FDD05A /* WorkWithFriendsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WorkWithFriendsTests-Info.plist"; sourceTree = "<group>"; };
 		3FFCEF4518F076BE00FDD05A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3FFCEF4718F076BE00FDD05A /* WorkWithFriendsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkWithFriendsTests.m; sourceTree = "<group>"; };
+		3FFCEF5418F098B600FDD05A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		3FFCEF5518F098B600FDD05A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		3FFCEF5A18F0995500FDD05A /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		3FFCEF5B18F0995500FDD05A /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		3FFCEF5D18F099D000FDD05A /* JobsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobsViewController.h; sourceTree = "<group>"; };
+		3FFCEF5E18F099D000FDD05A /* JobsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsViewController.m; sourceTree = "<group>"; };
+		3FFCEF6018F0A6C900FDD05A /* JobsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobsTableViewController.h; sourceTree = "<group>"; };
+		3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableViewController.m; sourceTree = "<group>"; };
+		3FFCEF6318F0AFA200FDD05A /* JobsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobsTableView.h; sourceTree = "<group>"; };
+		3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableView.m; sourceTree = "<group>"; };
+		3FFCEF6618F0C29700FDD05A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		3FFCEF6718F0C29700FDD05A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		3FFCEF6918F0C33C00FDD05A /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +84,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FFCEF1C18F076BE00FDD05A /* CoreGraphics.framework in Frameworks */,
+				3FFCEF6A18F0C33C00FDD05A /* FacebookSDK.framework in Frameworks */,
 				3FFCEF1E18F076BE00FDD05A /* UIKit.framework in Frameworks */,
 				3FFCEF1A18F076BE00FDD05A /* Foundation.framework in Frameworks */,
 			);
@@ -104,6 +125,7 @@
 		3FFCEF1818F076BE00FDD05A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3FFCEF6918F0C33C00FDD05A /* FacebookSDK.framework */,
 				3FFCEF1918F076BE00FDD05A /* Foundation.framework */,
 				3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */,
 				3FFCEF1D18F076BE00FDD05A /* UIKit.framework */,
@@ -118,10 +140,22 @@
 				3FFCEF2818F076BE00FDD05A /* AppDelegate.h */,
 				3FFCEF2918F076BE00FDD05A /* AppDelegate.m */,
 				3FFCEF2B18F076BE00FDD05A /* Main.storyboard */,
-				3FFCEF2E18F076BE00FDD05A /* FirstViewController.h */,
-				3FFCEF2F18F076BE00FDD05A /* FirstViewController.m */,
-				3FFCEF3118F076BE00FDD05A /* SecondViewController.h */,
-				3FFCEF3218F076BE00FDD05A /* SecondViewController.m */,
+				3FFCEF6618F0C29700FDD05A /* LoginViewController.h */,
+				3FFCEF6718F0C29700FDD05A /* LoginViewController.m */,
+				3FFCEF2E18F076BE00FDD05A /* NewsFeedViewController.h */,
+				3FFCEF2F18F076BE00FDD05A /* NewsFeedViewController.m */,
+				3FFCEF3118F076BE00FDD05A /* FriendsViewController.h */,
+				3FFCEF3218F076BE00FDD05A /* FriendsViewController.m */,
+				3FFCEF5418F098B600FDD05A /* SettingsViewController.h */,
+				3FFCEF5518F098B600FDD05A /* SettingsViewController.m */,
+				3FFCEF5A18F0995500FDD05A /* ProfileViewController.h */,
+				3FFCEF5B18F0995500FDD05A /* ProfileViewController.m */,
+				3FFCEF5D18F099D000FDD05A /* JobsViewController.h */,
+				3FFCEF5E18F099D000FDD05A /* JobsViewController.m */,
+				3FFCEF6018F0A6C900FDD05A /* JobsTableViewController.h */,
+				3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */,
+				3FFCEF6318F0AFA200FDD05A /* JobsTableView.h */,
+				3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */,
 				3FFCEF3418F076BE00FDD05A /* Images.xcassets */,
 				3FFCEF2018F076BE00FDD05A /* Supporting Files */,
 			);
@@ -254,9 +288,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FFCEF3318F076BE00FDD05A /* SecondViewController.m in Sources */,
+				3FFCEF3318F076BE00FDD05A /* FriendsViewController.m in Sources */,
+				3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */,
+				3FFCEF5F18F099D000FDD05A /* JobsViewController.m in Sources */,
 				3FFCEF2A18F076BE00FDD05A /* AppDelegate.m in Sources */,
-				3FFCEF3018F076BE00FDD05A /* FirstViewController.m in Sources */,
+				3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */,
+				3FFCEF5618F098B600FDD05A /* SettingsViewController.m in Sources */,
+				3FFCEF6518F0AFA200FDD05A /* JobsTableView.m in Sources */,
+				3FFCEF3018F076BE00FDD05A /* NewsFeedViewController.m in Sources */,
+				3FFCEF5C18F0995500FDD05A /* ProfileViewController.m in Sources */,
 				3FFCEF2618F076BE00FDD05A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +422,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Jeremy/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkWithFriends/WorkWithFriends-Prefix.pch";
 				INFOPLIST_FILE = "WorkWithFriends/WorkWithFriends-Info.plist";
@@ -395,6 +439,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Jeremy/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkWithFriends/WorkWithFriends-Prefix.pch";
 				INFOPLIST_FILE = "WorkWithFriends/WorkWithFriends-Info.plist";

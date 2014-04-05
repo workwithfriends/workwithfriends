@@ -1,18 +1,27 @@
 //
-//  SecondViewController.m
+//  FirstViewController.m
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/5/14.
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
-#import "SecondViewController.h"
+#import "NewsFeedViewController.h"
 
-@interface SecondViewController ()
+@interface NewsFeedViewController ()
 
 @end
 
-@implementation SecondViewController
+@implementation NewsFeedViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {

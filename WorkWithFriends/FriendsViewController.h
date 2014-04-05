@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  SecondViewController.h
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/5/14.
@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
+@interface FriendsViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *FriendsTable;
 
 @end
