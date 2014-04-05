@@ -133,10 +133,10 @@ def loginWithFacebook(request):
         try:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
 
-            userInfo = graph.get('me', fields='name, picture')
+            userInfo = graph.get('me', fields='name')
 
             name = userInfo['name']
-            profileImageUrl = userInfo['picture']
+            profileImageUrl = graph.my_image_url(size='small')
             skills = None
             jobs = None
 
@@ -450,3 +450,34 @@ def takeJob(request):
         'currentJobsAsEmployee': currentJobsAsEmployee
     }
     return formattedResponse(data=data)
+
+def seeFriendProfile(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        friendId
+    '''
+    requiredFields = ['accessToken', 'userId', 'friendId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    friendId = request['friendId']
+
+    if Account.objects.filter(userId=userId).exists():
+        if Account.objects.filter(userId=friendId).exists():
+            pass
+        else:
+            friendIsRegisteredUser = False
+
+    else:
+            errorMessage = 'Unknown user'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
