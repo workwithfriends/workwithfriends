@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  LoginViewController.h
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/5/14.
@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <FacebookSDK/FacebookSDK.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface FirstViewController : UIViewController
+@interface LoginViewController : UIViewController
 
 @end
