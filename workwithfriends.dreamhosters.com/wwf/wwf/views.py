@@ -78,6 +78,7 @@ def formatSkills(skills, hasStrength=False):
 
 def loginWithFacebook(request):
     request = request.POST
+
     accessToken = request['accessToken']
     userId = request['userId']
 
@@ -97,14 +98,14 @@ def loginWithFacebook(request):
         account.name = name
 
         profileImage, isImageCreated = ProfileImage.objects.get_or_create(account=account,
-                                                                     profileImageUrl=profileImageUrl)
+                                                                          profileImageUrl=profileImageUrl)
 
         account.save()
 
     # if returning user
     else:
         name = account.name
-        profileImageUrl = ProfileImage.objects.get(account=account).profileImageurl
+        profileImageUrl = str(ProfileImage.objects.get(account=account).profileImageurl)
 
         # get jobs
         postedJobs = None if not PostedJob.objects.filter(account=account).exists() else formatJobs(
@@ -122,7 +123,6 @@ def loginWithFacebook(request):
         }
 
         # get skills
-
         skills = None if not UserSkill.objects.filter(account=account).exists() else formatSkills(
             UserSkill.objects.get(account=account), hasStrength=True)
 
@@ -134,4 +134,49 @@ def loginWithFacebook(request):
         'jobs': jobs
     }
 
+    return formattedResponse(data=data)
+
+
+def addSkillToAccount(skill, account):
+    accountSkill, isCreated = UserSkill.objects.get_or_create(account=account, skill=skill.skill)
+
+    accountSkill.strength = skill.strength
+    accountSkill.save()
+
+def addSkillsToAccount(request):
+    request = request.POST
+
+    userId = request['userId']
+    skills = request['skills']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+
+        for skill in skills:
+            addSkillToAccount(skill, account)
+    else:
+        return formattedResponse(isError=True, errorMessage='Unknown user')
+
+    data = {
+        'skills': formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
+    }
+    return formattedResponse(data=data)
+
+def removeSkillFromAccount(request):
+    request = request.POST
+
+    userId = request['userId']
+    skill = request['skill']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+
+        if UserSkill.objects.filter(account=account, skill=skill).exists():
+            UserSkill.objects.get(account=account, skill=skill).delete()
+    else:
+        return formattedResponse(isError=True, errorMessage='Unknown user')
+
+    data = {
+        'skills' : formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
+    }
     return formattedResponse(data=data)
