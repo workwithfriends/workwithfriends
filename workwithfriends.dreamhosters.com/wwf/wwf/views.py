@@ -67,6 +67,7 @@ def formatSkills(skills, hasStrength=False):
 
 
 def loginWithFacebook(request):
+    request = request.POST
     accessToken = request['accessToken']
     userId = request['userId']
 
