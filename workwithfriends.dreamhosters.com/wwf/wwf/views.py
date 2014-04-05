@@ -226,8 +226,7 @@ def addSkillsToAccount(request):
     request = request.POST
 
     userId = request['userId']
-    print request['skills']
-    skills = request['skills']
+    skills = json.loads(request['skills'])
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
