@@ -59,7 +59,7 @@ class testAllRequests(TestCase):
         request = self.factory.post('/addSkillsToAccount',
                                     {'accessToken': TEST_ACCESS_TOKEN,
                                      'userId': TEST_USER_ID,
-                                     'skills': TEST_SKILLS,
+                                     'skills': json.dumps(TEST_SKILLS),
                                      }
                                     )
         response = addSkillsToAccount(request)
