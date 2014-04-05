@@ -5,7 +5,7 @@ from django.test.client import RequestFactory
 import json
 
 
-TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BAFLI8z6ZAiujA7kUEe5DyRcxqKKRW5Oi4AFziZCBD2LOn9CQtHZBGmKMGVqtpDKAmsUPnZBkTp9awzXOZBO6ChZCKQvvYuVQjI68C7ngKiQ3RHe6XTAwyK2yZBKp2yEopdjJG9aNXwOJwzei99HyBYDhWITaQEHWCFe4n3xaN4TsRcOBqLUkKU22rY8ccXNcgZDZD'
+TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BAIXVYZCSSoDfYAdo2VDK4Y33QvPXdaIFD3X9yjeuT61eBparj3cEG0poLBXOOR0ZAyZBXCC3HO1QbOFFw6IyOZA8S05IOL5AZBLRL7ejXnUMgJn6Yf5cBj0LRYd7qbyi7OEv0jGfbJebUbI3szxbUfeDqkAuOQIzuE3x3efj8YVUuLTauzIypeGrX84dxjwZDZD'
 TEST_USER_ID = '570053410'
 TEST_SKILLS = [{'skill': 'writer', 'strength': '5'}, {'skill': 'photographer', 'strength': '8'}]
 TEST_JOB = {"type": "photography", "skills": ["photography", "writer"],
@@ -68,7 +68,6 @@ class testAllRequests(TestCase):
         self.assertTrue(Account.objects.filter(userId=TEST_USER_ID).exists())
         self.assertTrue(hasFields(data, ['isNewUser', 'profileImageUrl',
                                          'name', 'skills', 'jobs']))
-        print data['profileImageUrl']
         self.assertTrue(responseIsSuccess(response), str(response))
 
     def testAddSkillsToAccount(self):
@@ -106,4 +105,40 @@ class testAllRequests(TestCase):
                          jobType=TEST_JOB['type'],
                          jobDescription=TEST_JOB['description'],
                          jobCompensation=TEST_JOB['compensation']).exists())
+        self.assertTrue(responseIsSuccess(response))
+        
+
+    def testDeleteJob(self):
+        postedJobResponse = self.postJob()
+        self.assertTrue(PostedJob.objects.filter(employer=self.account).exists())
+        jobId = PostedJob.objects.get(employer=self.account).pk
+        request = self.factory.post('/deleteJob',
+                               {'accessToken': TEST_ACCESS_TOKEN,
+                                'userId': TEST_USER_ID,
+                                'jobId': jobId})
+        response = deleteJob(request)
+        self.assertTrue(responseIsSuccess(response))
+        self.assertTrue(not PostedJob.objects.filter(employer=self.account).exists())
+
+
+    def testTakeJob(self):
+        TEST_ACCESS_TOKEN_2 = 'CAAIv2leQPu8BACZBWsFEwQogxu8evJQiUzwYfiVna4PlCieZCOeZCZA7QKELSeDw5wsUpCgHxqnqBLDcZB2JuSH3vBtrVVTLZCe7MTxdxT8fN5ETMvZBkpvLedbHhFFi7U5ZBL9tnZAvME8eKTfPrSu9LJkWWXMI1gDHZAFmbJZBCAtNT9c9WJ0j7IZB0CgDpr85ZCUk2r3c8zSNc7wZDZD'
+        TEST_USER_ID_2 = '524156482'
+        request = self.factory.post('/loginWithFacebook',
+                                    {'accessToken': TEST_ACCESS_TOKEN_2,
+                                     'userId': TEST_USER_ID_2
+                                     }
+                                    )
+        loginWithFacebook(request)
+        secondAccount = Account.objects.get(userId=TEST_USER_ID_2)
+        postedJobResponse = self.postJob()
+        self.assertTrue(PostedJob.objects.filter(employer=self.account).exists())
+        jobId = PostedJob.objects.get(employer=self.account).pk
+        request = self.factory.post('takeJob',
+                                    {'accessToken': TEST_ACCESS_TOKEN_2,
+                                     'userId': TEST_USER_ID_2,
+                                     'jobId': jobId,
+                                     'employerId': TEST_USER_ID})
+        response = takeJob(request)
+        self.assertTrue(CurrentJob.objects.filter(employer=self.account, employee=secondAccount).exists())
         self.assertTrue(responseIsSuccess(response))
