@@ -163,7 +163,7 @@ def loginWithFacebook(request):
 
 
 def addSkillToAccount(skill, account):
-    accountSkill, isCreated = UserSkill.objects.get_or_create(account=account, skill=skill.skill)
+    accountSkill, isCreated = UserSkill.objects.get_or_create(account=account, skill=skill['skill'])
 
     accountSkill.strength = skill.strength
     accountSkill.save()
@@ -187,7 +187,7 @@ def addSkillsToAccount(request):
     request = request.POST
 
     userId = request['userId']
-    skills = request['skills']
+    skills = json.loads(request['skills'])
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
