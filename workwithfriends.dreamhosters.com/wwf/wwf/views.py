@@ -69,6 +69,14 @@ def formatSkills(skills, hasStrength=False):
 
 
 def loginWithFacebook(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        
+    '''
+
     request = request.POST
 
     accessToken = request['accessToken']
@@ -135,7 +143,16 @@ def addSkillToAccount(skill, account):
     accountSkill.strength = skill.strength
     accountSkill.save()
 
+
 def addSkillsToAccount(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        skills
+
+    '''
     request = request.POST
 
     userId = request['userId']
@@ -154,7 +171,17 @@ def addSkillsToAccount(request):
     }
     return formattedResponse(data=data)
 
+
 def removeSkillFromAccount(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        skill
+
+    '''
+
     request = request.POST
 
     userId = request['userId']
@@ -169,6 +196,6 @@ def removeSkillFromAccount(request):
         return formattedResponse(isError=True, errorMessage='Unknown user')
 
     data = {
-        'skills' : formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
+        'skills': formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
     }
     return formattedResponse(data=data)
