@@ -153,3 +153,22 @@ def addSkillsToAccount(request):
         'skills': formatSkills(UserSkill.get(account=account), hasStrength=True)
     }
     return formattedResponse(data=data)
+
+def removeSkillFromAccount(request):
+    request = request.POST
+
+    userId = request['userId']
+    skill = request['skill']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+
+        if UserSkill.objects.filter(account=account, skill=skill).exists():
+            UserSkill.objects.get(account=account, skill=skill).delete()
+    else:
+        return formattedResponse(isError=True, errorMessage='Unknown user')
+
+    data = {
+        'skills' : formatSkills(UserSkill.get(account=account), hasStrength=True)
+    }
+    return formattedResponse(data=data)
