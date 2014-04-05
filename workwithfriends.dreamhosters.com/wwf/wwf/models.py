@@ -15,7 +15,7 @@ class ProfileImage(models.Model):
         return str(account)
 
 class Job(models.Model):
-    employer = models.ForeignKey(Account)
+    employer = models.ForeignKey(Account, related_name='%(app_label)s_%(class)s_related')
     jobType = models.CharField(max_length=200)
     jobDescription = models.CharField(max_length=200)
     jobCompensation = models.CharField(max_length=200)
