@@ -14,6 +14,18 @@ def responseIsSuccess(response):
     obj = json.loads(str(response)[lenToRemove:])
     return not obj['isError']
 
+def getResponseObject(response):
+    lenToRemove = len('Content-Type: application/json')
+    obj = str(response)[lenToRemove:]
+    return json.loads(obj)
+
+def hasFields(data, fields):
+    for field in fields:
+        if not field in data:
+            return False
+    return True
+    
+
 class testAllRequests(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
@@ -28,8 +40,13 @@ class testAllRequests(TestCase):
                                      }
                                     )
         response = loginWithFacebook(request)
+        data = getResponseObject(response)['data']
+        self.assertTrue(Account.objects.filter(userId=TEST_USER_ID).exists())
+        self.assertTrue(hasFields(data, ['isNewUser', 'profileImageUrl',
+                                         'name', 'skills', 'jobs']))
         self.assertTrue(responseIsSuccess(response))
 
+    '''
     def testAddSkillsToAccount(self):
         request = self.factory.post('/addSkillsToAccount',
                                     {'accessToken': TEST_ACCESS_TOKEN,
@@ -50,3 +67,4 @@ class testAllRequests(TestCase):
                                     )
         response = removeSkillsFromAccount(request)
         self.assertTrue(responseIsSuccess(response))
+        '''

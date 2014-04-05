@@ -14,6 +14,14 @@ FBOpen = OpenFacebook
 
 APP_ACCESS_TOKEN = FBAuth.get_app_access_token()
 
+def verifyRequest(request, requiredFields):
+    params = request.POST
+    missingFields = []
+    for field in requiredFields:
+        if not field in params:
+            missingFields.append(field)
+    return missingFields
+    
 
 def formattedResponse(isError=False, errorMessage=None, data=None):
     '''
