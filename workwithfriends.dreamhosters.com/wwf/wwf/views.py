@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from django.models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, UserSkill, PostedJobSkill, \
+from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, UserSkill, PostedJobSkill, \
     CurrentJobSkill, CompletedJobSkill
 
 from django.forms.util import ValidationError

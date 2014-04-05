@@ -16,7 +16,7 @@ def responseIsSuccess(response):
 
 class testAllRequests(TestCase):
     def setUp(self):
-        factory = RequestFactory()
+        self.factory = RequestFactory()
 
     def tearDown(self):
         pass
