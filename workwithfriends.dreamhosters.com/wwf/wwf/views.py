@@ -7,6 +7,8 @@ from django.forms.util import ValidationError
 from open_facebook.api import FacebookAuthorization, OpenFacebook
 from django_facebook.auth_backends import FacebookBackend
 
+import json
+
 FBAuth = FacebookAuthorization
 FBOpen = OpenFacebook
 
