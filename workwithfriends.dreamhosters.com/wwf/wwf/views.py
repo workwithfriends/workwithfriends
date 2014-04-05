@@ -50,7 +50,14 @@ def formattedResponse(isError=False, errorMessage=None, data=None):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
-def formatJobs(jobs):
+'''
+formatJobs:
+    Helper method to format a database model
+    of jobs to a regular python list of jobs
+'''
+
+
+def formatJobs(jobs, hasEmployee=False):
     formattedJobs = None
 
     if jobs is not None:
@@ -61,12 +68,24 @@ def formatJobs(jobs):
                 'employerName': str(job.employer.name),
                 'type': str(job.jobType),
                 'description': str(job.jobDescription),
-                'compensation': str(job.jobCompensation)
+                'compensation': str(job.jobCompensation),
+                'jobId': str(job.pk)
             }
+
+            if hasEmployee:
+                formattedJob['employeeId'] = str(job.employee.userId)
+                formattedJob['employeeName'] = str(job.employee.name)
 
             formattedJobs.append(formattedJob)
 
     return formattedJobs
+
+
+'''
+formatSkills:
+    Helper method to format a database model
+    of skills to a regular python list of skills
+'''
 
 
 def formatSkills(skills, hasStrength=False):
@@ -111,21 +130,23 @@ def loginWithFacebook(request):
 
     # if new user
     if (isAccountCreated):
-        graph = FBOpen(access_token=accessToken, current_user_id=userId)
+        try:
+            graph = FBOpen(access_token=accessToken, current_user_id=userId)
 
-        userInfo = graph.get('me', fields='name, picture')
+            userInfo = graph.get('me', fields='name, picture')
 
-        name = userInfo['name']
-        profileImageUrl = userInfo['picture']
-        skills = None
-        jobs = None
+            name = userInfo['name']
+            profileImageUrl = userInfo['picture']
+            skills = None
+            jobs = None
 
-        account.name = name
-
-        profileImage, isImageCreated = ProfileImage.objects.get_or_create(account=account,
-                                                                          profileImageUrl=profileImageUrl)
-
-        account.save()
+            account.name = name
+            account.save()
+            ProfileImage.objects.get_or_create(account=account,
+                                               profileImageUrl=profileImageUrl)
+        except:
+            errorMessage = 'Bad access token'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
 
     # if returning user
     else:
@@ -133,17 +154,34 @@ def loginWithFacebook(request):
         profileImageUrl = str(ProfileImage.objects.get(account=account).profileImageurl)
 
         # get jobs
-        postedJobs = None if not PostedJob.objects.filter(account=account).exists() else formatJobs(
-            PostedJob.objects.get(
-                account=account))
-        currentJobs = None if not CurrentJob.objects.filter(account=account).exists() else formatJobs(
-            CurrentJob.objects.get(account=account))
-        completedJobs = None if not CompletedJob.objects.filter(account=account).exists() else formatJobs(
-            CompletedJob.objects.get(account=account))
+        postedJobs = None if not PostedJob.objects.filter(employer=account).exists() else \
+            formatJobs(
+                PostedJob.objects.filter(
+                    employer=account)
+            )
+
+        currentJobsAsEmployee = None if not CurrentJob.objects.filter(employee=account).exists() else \
+            formatJobs(
+                CurrentJob.objects.filter(employee=account),
+                hasEmployee=True
+            )
+
+        currentJobsAsEmployer = None if not CurrentJob.objects.filter(employer=account).exists() else \
+            formatJobs(
+                CurrentJob.objects.filter(employer=account),
+                hasEmployee=True
+            )
+
+        completedJobs = None if not CompletedJob.objects.filter(employee=account).exists() else \
+            formatJobs(
+                CompletedJob.objects.filter(employee=account),
+                hasEmployee=True
+            )
 
         jobs = {
             'postedJobs': postedJobs,
-            'currentJobs': currentJobs,
+            'currentJobsAsEmployee': currentJobsAsEmployee,
+            'currentJobsAsEmployer': currentJobsAsEmployer,
             'completedJobs': completedJobs
         }
 
@@ -164,8 +202,8 @@ def loginWithFacebook(request):
 
 def addSkillToAccount(skill, account):
     accountSkill, isCreated = UserSkill.objects.get_or_create(account=account, skill=skill.skill)
-
     accountSkill.strength = skill.strength
+
     accountSkill.save()
 
 
@@ -184,6 +222,7 @@ def addSkillsToAccount(request):
     if verifiedRequestResponse['isMissingFields']:
         errorMessage = verifiedRequestResponse['errorMessage']
         return formattedResponse(isError=True, errorMessage=errorMessage)
+
     request = request.POST
 
     userId = request['userId']
@@ -234,5 +273,62 @@ def removeSkillFromAccount(request):
 
     data = {
         'skills': formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
+    }
+    return formattedResponse(data=data)
+
+
+def postJob(request):
+    '''
+    Require fields:
+
+        accessToken
+        userId
+        job
+    '''
+    requiredFields = ['accessToken', 'userId', 'job']
+
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    job = request['job']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+
+        jobType = job['type']
+        jobSkills = job['skills']
+        jobDescription = job['description']
+        jobCompensation = job['compensation']
+
+        postedJob, isPostedJobCreated = PostedJob.objects.get_or_create(
+            employer=account,
+            jobType=jobType,
+            jobDescription=jobDescription,
+            jobCompensation=jobCompensation
+        )
+
+        if isPostedJobCreated:
+            for skill in jobSkills:
+                postedJobSkill, isPostedJobSkillCreated = PostedJobSkill.objects.get_or_create(job=postedJob,
+                                                                                               skill=skill)
+
+            postedJobs = formatJobs(
+                PostedJob.objects.filter(employer=account)
+            )
+
+        else:
+            errorMessage = 'Job already exists'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    data = {
+        'postedJobs': postedJobs
     }
     return formattedResponse(data=data)
