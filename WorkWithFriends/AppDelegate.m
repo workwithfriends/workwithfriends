@@ -7,26 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    
-    // Load the FBProfilePictureView
-    // You can find more information about why you need to add this line of code in our troubleshooting guide
-    
-    // Create a LoginUIViewController instance where the login button will be
-    LoginViewController *login = [[LoginViewController alloc] init];
-    
-    // Set loginUIViewController as root view controller
-    [[self window] setRootViewController:login];
-    
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    [FBLoginView class];
     return YES;
 }
 

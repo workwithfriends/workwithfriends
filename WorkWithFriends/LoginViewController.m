@@ -19,18 +19,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info"]];
-        
-        // Align the button in the center horizontally
-        loginView.frame = CGRectOffset(loginView.frame,
-                                       (self.view.center.x - (loginView.frame.size.width / 2)),
-                                       5);
-        
-        // Align the button in the center vertically
-        loginView.center = self.view.center;
-        
-        // Add the button to the view
-        [self.view addSubview:loginView];
     }
     return self;
 }
@@ -57,5 +45,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 @end
