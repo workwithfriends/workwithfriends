@@ -133,10 +133,10 @@ def loginWithFacebook(request):
         try:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
 
-            userInfo = graph.get('me', fields='name, picture')
+            userInfo = graph.get('me', fields='name')
 
             name = userInfo['name']
-            profileImageUrl = userInfo['picture']
+            profileImageUrl = graph.my_image_url(size='small')
             skills = None
             jobs = None
 
@@ -279,7 +279,7 @@ def removeSkillFromAccount(request):
 
 def postJob(request):
     '''
-    Require fields:
+    Required fields:
 
         accessToken
         userId
@@ -344,6 +344,7 @@ def deleteJob(request):
     '''
     requiredFields = ['accessToken', 'userId', 'jobId']
 
+    # verify request
     verifiedRequestResponse = verifyRequest(request, requiredFields)
     if verifiedRequestResponse['isMissingFields']:
         errorMessage = verifiedRequestResponse['errorMessage']
@@ -358,6 +359,7 @@ def deleteJob(request):
         account = Account.objects.get(userId=userId)
 
         if PostedJob.objects.filter(pk=jobId, employer=account).exists():
+            # if job exists with account and id, delete it
             jobToDelete = PostedJob.objects.get(pk=jobId, employer=account)
             jobToDelete.delete()
 
@@ -373,7 +375,109 @@ def deleteJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     data = {
-        'postedJobs' : postedJobs
+        'postedJobs': postedJobs
     }
 
     return formattedResponse(data=data)
+
+def takeJob(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        jobId
+        employerId
+    '''
+    requiredFields = ['accessToken', 'userId', 'jobId', 'employerId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    jobId = request['jobId']
+    employerId = request['employerId']
+
+    if userId != employerId:
+        if Account.objects.filter(userId=userId).exists():
+            if Account.objects.filter(userId=employerId).exists():
+                employee = Account.objects.get(userId=userId)
+                employer = Account.objects.get(userId=employerId)
+
+                if PostedJob.objects.filter(pk=jobId, employer=employer).exists():
+                    jobToTake = PostedJob.objects.get(pk=jobId, employer=employer)
+
+                    jobType = str(jobToTake.jobType)
+                    jobDescription = str(jobToTake.jobDescription)
+                    jobCompensation = str(jobToTake.jobCompensation)
+
+                    newCurrentJob, newCurrentJobIsCreated = CurrentJob.objects.get_or_create(
+                        employee=employee,
+                        employer=employer,
+                        jobType=jobType,
+                        jobDescription=jobDescription,
+                        jobCompensation=jobCompensation
+                    )
+
+                    if newCurrentJobIsCreated:
+                        jobToTake.delete()
+
+                        currentJobsAsEmployee = formatJobs(
+                            CurrentJob.objects.filter(employee=employee),
+                            hasEmployee=True
+                        )
+
+                    else:
+                        errorMessage = 'Failed to take job'
+                        return formattedResponse(isError=True, errorMessage=errorMessage)
+            else:
+                errorMessage = 'Unknown employer'
+                return formattedResponse(isError=True, errorMessage=errorMessage)
+        else:
+            errorMessage = 'Unknown user'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
+    else:
+        errorMessage = 'userId and employerId are the same'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    data = {
+        'currentJobsAsEmployee': currentJobsAsEmployee
+    }
+    return formattedResponse(data=data)
+
+def seeFriendProfile(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        friendId
+    '''
+    requiredFields = ['accessToken', 'userId', 'friendId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    friendId = request['friendId']
+
+    if Account.objects.filter(userId=userId).exists():
+        if Account.objects.filter(userId=friendId).exists():
+            pass
+        else:
+            friendIsRegisteredUser = False
+
+    else:
+            errorMessage = 'Unknown user'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
+
