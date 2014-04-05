@@ -133,10 +133,10 @@ def loginWithFacebook(request):
         try:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
 
-            userInfo = graph.get('me', fields='name')
+            userInfo = graph.get('me', fields='name, picture')
 
             name = userInfo['name']
-            profileImageUrl = graph.my_image_url(size='small')
+            profileImageUrl = userInfo['picture']['data']['url']
             skills = None
             jobs = None
 
@@ -472,11 +472,11 @@ def seeFriendProfile(request):
     friendId = request['friendId']
 
     if Account.objects.filter(userId=userId).exists():
-        if Account.objects.filter(userId=friendId).exists():
+        friendIsRegisteredUser = Account.objects.filter(userId=friendId).exists()
+        if friendIsRegisteredUser:
             pass
         else:
-            friendIsRegisteredUser = False
-
+            pass
     else:
             errorMessage = 'Unknown user'
             return formattedResponse(isError=True, errorMessage=errorMessage)
