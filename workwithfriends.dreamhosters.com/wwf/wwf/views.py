@@ -295,7 +295,7 @@ def postJob(request):
     request = request.POST
 
     userId = request['userId']
-    job = json.load(request['job'])
+    job = json.loads(request['job'])
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
