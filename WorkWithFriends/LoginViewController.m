@@ -17,13 +17,31 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-    
     }
     return self;
 }
 
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+    
+    SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000";
+    //Get access Token:
+    ACCESSTOCKEN = [[[FBSession activeSession] accessTokenData] accessToken];
+    
+    //Get User ID:
+    [FBRequestConnection
+     startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+         if (!error) {
+             USERID = [result objectForKey:@"id"];
+         }
+     }];
+    
+    //Make login request to server:
+    NSString *urlForRequest = [SERVERURL stringByAppendingString:@"/loginWithFacebook/"];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
+    [request setPostValue:ACCESSTOCKEN forKey:@"accessToken"];
+    [request setPostValue:USERID forKey:@"userId"];
+    
     
     [self performSegueWithIdentifier:@"login_success" sender:self];
 
