@@ -526,7 +526,7 @@ def viewFriendProfile(request):
 
     data = {
         'friendIsRegisteredUser': friendIsRegisteredUser,
-        'friendProfileImage': friendProfileImage,
+        'friendProfileImageUrl': friendProfileImage,
         'friendSkills': friendSkills,
         'friendName': friendName,
         'friendJobs': {
