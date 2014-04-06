@@ -11,8 +11,8 @@
 @interface JobsTableViewController : UITableViewController
 {
     NSMutableArray *maListe;
-    NSMutableArray *tampon;
-    NSMutableArray *tampon2;
+    NSArray *searchResults;
 }
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 
 @end

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F073F586-8247-41A6-B91D-E9EBF9D7F01E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>WorkWithFriends</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>567B7030-240D-4A42-9CE1-B529D03CC1AB</key>
+		<string>ssh://github.com/workwithfriends/workwithfriends.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>WorkWithFriends.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>567B7030-240D-4A42-9CE1-B529D03CC1AB</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/workwithfriends/workwithfriends.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>567B7030-240D-4A42-9CE1-B529D03CC1AB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>567B7030-240D-4A42-9CE1-B529D03CC1AB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WorkWithFriends</string>
+		</dict>
+	</array>
+</dict>
+</plist>
