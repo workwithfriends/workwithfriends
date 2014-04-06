@@ -3,6 +3,7 @@ from django.db import models
 class Account(models.Model):
     name = models.CharField(max_length=200)
     userId = models.CharField(max_length=200)
+    aboutMe = models.CharField(max_length=200, default='')
 
     def __unicode__(self):
         return str(self.name) + ' ' +  str(self.userId)
