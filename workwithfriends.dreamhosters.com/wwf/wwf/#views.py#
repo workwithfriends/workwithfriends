@@ -59,7 +59,7 @@ formatJobs:
 
 def formatJobs(jobs, hasEmployee=False):
     formattedJobs = None
-
+    
     if jobs is not None:
         formattedJobs = []
         for job in jobs:
