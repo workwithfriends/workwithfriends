@@ -196,11 +196,23 @@
                                     <navigationItem title="Work With Friends" id="Nb8-SM-blg"/>
                                 </items>
                             </navigationBar>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hCv-W7-rdH" customClass="FBLoginView">
+                                <rect key="frame" x="61" y="246" width="199" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="nAA-5S-1Ay" id="AbE-Lf-77k"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="settings" id="h84-Y7-kON"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="FBlogout" destination="hCv-W7-rdH" id="xmS-QI-i0x"/>
+                        <segue destination="x57-TI-lIv" kind="modal" identifier="logout_success" id="1br-nv-eJR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZU-0P-tzB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

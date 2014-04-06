@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface SettingsViewController : UIViewController
+@property (weak, nonatomic) IBOutlet FBLoginView *FBlogout;
+
 
 @end

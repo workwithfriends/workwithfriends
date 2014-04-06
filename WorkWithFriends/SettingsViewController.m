@@ -23,6 +23,11 @@
     return self;
 }
 
+// Logged-out user experience
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+    [self performSegueWithIdentifier:@"logout_success" sender:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
