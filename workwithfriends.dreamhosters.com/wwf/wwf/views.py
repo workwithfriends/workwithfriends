@@ -540,3 +540,44 @@ def viewFriendProfile(request):
 
     return formattedResponse(data=data)
 
+def getPostedJobs(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        query
+
+    requiredFields = ['accessToken', 'userId', 'query']
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+    
+    userId = request['userId']
+    friendId = request['friendId']'''
+    TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BALkcYNYiGZCLWOwuqCCl2jAXSmvNJCqFf0Jw5WJ2bWtG7nXrhvMUaxUe5YjZCBKvA3eU6x25S1mYCJSMI4LKQiARa7lsauSZCSZCvOCUsNHX1MB0Hnmi6zVDNdZA0vHlnwfloBWFwYM9iCmCrVSDNsysoHmtc6D28u593EoBgmAZBgDzRY3xqYdUWGxlmn4wZDZD'
+    TEST_USER_ID = '570053410'
+
+    graph = FBOpen(access_token=accessToken, current_user_id=userId)
+    allValidFriends = {}
+    friendsDegreeOne = graph.get('me/friends')
+    for friend in friendsDegreeOne:
+        if (Account.objects.filter(userId=friend['id']).exists()):
+            allValidFriends[friend['id']] = friend['name']
+    for person in allValidFriends:
+        friends = graph.get(person + '/friends')
+        for friend in friends:
+            if (Account.objects.filter(userId=friend['id']).exists()):
+                allValidFriends[friend['id']] = friend['name']
+    postedJobs = PostedJob.objects.all()
+    validJobs = []
+    for job in postedJobs:
+        if job.employer.userId in allValidFriends:
+            validJobs.append(job)
+    validPostedJobs = formatJobs(validJobs)
+    data = {'postedJobs' : validPostedJobs}
+    return formattedResponse(data=data)
