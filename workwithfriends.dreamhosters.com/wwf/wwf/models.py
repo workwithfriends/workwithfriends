@@ -40,13 +40,13 @@ class CompletedJob(Job):
 
 class Skill(models.Model):
     skill = models.CharField(max_length=200)
-    strength = models.CharField(max_length=200)
 
     class Meta:
         abstract = True
 
 class UserSkill(Skill):
     account = models.ForeignKey(Account)
+    strength = models.CharField(max_length=200)
 
     def __unicode__(self):
         return str(self.skill) + ' ' + str(self.account)
