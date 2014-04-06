@@ -479,6 +479,7 @@ def viewFriendProfile(request):
 
     userId = request['userId']
     friendId = request['friendId']
+    accessToken = request['accessToken']
 
     if Account.objects.filter(userId=userId).exists():
         friendIsRegisteredUser = Account.objects.filter(userId=friendId).exists()
@@ -516,9 +517,19 @@ def viewFriendProfile(request):
             )
 
         else:
-            # TODO: Add logic for a friend who has not used Work With Friends
-            errorMessage = 'Unknown friend'
-            return formattedResponse(isError=True, errorMessage=errorMessage)
+            graph = FBOpen(access_token=accessToken, current_user_id=userId)
+            friendInfo = graph.get(friendId, fields='picture, name')
+
+            friendName = friendInfo['name']
+            friendProfileImage = friendInfo['picture']['data']['url']
+
+            friendSkills = None
+            friendPostedJobs = None
+            friendCurrentJobsAsEmployee = None
+            friendCurrentJobsAsEmployer = None
+            friendCompletedJobsAsEmployee = None
+            friendCompletedJobsAsEmployer = None
+
     else:
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
@@ -532,7 +543,7 @@ def viewFriendProfile(request):
             'postedJobs': friendPostedJobs,
             'currentJobsAsEmployee': friendCurrentJobsAsEmployee,
             'currentJobsAsEmployer': friendCurrentJobsAsEmployer,
-            'completedJobsAsEmployee': friendCurrentJobsAsEmployee,
+            'completedJobsAsEmployee': friendCompletedJobsAsEmployee,
             'completedJobsAsEmployer': friendCompletedJobsAsEmployer,
         }
     }
