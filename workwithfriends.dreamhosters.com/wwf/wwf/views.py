@@ -485,7 +485,7 @@ def viewFriendProfile(request):
             friend = Account.objects.get(userId=friendId)
 
             friendName = friend.name
-            friendProfileImage = ProfileImage.objects.get(account=friend)
+            friendProfileImage = str(ProfileImage.objects.get(account=friend))
 
             friendSkills = formatSkills(
                 UserSkill.objects.filter(account=friend),

@@ -12,7 +12,7 @@ class ProfileImage(models.Model):
     profileImageUrl = models.CharField(max_length=200)
     
     def __unicode__(self):
-        return str(account)
+        return str(self.account)
 
 class Job(models.Model):
     employer = models.ForeignKey(Account, related_name='%(app_label)s_%(class)s_related')

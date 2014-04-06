@@ -142,3 +142,21 @@ class testAllRequests(TestCase):
         response = takeJob(request)
         self.assertTrue(CurrentJob.objects.filter(employer=self.account, employee=secondAccount).exists())
         self.assertTrue(responseIsSuccess(response), response)
+
+    def testViewFriendProfile(self):
+        request = self.factory.post('/loginWithFacebook',
+                                    {'accessToken': TEST_ACCESS_TOKEN_2,
+                                     'userId': TEST_USER_ID_2
+                                     }
+                                    )
+        loginWithFacebook(request)
+        request = self.factory.post('/viewFriendProfile',
+                                    {'accessToken': TEST_ACCESS_TOKEN,
+                                     'userId': TEST_USER_ID,
+                                     'friendId': TEST_USER_ID_2,})
+        response = viewFriendProfile(request)
+        data = getResponseObject(response)['data']
+        self.assertTrue(hasFields(data, ['friendIsRegisteredUser', 'friendProfileImageUrl',
+                                         'friendName', 'friendSkills',
+                                         'friendJobs',]))
+        self.assertTrue(responseIsSuccess(response), response)
