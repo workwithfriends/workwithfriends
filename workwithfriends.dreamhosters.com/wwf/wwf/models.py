@@ -19,6 +19,9 @@ class Job(models.Model):
     jobType = models.CharField(max_length=200)
     jobDescription = models.CharField(max_length=200)
     jobCompensation = models.CharField(max_length=200)
+    lat = models.FloatField(default=0.0)
+    long = models.FloatField(default=0.0)
+    timeCreated = models.DateTimeField(auto_now_add=True)
     
     def __unicode__(self):
         return str(self.jobType) + ' ' + str(self.employer)
