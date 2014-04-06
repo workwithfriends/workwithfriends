@@ -168,6 +168,7 @@ class testAllRequests(TestCase):
         data = getResponseObject(response)['data']
         self.assertTrue(
             hasFields(data, ['friendIsRegisteredUser', 'friendProfileImageUrl',
-                             'friendName', 'friendSkills',
+                             'friendLastName', 'friendFirstName',
+                             'friendSkills',
                              'friendJobs', ]))
         self.assertTrue(responseIsSuccess(response), response)
