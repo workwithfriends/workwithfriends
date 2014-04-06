@@ -28,7 +28,7 @@
 		3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */; };
 		3FFCEF6518F0AFA200FDD05A /* JobsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */; };
 		3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6718F0C29700FDD05A /* LoginViewController.m */; };
-		3FFCEF6A18F0C33C00FDD05A /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF6918F0C33C00FDD05A /* FacebookSDK.framework */; };
+		A0CA1A4C18F1AF7400C44ACD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +75,7 @@
 		3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableView.m; sourceTree = "<group>"; };
 		3FFCEF6618F0C29700FDD05A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3FFCEF6718F0C29700FDD05A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		3FFCEF6918F0C33C00FDD05A /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FFCEF1C18F076BE00FDD05A /* CoreGraphics.framework in Frameworks */,
-				3FFCEF6A18F0C33C00FDD05A /* FacebookSDK.framework in Frameworks */,
+				A0CA1A4C18F1AF7400C44ACD /* FacebookSDK.framework in Frameworks */,
 				3FFCEF1E18F076BE00FDD05A /* UIKit.framework in Frameworks */,
 				3FFCEF1A18F076BE00FDD05A /* Foundation.framework in Frameworks */,
 			);
@@ -125,7 +125,7 @@
 		3FFCEF1818F076BE00FDD05A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3FFCEF6918F0C33C00FDD05A /* FacebookSDK.framework */,
+				A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */,
 				3FFCEF1918F076BE00FDD05A /* Foundation.framework */,
 				3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */,
 				3FFCEF1D18F076BE00FDD05A /* UIKit.framework */,
@@ -425,6 +425,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/Jeremy/Documents/FacebookSDK,
+					/Users/Luis/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkWithFriends/WorkWithFriends-Prefix.pch";
@@ -442,6 +443,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/Jeremy/Documents/FacebookSDK,
+					/Users/Luis/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WorkWithFriends/WorkWithFriends-Prefix.pch";
@@ -510,6 +512,7 @@
 				3FFCEF4D18F076BE00FDD05A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FFCEF4E18F076BE00FDD05A /* Build configuration list for PBXNativeTarget "WorkWithFriendsTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +521,7 @@
 				3FFCEF5018F076BE00FDD05A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,7 +9,6 @@
 #import "LoginViewController.h"
 
 @interface LoginViewController ()
-
 @end
 
 @implementation LoginViewController
@@ -18,9 +17,16 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+    
     }
     return self;
+}
+
+// Logged-in user experience
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+    
+    [self performSegueWithIdentifier:@"login_success" sender:self];
+
 }
 
 - (void)viewDidLoad
