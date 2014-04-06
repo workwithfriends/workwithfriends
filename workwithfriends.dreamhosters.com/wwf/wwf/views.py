@@ -387,6 +387,7 @@ def deleteJob(request):
 
     return formattedResponse(data=data)
 
+
 def takeJob(request):
     '''
     Required fields:
@@ -514,8 +515,6 @@ def viewFriendProfile(request):
                 hasEmployee=True
             )
 
-
-
         else:
             # TODO: Add logic for a friend who has not used Work With Friends
             errorMessage = 'Unknown friend'
@@ -540,3 +539,72 @@ def viewFriendProfile(request):
 
     return formattedResponse(data=data)
 
+
+def completeJob(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        jobId
+    '''
+    requiredFields = ['accessToken', 'userId', 'jobId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    jobId = request['jobId']
+
+    if Account.objects.filter(userId=userId).exists():
+        employer = Account.objects.get(userId=userId)
+
+        if CurrentJob.objects.filter(pk=jobId, employer=employer).exists():
+            jobToComplete = CurrentJob.objects.get(pk=jobId, employer=employer)
+
+            employee = jobToComplete.employee
+            jobType = str(jobToComplete.jobType)
+            jobDescription = str(jobToComplete.jobDescription)
+            jobCompensation = str(jobToComplete.jobCompenstation)
+
+            newCompletedJob, newCompletedJobIsCreated = CompletedJob.objects.get_or_create(
+                employer=employer,
+                employee=employee,
+                jobType=jobType,
+                jobDescription=jobDescription,
+                jobCompensation=jobCompensation
+            )
+
+            if newCompletedJobIsCreated:
+                jobToComplete.delete()
+
+                currentJobsAsEmployer = formatJobs(
+                    CurrentJob.objects.filter(employer=employer),
+                    hasEmployee=True
+                )
+                completedJobsAsEmployer = formatJobs(
+                    CompletedJob.objects.filter(employer=employer),
+                    hasEmployee=True
+                )
+
+            else:
+                errorMessage = 'Failed to complete job'
+                return formattedResponse(isError=True, errorMessage=errorMessage)
+        else:
+            errorMessage = 'Unknown job'
+            return formattedResponse(isError=True, errorMessage=errorMessage)
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    data = {
+        'currentJobsAsEmployer': currentJobsAsEmployer,
+        'completedJobsAsEmployer': completedJobsAsEmployer
+    }
+
+    return formattedResponse(data=data)

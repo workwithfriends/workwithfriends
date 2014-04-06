@@ -19,5 +19,6 @@ urlpatterns = patterns('',
                        url(r'^postJob/', include('wwf.views.postJob')),
                        url(r'^deleteJob/', include('wwf.views.deleteJob')),
                        url(r'^takeJob/', include('wwf.views.takeJob')),
+                       url(r'^completeJob/', include('wwf.views.completeJob')),
                        url(r'^viewFriendProfile/', include('wwf.views.viewFriendProfile'))
 )
