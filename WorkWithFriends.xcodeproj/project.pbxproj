@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F323DA818F1A400007D26A0 /* SkillsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323DA718F1A400007D26A0 /* SkillsPageViewController.m */; };
 		3FFCEF1A18F076BE00FDD05A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1918F076BE00FDD05A /* Foundation.framework */; };
 		3FFCEF1C18F076BE00FDD05A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */; };
 		3FFCEF1E18F076BE00FDD05A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1D18F076BE00FDD05A /* UIKit.framework */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F323DA618F1A400007D26A0 /* SkillsPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillsPageViewController.h; sourceTree = "<group>"; };
+		3F323DA718F1A400007D26A0 /* SkillsPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillsPageViewController.m; sourceTree = "<group>"; };
 		3FFCEF1618F076BE00FDD05A /* WorkWithFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkWithFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCEF1918F076BE00FDD05A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -154,6 +157,8 @@
 				3FFCEF5E18F099D000FDD05A /* JobsViewController.m */,
 				3FFCEF6018F0A6C900FDD05A /* JobsTableViewController.h */,
 				3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */,
+				3F323DA618F1A400007D26A0 /* SkillsPageViewController.h */,
+				3F323DA718F1A400007D26A0 /* SkillsPageViewController.m */,
 				3FFCEF6318F0AFA200FDD05A /* JobsTableView.h */,
 				3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */,
 				3FFCEF3418F076BE00FDD05A /* Images.xcassets */,
@@ -292,6 +297,7 @@
 				3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */,
 				3FFCEF5F18F099D000FDD05A /* JobsViewController.m in Sources */,
 				3FFCEF2A18F076BE00FDD05A /* AppDelegate.m in Sources */,
+				3F323DA818F1A400007D26A0 /* SkillsPageViewController.m in Sources */,
 				3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */,
 				3FFCEF5618F098B600FDD05A /* SettingsViewController.m in Sources */,
 				3FFCEF6518F0AFA200FDD05A /* JobsTableView.m in Sources */,

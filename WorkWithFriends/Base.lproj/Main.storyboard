@@ -37,6 +37,14 @@
             </objects>
             <point key="canvasLocation" x="-479" y="-1741"/>
         </scene>
+        <!--Skills Page View Controller-->
+        <scene sceneID="C51-bJ-dqn">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="l9C-OS-6Sn" customClass="SkillsPageViewController" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Koj-6L-RC6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-487" y="562"/>
+        </scene>
         <!--Jobs Table View Controller-->
         <scene sceneID="DbO-j7-GFf">
             <objects>
@@ -45,9 +53,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="435"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" id="ssA-2n-Ka4">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="bg4-ig-Yyx" id="nix-Pm-fex"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="YY2-GZ-wIU">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YY2-GZ-wIU" id="8fh-25-j4Q">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -62,7 +78,7 @@
                     </tableView>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="searchDisplayController" destination="csK-V0-X3x" id="9WX-dB-3xk"/>
+                        <outlet property="searchDisplayController" destination="kEn-dn-wqL" id="Ahk-yT-Umw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f40-Y7-dFX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -72,6 +88,31 @@
                         <outlet property="searchContentsController" destination="VhB-6h-yiY" id="9U9-Hs-xky"/>
                         <outlet property="searchResultsDataSource" destination="VhB-6h-yiY" id="tZ0-gj-5FH"/>
                         <outlet property="searchResultsDelegate" destination="VhB-6h-yiY" id="PKv-gn-sCo"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="YB7-uY-E2P">
+                    <connections>
+                        <outlet property="delegate" destination="VhB-6h-yiY" id="ZM4-k1-Wq4"/>
+                        <outlet property="searchContentsController" destination="VhB-6h-yiY" id="57b-wz-g7v"/>
+                        <outlet property="searchResultsDataSource" destination="VhB-6h-yiY" id="KJY-pY-yNF"/>
+                        <outlet property="searchResultsDelegate" destination="VhB-6h-yiY" id="eJo-Hp-jVc"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="ga5-AN-a43">
+                    <connections>
+                        <outlet property="delegate" destination="VhB-6h-yiY" id="4aN-Nb-uec"/>
+                        <outlet property="searchContentsController" destination="VhB-6h-yiY" id="sFf-15-ZMu"/>
+                        <outlet property="searchResultsDataSource" destination="VhB-6h-yiY" id="y00-cu-Cye"/>
+                        <outlet property="searchResultsDelegate" destination="VhB-6h-yiY" id="Wzr-Cl-VLz"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="kEn-dn-wqL">
+                    <connections>
+                        <outlet property="delegate" destination="VhB-6h-yiY" id="ecc-4x-Bgy"/>
+                        <outlet property="searchBar" destination="ssA-2n-Ka4" id="SU6-gE-cqO"/>
+                        <outlet property="searchContentsController" destination="VhB-6h-yiY" id="lJi-B4-p0c"/>
+                        <outlet property="searchResultsDataSource" destination="VhB-6h-yiY" id="Z9V-QQ-wla"/>
+                        <outlet property="searchResultsDelegate" destination="VhB-6h-yiY" id="ctD-c1-C81"/>
                     </connections>
                 </searchDisplayController>
             </objects>
@@ -189,6 +230,14 @@
                                     <navigationItem title="Work With Friends" id="eVr-03-n7X"/>
                                 </items>
                             </navigationBar>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VXK-17-Obf">
+                                <rect key="frame" x="-10" y="351" width="352" height="167"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="l9C-OS-6Sn" kind="embed" id="up6-kY-0E7"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

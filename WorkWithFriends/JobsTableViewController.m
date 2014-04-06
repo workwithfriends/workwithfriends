@@ -33,7 +33,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     maListe = [NSMutableArray array];
-    tampon = [[NSMutableArray alloc] init];
     [maListe addObject:@"Paris"];
     [maListe addObject:@"Lyon"];
     [maListe addObject:@"Marseille"];
@@ -50,7 +49,6 @@
     [maListe addObject:@"Dijon"];
     [maListe addObject:@"Grenoble"];
     [maListe addObject:@"Brest"]; self.navigationItem.title = @"Grandes villes";
-    [tampon addObjectsFromArray:maListe];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +68,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [maListe count];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [searchResults count];
+        
+    } else {
+        return [maListe count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,8 +84,30 @@
     cell = [[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     // Configuration de la cellule
-    NSString *cellValue = [maListe objectAtIndex:indexPath.row]; cell.textLabel.text = cellValue;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        NSString *cellValue = [searchResults objectAtIndex:indexPath.row];
+        cell.textLabel.text = cellValue;
+    } else {
+        NSString *cellValue = [maListe objectAtIndex:indexPath.row];
+        cell.textLabel.text = cellValue;
+    }
     return cell;
+}
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
+    searchResults = [maListe filteredArrayUsingPredicate:resultPredicate];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
 }
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
