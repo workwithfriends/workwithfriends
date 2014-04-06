@@ -82,7 +82,7 @@ def formatJobs(jobs, hasEmployee=False):
                 'jobId': str(job.pk),
                 'time': str(job.timeCreated),
                 'lat': float(job.lat),
-                'long': float(job.log),
+                'long': float(job.long),
                 'skills': formatSkills(skills)
             }
 
