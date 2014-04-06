@@ -69,7 +69,8 @@ class testAllRequests(TestCase):
         data = getResponseObject(response)['data']
         self.assertTrue(Account.objects.filter(userId=TEST_USER_ID).exists())
         self.assertTrue(hasFields(data, ['isNewUser', 'profileImageUrl',
-                                         'name', 'skills', 'jobs']))
+                                         'firstName', 'lastName', 'skills',
+                                         'jobs']))
         self.assertTrue(responseIsSuccess(response), str(response))
 
     def testAddSkillsToAccount(self):

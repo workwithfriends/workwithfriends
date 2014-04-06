@@ -75,7 +75,15 @@ def formatJobs(jobs, hasEmployee=False):
 
             formattedJob = {
                 'employerId': str(job.employer.userId),
-                'employerName': str(job.employer.name),
+                'employerFirstName': str(job.employer.firstName),
+                'employerLastName': str(job.employer.lastName),
+                'employerProfileImageUrl': str(
+                    ProfileImage
+                    .objects
+                    .get(
+                        account=job.employer
+                    )
+                    .profileImageUrl),
                 'type': str(job.jobType),
                 'description': str(job.jobDescription),
                 'compensation': str(job.jobCompensation),
@@ -88,7 +96,15 @@ def formatJobs(jobs, hasEmployee=False):
 
             if hasEmployee:
                 formattedJob['employeeId'] = str(job.employee.userId)
-                formattedJob['employeeName'] = str(job.employee.name)
+                formattedJob['employeeFirstName'] = str(job.employee.firstName)
+                formattedJob['employeeLastName'] = str(job.employee.lastName)
+                formattedJob['employeeProfileImageUrl'] = str(
+                    ProfileImage
+                    .objects
+                    .get(
+                        account=job.employee
+                    )
+                    .profileImageUrl)
 
             formattedJobs.append(formattedJob)
 
@@ -128,7 +144,8 @@ getUserModel:
 
 
 def getUserModel(account):
-    name = str(account.name)
+    firstName = str(account.firstName)
+    lastName = str(account.lastName)
     aboutMe = str(account.aboutMe)
     profileImageUrl = str(
         ProfileImage.objects.get(account=account).profileImageUrl
@@ -177,7 +194,8 @@ def getUserModel(account):
 
     userModel = {
         'profileImageUrl': profileImageUrl,
-        'name': name,
+        'firstName': firstName,
+        'lastName': lastName,
         'aboutMe': aboutMe,
         'skills': skills,
         'jobs': jobs
@@ -213,15 +231,17 @@ def loginWithFacebook(request):
         try:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
 
-            userInfo = graph.get('me', fields='name, picture')
+            userInfo = graph.get('me', fields='first_name, last_name, picture')
 
-            name = userInfo['name']
+            firstName = userInfo['first_name']
+            lastName = userInfo['last_name']
             profileImageUrl = userInfo['picture']['data']['url']
             aboutMe = None
             skills = None
             jobs = None
 
-            account.name = name
+            account.firstName = firstName
+            account.lastName = lastName
             account.save()
             ProfileImage.objects.get_or_create(account=account,
                                                profileImageUrl=profileImageUrl)
@@ -234,7 +254,8 @@ def loginWithFacebook(request):
         userModel = getUserModel(account)
 
         profileImageUrl = userModel['profileImageUrl']
-        name = userModel['name']
+        firstName = userModel['firstName']
+        lastName = userModel['lastName']
         aboutMe = userModel['aboutMe']
         skills = userModel['skills']
         jobs = userModel['jobs']
@@ -242,7 +263,8 @@ def loginWithFacebook(request):
     userModel = {
         'isNewUser': isAccountCreated,
         'profileImageUrl': profileImageUrl,
-        'name': name,
+        'firstName': firstName,
+        'lastName': lastName,
         'aboutMe': aboutMe,
         'skills': skills,
         'jobs': jobs
@@ -598,7 +620,8 @@ def viewFriendProfile(request):
             friend = Account.objects.get(userId=friendId)
             friendModel = getUserModel(friend)
 
-            friendName = friendModel['name']
+            friendFirstName = friendModel['firstName']
+            friendLastName = friendModel['lastName']
             friendProfileImage = friendModel['profileImageUrl']
             friendAboutMe = friendModel['aboutMe']
             friendSkills = friendModel['skills']
@@ -606,9 +629,13 @@ def viewFriendProfile(request):
 
         else:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
-            friendInfo = graph.get(friendId, fields='picture, name')
+            friendInfo = graph.get(
+                friendId,
+                fields='picture, first_name, last_name'
+            )
 
-            friendName = friendInfo['name']
+            friendFirstName = friendInfo['first_name']
+            friendLastName = friendInfo['last_name']
             friendProfileImage = friendInfo['picture']['data']['url']
             friendAboutMe = ''
             friendJobs = None
@@ -622,7 +649,8 @@ def viewFriendProfile(request):
         'friendIsRegisteredUser': friendIsRegisteredUser,
         'friendProfileImageUrl': friendProfileImage,
         'friendSkills': friendSkills,
-        'friendName': friendName,
+        'friendFirstName': friendFirstName,
+        'friendLastName': friendLastName,
         'friendAboutMe': friendAboutMe,
         'friendJobs': friendJobs
     }
