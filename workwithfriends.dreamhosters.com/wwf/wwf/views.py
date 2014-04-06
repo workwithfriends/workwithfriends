@@ -607,7 +607,8 @@ def completeJob(request):
     }
 
     return formattedResponse(data=data)
-    
+
+
 def getPostedJobs(request):
     '''
     Required fields:
@@ -615,7 +616,7 @@ def getPostedJobs(request):
         accessToken
         userId
     '''
-    requiredFields = ['accessToken', 'userId',]
+    requiredFields = ['accessToken', 'userId', ]
 
     # verify request
     verifiedRequestResponse = verifyRequest(request, requiredFields)
@@ -627,22 +628,38 @@ def getPostedJobs(request):
     userId = request['userId']
     accessToken = request['accessToken']
 
-    graph = FBOpen(access_token=accessToken, current_user_id=userId)
-    allValidFriends = {}
-    friendsDegreeOne = graph.get('me/friends')
-    for friend in friendsDegreeOne:
-        if (Account.objects.filter(userId=friend['id']).exists()):
-            allValidFriends[friend['id']] = friend['name']
-    for person in allValidFriends:
-        friends = graph.get(person + '/friends')
-        for friend in friends:
+    if Account.objects.filter(userId=userId).exists():
+
+        graph = FBOpen(access_token=accessToken, current_user_id=userId)
+        friendsDegreeOne = graph.get('me/friends')['data']
+
+        validPeople = {}
+
+        # get user's immediate friends that have an account
+        for friend in friendsDegreeOne:
             if (Account.objects.filter(userId=friend['id']).exists()):
-                allValidFriends[friend['id']] = friend['name']
-    postedJobs = PostedJob.objects.all()
-    validJobs = []
-    for job in postedJobs:
-        if job.employer.userId in allValidFriends:
-            validJobs.append(job)
-    validPostedJobs = formatJobs(validJobs)
-    data = {'postedJobs' : validPostedJobs}
+                validPeople[friend['id']] = friend['name']
+
+        # get user's friends of friends that have an account
+        for validFriendId in validPeople.copy():
+            friendsOfValidFriend = graph.get(validFriendId + '/friends')['data']
+            for person in friendsOfValidFriend:
+                if (Account.objects.filter(userId=friend['id']).exists()):
+                    validPeople[friend['id']] = friend['name']
+
+        postedJobs = PostedJob.objects.all()
+        validPostedJobs = []
+        for job in postedJobs:
+            if job.employer.userId in validPeople:
+                validPostedJobs.append(job)
+
+        formattedPostedJobs = formatJobs(validPostedJobs)
+
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    data = {
+        'postedJobs': formattedPostedJobs
+    }
     return formattedResponse(data=data)
