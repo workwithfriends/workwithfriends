@@ -1,7 +1,8 @@
 from django.db import models
 
 class Account(models.Model):
-    name = models.CharField(max_length=200)
+    firstName = models.CharField(max_length=200, default='')
+    lastName = models.CharField(max_length=200, default='')
     userId = models.CharField(max_length=200)
     aboutMe = models.CharField(max_length=200, default='')
 
