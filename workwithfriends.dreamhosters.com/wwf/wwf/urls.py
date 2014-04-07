@@ -65,6 +65,14 @@ urlpatterns = patterns('',
                            r'^getFriends',
                            'wwf.views.getFriends'
                        ),
+                       url(
+                           r'getNewsfeed',
+                           'wwf.views.getNewsfeed'
+                       ),
+                       url(
+                           r'viewJob',
+                           'wwf.views.viewJob'
+                       )
 
 )
 

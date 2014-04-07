@@ -960,7 +960,7 @@ def pushUpdateToNewsFeed(account, updateType, updateData):
     NewsFeed.objects.create(account=account, type=updateType, data=json.dumps(updateData))
 
 
-def getNewsFeed(request):
+def getNewsfeed(request):
     '''
     Required fields:
 
