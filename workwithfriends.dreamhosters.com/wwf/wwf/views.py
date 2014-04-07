@@ -268,6 +268,8 @@ def loginWithFacebook(request):
         skills = userModel['skills']
         jobs = userModel['jobs']
 
+    friendsWithApp = getFriendsWithApp(accessToken)
+
     userModel = {
         'userId': userId,
         'isNewUser': isAccountCreated,
@@ -276,7 +278,8 @@ def loginWithFacebook(request):
         'lastName': lastName,
         'aboutMe': aboutMe,
         'skills': skills,
-        'jobs': jobs
+        'jobs': jobs,
+        'friends': friendsWithApp
     }
 
     return formattedResponse(data=userModel)
