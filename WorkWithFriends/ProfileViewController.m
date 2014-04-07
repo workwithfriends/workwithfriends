@@ -38,6 +38,7 @@
 - (void) setProfilePicture{
     NSURL *profileURL = [NSURL URLWithString: @"https://scontent-b.xx.fbcdn.net/hphotos-frc3/l/t31.0-8/1801135_10152417296136042_2112033691_o.jpg"];
     profilePicture= [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
+    NSString *myToken = ACCESSTOKEN;
 }
 - (void) setFirstName {
     firstName=@"Jeremy";
