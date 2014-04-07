@@ -211,7 +211,6 @@ def loginWithFacebook(request):
         userId
         
     '''
-    print 'got passed csrf'
     requiredFields = ['accessToken', 'userId']
 
     verifiedRequestResponse = verifyRequest(request, requiredFields)
