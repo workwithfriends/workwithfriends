@@ -24,7 +24,7 @@
             UIView *newSkill;
             [viewControllers addObject:newSkill];
         }
-        [self setViewControllers: viewControllers direction: UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NO];
+        //[self setViewControllers: viewControllers direction: UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NO];
     }
     return self;
 }

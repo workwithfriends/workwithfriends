@@ -24,25 +24,68 @@
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     
-    SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000";
+    NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/loginWithFacebook/";
     //Get access Token:
-    ACCESSTOCKEN = [[[FBSession activeSession] accessTokenData] accessToken];
+    //NSString *ACCESSTOKEN = [[[FBSession activeSession] accessTokenData] accessToken];
     
     //Get User ID:
+    NSString *USERID = @"";
     [FBRequestConnection
      startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
          if (!error) {
-             USERID = [result objectForKey:@"id"];
+             NSString *USERID = [result objectForKey:@"id"];
          }
      }];
     
     //Make login request to server:
-    NSString *urlForRequest = [SERVERURL stringByAppendingString:@"/loginWithFacebook/"];
+    NSURL *urlForRequest = [NSURL URLWithString:SERVERURL];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
-    [request setPostValue:ACCESSTOCKEN forKey:@"accessToken"];
+    //ACCESSTOKEN
+    [request setPostValue:@"" forKey:@"accessToken"];
     [request setPostValue:USERID forKey:@"userId"];
-    
-    
+    [request setShouldUseRFC2616RedirectBehaviour:YES];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request startSynchronous];
+    NSError *error = [request error];
+    if (!error) {
+        NSString *response = [request responseString];
+        NSLog(@"%@", response);
+        NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (responseDict == NULL){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
+                                                            message:@"An unexpected response was received from our server."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else{
+            BOOL err = [[responseDict valueForKey:@"isError"] boolValue];
+            if (err){
+                NSString *errorMessage = [[responseDict valueForKey:@"errorMessage"] stringValue];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
+                                                                message:errorMessage
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            }
+            else{
+            
+            }
+        }
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
+                                                                message:@"An unexpected error was encoutered while communicating with our sever."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+        [alert show];
+    }
+
+
     [self performSegueWithIdentifier:@"login_success" sender:self];
 
 }
