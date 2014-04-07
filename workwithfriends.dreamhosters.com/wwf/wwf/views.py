@@ -205,6 +205,7 @@ def getUserModel(account):
 
     return userModel
 
+
 def loginWithFacebook(request):
     '''
     Required fields:
@@ -228,7 +229,7 @@ def loginWithFacebook(request):
 
     try:
         userInfo = graph.get('me', fields='first_name, last_name, '
-                                      'picture, id')
+                                          'picture, id')
     except:
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
@@ -268,7 +269,7 @@ def loginWithFacebook(request):
         jobs = userModel['jobs']
 
     userModel = {
-        'userId' : userId,
+        'userId': userId,
         'isNewUser': isAccountCreated,
         'profileImageUrl': profileImageUrl,
         'firstName': firstName,
@@ -279,6 +280,7 @@ def loginWithFacebook(request):
     }
 
     return formattedResponse(data=userModel)
+
 
 def addAboutMeToAccount(request):
     '''
@@ -319,6 +321,7 @@ addSkillToAccount:
     Helper method for addSkillsToAccount
 '''
 
+
 def addSkillToAccount(skill, account):
     accountSkill, isCreated = UserSkill.objects.get_or_create(account=account,
                                                               skill=skill[
@@ -326,6 +329,7 @@ def addSkillToAccount(skill, account):
     accountSkill.strength = skill['strength']
 
     accountSkill.save()
+
 
 def addSkillsToAccount(request):
     '''
@@ -362,6 +366,7 @@ def addSkillsToAccount(request):
     }
     return formattedResponse(data=userSkills)
 
+
 def removeSkillFromAccount(request):
     '''
     Required fields:
@@ -396,6 +401,7 @@ def removeSkillFromAccount(request):
                                hasStrength=True)
     }
     return formattedResponse(data=userSkills)
+
 
 def postJob(request):
     '''
@@ -458,6 +464,7 @@ def postJob(request):
     }
     return formattedResponse(data=postedJobModel)
 
+
 def deleteJob(request):
     '''
     Required fields:
@@ -503,6 +510,7 @@ def deleteJob(request):
     }
 
     return formattedResponse(data=postedJobModel)
+
 
 def takeJob(request):
     '''
@@ -591,6 +599,7 @@ def takeJob(request):
     }
     return formattedResponse(data=currentJobsAsEmployeeModel)
 
+
 def viewFriendProfile(request):
     '''
     Required fields:
@@ -656,6 +665,7 @@ def viewFriendProfile(request):
     }
 
     return formattedResponse(data=friendModelToReturn)
+
 
 def completeJob(request):
     '''
@@ -738,6 +748,7 @@ def completeJob(request):
 
     return formattedResponse(data=data)
 
+
 def getPostedJobs(request):
     '''
     Required fields:
@@ -773,7 +784,8 @@ def getPostedJobs(request):
         for validFriendId in validPeople.copy():
             friendsOfValidFriend = graph.get(validFriendId + '/friends')['data']
             for person in friendsOfValidFriend:
-                if (Account.objects.filter(userId=person['id']).exists()):
+                if userId != person['id'] and \
+                        Account.objects.filter(userId=person['id']).exists():
                     validPeople[person['id']] = person['name']
 
         postedJobs = PostedJob.objects.all()
