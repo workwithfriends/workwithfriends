@@ -23,7 +23,7 @@ urlpatterns = patterns('',
                        ),
                        url(
                            r'^loginWithFacebook/',
-                           include('wwf.views.loginWithFacebook')
+                           include('views.loginWithFacebook')
                        ),
                        url(
                            r'^addAboutMeToAccount',
