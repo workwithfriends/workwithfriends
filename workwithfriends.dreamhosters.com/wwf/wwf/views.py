@@ -2,7 +2,7 @@ from django.http import HttpResponse
 
 from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, \
     UserSkill, PostedJobSkill, \
-    CurrentJobSkill, CompletedJobSkill
+    CurrentJobSkill, CompletedJobSkill, NewsFeed
 
 from django.forms.util import ValidationError
 from open_facebook.api import FacebookAuthorization, OpenFacebook
@@ -15,6 +15,11 @@ FBAuth = FacebookAuthorization
 FBOpen = OpenFacebook
 
 APP_ACCESS_TOKEN = FBAuth.get_app_access_token()
+
+NEWSFEED_POSTED_JOB_TYPE = 'postedJob'
+NEWSFEED_CURRENT_JOB_TYPE = 'currentJob'
+NEWSFEED_COMPLETED_JOB_TYPE = 'completedJob'
+NEWSFEED_SKILLS_UPDATE_TYPE = 'addedSkills'
 
 
 def verifyRequest(request, requiredFields):
@@ -50,6 +55,28 @@ def formattedResponse(isError=False, errorMessage=None, data=None):
         'data': data,
     }
     return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+'''
+formatJobsForNewsFeed:
+    Helper method to format a database job model
+    into a python dictionary for newsfeed data
+'''
+
+
+def formatJobForNewsfeed(job, hasEmployee=False):
+    formattedJob = {
+        'jobId': str(job.pk),
+        'type': str(job.jobType),
+        'compensation': str(job.jobCompensation),
+    }
+
+    if hasEmployee:
+        formattedJob['employeeFirstName'] = str(job.employee.firstName)
+        formattedJob['employeeLastName'] = str(job.employee.lastName)
+        formattedJob['employeeId'] = str(job.employee.userId)
+
+    return formattedJob
 
 
 '''
@@ -241,7 +268,7 @@ def loginWithFacebook(request):
     account, isAccountCreated = Account.objects.get_or_create(userId=userId)
 
 
-    # if new user
+    # if new user, create blank user model
     if isAccountCreated:
 
         profileImageUrl = userInfo['picture']['data']['url']
@@ -255,7 +282,7 @@ def loginWithFacebook(request):
         ProfileImage.objects.get_or_create(account=account,
                                            profileImageUrl=profileImageUrl)
 
-    # if returning user
+    # if returning user, get user model
     else:
         userModel = getUserModel(account)
 
@@ -266,8 +293,9 @@ def loginWithFacebook(request):
         skills = userModel['skills']
         jobs = userModel['jobs']
 
+    # get models of user's friends that have Work With Friends
     try:
-        friendsWithApp = getFriendsWithApp(accessToken)
+        friendsWithApp = getFriendsWithAppByModel(accessToken)
     except:
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
@@ -448,6 +476,14 @@ def postJob(request):
         )
 
         if isPostedJobCreated:
+            # push job to newsfeed
+            pushUpdateToNewsFeed(
+                account=account,
+                updateType=NEWSFEED_POSTED_JOB_TYPE,
+                updateData=formatJobForNewsfeed(job=postedJob)
+            )
+
+            # create skills for job
             for skill in jobSkills:
                 postedJobSkill, isPostedJobSkillCreated = PostedJobSkill.objects.get_or_create(
                     job=postedJob,
@@ -497,6 +533,17 @@ def deleteJob(request):
         if PostedJob.objects.filter(pk=jobId, employer=account).exists():
             # if job exists with account and id, delete it
             jobToDelete = PostedJob.objects.get(pk=jobId, employer=account)
+
+            # delete job from news feed if it exists
+            jobNewsfeedData = formatJobForNewsfeed(jobToDelete)
+            if NewsFeed.objects.filter(account=account, type=NEWSFEED_POSTED_JOB_TYPE, data=jobNewsfeedData).exists():
+                newsfeedItemToDelete = NewsFeed.objects.get(
+                    account=account,
+                    type=NEWSFEED_POSTED_JOB_TYPE,
+                    data=jobNewsfeedData
+                )
+                newsfeedItemToDelete.delete()
+                
             jobToDelete.delete()
 
             postedJobs = formatJobs(
@@ -811,31 +858,40 @@ def getPostedJobs(request):
     return formattedResponse(data=data)
 
 
-def getFriendsWithApp(accessToken):
+def getFriendsWithAppById(accessToken):
     graph = FBOpen(access_token=accessToken)
 
-    friendsById = graph.get('me/friends', fields='id')['data']
+    allFriendsById = graph.get('me/friends', field='id')['data']
+    friendsWithAppById = []
 
-    friendsWithApp = []
-
-    for friend in friendsById:
+    for friend in allFriendsById:
         if Account.objects.filter(userId=friend['id']).exists():
-            friendObject = Account.objects.get(userId=friend['id'])
-            friendsWithApp.append({
-                'friendFirstName': str(friendObject.firstName),
-                'friendLastName': str(friendObject.lastName),
-                'friendProfileImageUrl': str(
-                    ProfileImage.
-                    objects
-                    .get(
-                        account=friendObject
-                    )
-                    .profileImageUrl
-                ),
-                'friendId': friend['id']
-            })
+            friendsWithAppById.append(friend['id'])
 
-    return friendsWithApp
+    return friendsWithAppById
+
+
+def getFriendsWithAppByModel(accessToken):
+    friendsWithAppById = getFriendsWithAppById(accessToken)
+    friendsWithAppByModel = []
+
+    for friendId in friendsWithAppById:
+        friendObject = Account.objects.get(userId=friendId)
+        friendsWithAppByModel.append({
+            'friendFirstName': str(friendObject.firstName),
+            'friendLastName': str(friendObject.lastName),
+            'friendProfileImageUrl': str(
+                ProfileImage.
+                objects
+                .get(
+                    account=friendObject
+                )
+                .profileImageUrl
+            ),
+            'friendId': str(friendObject.userId)
+        })
+
+    return friendsWithAppByModel
 
 
 def getFriends(request):
@@ -844,7 +900,7 @@ def getFriends(request):
 
             accessToken
             userId
-        '''
+    '''
     requiredFields = ['accessToken', 'userId']
 
     # verify request
@@ -856,9 +912,84 @@ def getFriends(request):
     request = request.POST
     accessToken = request['accessToken']
     try:
-        friends = getFriendsWithApp(accessToken)
+        friends = getFriendsWithAppByModel(accessToken)
     except:
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     return formattedResponse(data=friends)
+
+
+def pushUpdateToNewsFeed(account, updateType, updateData):
+    NewsFeed.objects.create(account=account, type=updateType, data=json.dumps(updateData))
+
+
+def getNewsFeed(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+    '''
+    requiredFields = ['accessToken', 'userId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    accessToken = request['accessToken']
+    userId = request['userId']
+
+    friendsWithAppById = getFriendsWithAppById(accessToken)
+
+    newsfeed = []
+
+    # get user's newsfeed updates
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+
+        if NewsFeed.objects.filter(account=account).exists():
+
+            accountNewsfeedItems = NewsFeed.objects.filter(account=account)
+
+            for newsfeedItem in accountNewsfeedItems:
+                newsfeed.append({
+                    'userId': str(account.userId),
+                    'profileImageUrl': str(ProfileImage
+                                           .objects
+                                           .get(account=account)
+                                           .profileImageUrl),
+                    'newsfeedItemType': str(newsfeedItem.type),
+                    'newsfeedItemTime': str(newsfeedItem.timeCreated),
+                    'newsfeedItemData': str(newsfeedItem.data)
+                })
+
+    # get newsfeed updates from friends with app
+    for friendId in friendsWithAppById:
+        friendAccount = Account.objects.get(userid=friendId)
+
+        if NewsFeed.objects.filter(account=friendAccount).exists():
+
+            friendNewsfeedItems = NewsFeed.objects.filter(account=friendAccount)
+
+            for newsfeedItem in friendNewsfeedItems:
+                newsfeed.append({
+                    'userId': str(friendAccount.userId),
+                    'profileImageUrl': str(ProfileImage
+                                           .objects
+                                           .get(account=friendAccount)
+                                           .profileImageUrl),
+                    'newsfeedItemType': str(newsfeedItem.type),
+                    'newsfeedItemTime': str(newsfeedItem.timeCreated),
+                    'newsfeedItemData': str(newsfeedItem.data)
+                })
+
+    newsfeedResponseObject = {
+        'newsfeed': newsfeed
+    }
+
+    return formattedResponse(data=newsfeedResponseObject)

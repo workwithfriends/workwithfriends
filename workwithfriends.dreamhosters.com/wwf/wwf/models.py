@@ -70,3 +70,12 @@ class CompletedJobSkill(Skill):
     
     def __unicode__(self):
         return str(self.skill) + ' ' + str(self.job)
+
+class NewsFeed(models.Model):
+    account = models.ForeignKey(Account)
+    timeCreated = models.DateTimeField(auto_now_add=True)
+    type = models.CharField(max_length=200)
+    data = models.CharField(max_length=400)
+
+    def __unicode__(self):
+        return str(self.account) + ' ' + str(self.type)
