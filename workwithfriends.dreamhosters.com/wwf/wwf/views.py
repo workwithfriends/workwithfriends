@@ -824,11 +824,19 @@ def getFriendsWithApp(accessToken):
             friendsWithApp.append({
                 'friendFirstName': str(friendObject.firstName),
                 'friendLastName': str(friendObject.lastName),
-                'friendProfileImageUrl': str(friendObject.profileImageUrl),
+                'friendProfileImageUrl': str(
+                    ProfileImage.
+                    objects
+                    .get(
+                        account=friendObject
+                    )
+                    .profileImageUrl
+                ),
                 'friendId': friend['id']
             })
 
     return friendsWithApp
+
 
 def getFriends(request):
     '''
