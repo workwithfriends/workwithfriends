@@ -20,7 +20,7 @@ NEWSFEED_POSTED_JOB_TYPE = 'postedJob'
 NEWSFEED_CURRENT_JOB_TYPE = 'currentJob'
 NEWSFEED_COMPLETED_JOB_TYPE = 'completedJob'
 NEWSFEED_SKILLS_UPDATE_TYPE = 'addedSkills'
-
+NEWS_ABOUTME_UPDATE_TYPE = 'updatedAboutMe'
 
 def verifyRequest(request, requiredFields):
     params = request.POST
@@ -350,6 +350,13 @@ def addAboutMeToAccount(request):
         account = Account.objects.get(userId=userId)
         account.aboutMe = aboutMe
         account.save()
+
+        pushUpdateToNewsFeed(
+            account=account,
+            updateType=NEWS_ABOUTME_UPDATE_TYPE,
+            updateData={}
+        )
+
     else:
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
