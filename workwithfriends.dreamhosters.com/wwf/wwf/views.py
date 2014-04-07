@@ -804,3 +804,48 @@ def getPostedJobs(request):
         'postedJobs': formattedPostedJobs
     }
     return formattedResponse(data=data)
+
+
+def getFriendsWithApp(accessToken):
+    graph = FBOpen(access_token=accessToken)
+
+    friendsById = graph('me/friends', fields='id')['data']
+
+    friendsWithApp = []
+
+    for friend in friendsById:
+        if Account.objects.filter(userId=friend['id']):
+            friendObject = Account.objects.get(userId=friend['id'])
+            friendsWithApp.append({
+                'friendFirstName': str(friendObject.firstName),
+                'friendLastName': str(friendObject.lastName),
+                'friendProfileImageUrl': str(friendObject.profileImageUrl),
+                'friendId': friend['id']
+            })
+
+    return friendsWithApp
+
+def getFriends(request):
+    '''
+        Required fields:
+
+            accessToken
+            userId
+        '''
+    requiredFields = ['accessToken', 'userId', ]
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+    accessToken = request['accessToken']
+    try:
+        friends = getFriendsWithApp(accessToken)
+    except:
+        errorMessage = 'Bad access token'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    return formattedResponse(data=friends)
