@@ -7,6 +7,8 @@
 //
 
 #import "JobsTableViewController.h"
+#import "JobFormViewController.h"
+
 
 @interface JobsTableViewController ()
 
@@ -78,7 +80,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"MyIdentifier";
+    static NSString *MyIdentifier = @"JobCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil)
     cell = [[UITableViewCell alloc]
@@ -108,6 +110,11 @@
                                                      selectedScopeButtonIndex]]];
     
     return YES;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"jobDetails" sender:self];
+    
 }
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
