@@ -30,6 +30,7 @@
 		3F323E4118F228E5007D26A0 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E3018F228E5007D26A0 /* ASIInputStream.m */; };
 		3F323E4218F228E5007D26A0 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E3218F228E5007D26A0 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3F323E4318F228E5007D26A0 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E3218F228E5007D26A0 /* ASINetworkQueue.m */; };
+		3F323E4618F28A91007D26A0 /* GlobalVariables.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E4518F28A91007D26A0 /* GlobalVariables.m */; };
 		3FFCEF1A18F076BE00FDD05A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1918F076BE00FDD05A /* Foundation.framework */; };
 		3FFCEF1C18F076BE00FDD05A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */; };
 		3FFCEF1E18F076BE00FDD05A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1D18F076BE00FDD05A /* UIKit.framework */; };
@@ -93,6 +94,8 @@
 		3F323E3118F228E5007D26A0 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
 		3F323E3218F228E5007D26A0 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
 		3F323E3318F228E5007D26A0 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		3F323E4418F28A91007D26A0 /* GlobalVariables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalVariables.h; sourceTree = "<group>"; };
+		3F323E4518F28A91007D26A0 /* GlobalVariables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalVariables.m; sourceTree = "<group>"; };
 		3FFCEF1618F076BE00FDD05A /* WorkWithFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkWithFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCEF1918F076BE00FDD05A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -223,6 +226,8 @@
 				3FFCEF2B18F076BE00FDD05A /* Main.storyboard */,
 				3FFCEF6618F0C29700FDD05A /* LoginViewController.h */,
 				3FFCEF6718F0C29700FDD05A /* LoginViewController.m */,
+				3F323E4418F28A91007D26A0 /* GlobalVariables.h */,
+				3F323E4518F28A91007D26A0 /* GlobalVariables.m */,
 				3FFCEF2E18F076BE00FDD05A /* NewsFeedViewController.h */,
 				3FFCEF2F18F076BE00FDD05A /* NewsFeedViewController.m */,
 				3FFCEF3118F076BE00FDD05A /* FriendsViewController.h */,
@@ -390,6 +395,7 @@
 				3FFCEF5C18F0995500FDD05A /* ProfileViewController.m in Sources */,
 				3FFCEF2618F076BE00FDD05A /* main.m in Sources */,
 				3F323E3C18F228E5007D26A0 /* ASIFormDataRequest.m in Sources */,
+				3F323E4618F28A91007D26A0 /* GlobalVariables.m in Sources */,
 				3F323E3818F228E5007D26A0 /* ASIDataDecompressor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

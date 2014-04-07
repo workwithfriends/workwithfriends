@@ -29,32 +29,32 @@
 - (UIImage*) profilePicture{
     return profilePicture;
 }
-- (void) setAboutMe {
-    aboutMe=@"I'm Jeremy and I love Work with Friends!";
+- (void) setAboutMe: (NSDictionary*) me {
+    aboutMe=[me valueForKey:@"aboutMe"];
 }
-- (void) setMySkills{
+- (void) setMySkills: (NSDictionary*) me{
     mySkills=[NSArray arrayWithObjects:@"Maths",@"Soccer","blabla", nil];
 }
-- (void) setProfilePicture{
-    NSURL *profileURL = [NSURL URLWithString: @"https://scontent-b.xx.fbcdn.net/hphotos-frc3/l/t31.0-8/1801135_10152417296136042_2112033691_o.jpg"];
+- (void) setProfilePicture: (NSDictionary*) me{
+    NSURL *profileURL = [NSURL URLWithString:[me valueForKey:@"profileImageUrl"]];
     profilePicture= [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
-    NSString *myToken = ACCESSTOKEN;
 }
-- (void) setFirstName {
-    firstName=@"Jeremy";
+- (void) setFirstName:(NSDictionary*) me{
+    firstName=[me valueForKey:@"firstName"];
 }
-- (void) setLastName {
-    lastName=@"Wohlwend";
+- (void) setLastName:(NSDictionary*) me {
+    lastName=[me valueForKey:@"lastName"];;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self setFirstName];
-        [self setLastName];
-        [self setAboutMe];
-        [self setProfilePicture];
+        GlobalVariables *globals = [GlobalVariables sharedInstance];
+        [self setFirstName: globals.ME];
+        [self setLastName: globals.ME];
+        [self setAboutMe: globals.ME];
+        [self setProfilePicture: globals.ME];
     }
     return self;
 }

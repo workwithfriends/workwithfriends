@@ -57,14 +57,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WorkWithFriends/ProfileViewController.m"
-            timestampString = "418540325.083912"
+            filePath = "WorkWithFriends/LoginViewController.m"
+            timestampString = "418549404.592067"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "-setProfilePicture"
-            landmarkType = "5">
+            startingLineNumber = "15"
+            endingLineNumber = "15">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

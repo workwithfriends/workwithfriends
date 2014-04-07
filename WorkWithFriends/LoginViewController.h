@@ -12,9 +12,9 @@
 
 
 
-static NSString *ACCESSTOKEN;
-static NSDictionary *ME;
+
 @interface LoginViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet FBLoginView *FBLogin;
 
 @end
