@@ -26,23 +26,13 @@
     
     NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/loginWithFacebook/";
     //Get access Token:
-    //NSString *ACCESSTOKEN = [[[FBSession activeSession] accessTokenData] accessToken];
-    
-    //Get User ID:
-    NSString *USERID = @"";
-    [FBRequestConnection
-     startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-         if (!error) {
-             NSString *USERID = [result objectForKey:@"id"];
-         }
-     }];
+    NSString *ACCESSTOKEN = [[[FBSession activeSession] accessTokenData] accessToken];
+    NSLog(ACCESSTOKEN);
     
     //Make login request to server:
     NSURL *urlForRequest = [NSURL URLWithString:SERVERURL];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
-    //ACCESSTOKEN
-    [request setPostValue:@"" forKey:@"accessToken"];
-    [request setPostValue:USERID forKey:@"userId"];
+    [request setPostValue:ACCESSTOKEN forKey:@"accessToken"];
     [request setShouldUseRFC2616RedirectBehaviour:YES];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
