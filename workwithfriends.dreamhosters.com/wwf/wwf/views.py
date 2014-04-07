@@ -254,8 +254,6 @@ def loginWithFacebook(request):
         account.save()
         ProfileImage.objects.get_or_create(account=account,
                                            profileImageUrl=profileImageUrl)
-        errorMessage = 'Bad access token'
-        return formattedResponse(isError=True, errorMessage=errorMessage)
 
     # if returning user
     else:
@@ -268,7 +266,11 @@ def loginWithFacebook(request):
         skills = userModel['skills']
         jobs = userModel['jobs']
 
-    friendsWithApp = getFriendsWithApp(accessToken)
+    try:
+        friendsWithApp = getFriendsWithApp(accessToken)
+    except:
+        errorMessage = 'Bad access token'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
 
     userModel = {
         'userId': userId,
