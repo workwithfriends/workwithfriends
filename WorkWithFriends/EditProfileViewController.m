@@ -14,11 +14,47 @@
 
 @implementation EditProfileViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (NSString*) aboutMe{
+    return aboutMe;
+}
+- (NSArray*) mySkills{
+    return mySkills;
+}
+- (NSString*) firstName{
+    return firstName;
+}
+- (NSString*) lastName{
+    return lastName;
+}
+- (UIImage*) profilePicture{
+    return profilePicture;
+}
+- (void) setAboutMe: (NSDictionary*) me {
+    aboutMe=[me valueForKey:@"aboutMe"];
+}
+- (void) setMySkills: (NSDictionary*) me{
+    mySkills=[NSArray arrayWithObjects:@"Maths",@"Soccer","blabla", nil];
+}
+- (void) setProfilePicture: (NSDictionary*) me{
+    NSURL *profileURL = [NSURL URLWithString:[me valueForKey:@"profileImageUrl"]];
+    profilePicture= [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
+}
+- (void) setFirstName:(NSDictionary*) me{
+    firstName=[me valueForKey:@"firstName"];
+}
+- (void) setLastName:(NSDictionary*) me {
+    lastName=[me valueForKey:@"lastName"];;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Custom initialization
+        GlobalVariables *globals = [GlobalVariables sharedInstance];
+        [self setFirstName: globals.ME];
+        [self setLastName: globals.ME];
+        [self setAboutMe: globals.ME];
+        [self setProfilePicture: globals.ME];
     }
     return self;
 }
@@ -26,7 +62,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    _profilePictureLabel.image = self.profilePicture;
+    _firstNameLabel.text = self.firstName;
+    _lastNameLabel.text = self.lastName;
+    _aboutMeLabel.text = self.aboutMe;
 }
 
 - (void)didReceiveMemoryWarning
