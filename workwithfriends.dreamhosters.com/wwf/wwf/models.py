@@ -18,7 +18,6 @@ class ProfileImage(models.Model):
 
 class Job(models.Model):
     employer = models.ForeignKey(Account, related_name='%(app_label)s_%(class)s_related')
-    jobTitle = models.CharField(max_length=200)
     jobType = models.CharField(max_length=200)
     jobDescription = models.CharField(max_length=200)
     jobCompensation = models.CharField(max_length=200)
