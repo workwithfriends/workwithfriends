@@ -837,7 +837,7 @@ def getFriends(request):
             accessToken
             userId
         '''
-    requiredFields = ['accessToken', 'userId', ]
+    requiredFields = ['accessToken', 'userId']
 
     # verify request
     verifiedRequestResponse = verifyRequest(request, requiredFields)
