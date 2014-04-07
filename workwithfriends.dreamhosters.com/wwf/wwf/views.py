@@ -819,7 +819,7 @@ def getFriendsWithApp(accessToken):
     friendsWithApp = []
 
     for friend in friendsById:
-        if Account.objects.filter(userId=friend['id']):
+        if Account.objects.filter(userId=friend['id']).exists():
             friendObject = Account.objects.get(userId=friend['id'])
             friendsWithApp.append({
                 'friendFirstName': str(friendObject.firstName),
