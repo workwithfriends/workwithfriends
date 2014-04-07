@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 
-from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, \
-    UserSkill, PostedJobSkill, \
+from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, UserSkill, PostedJobSkill, \
     CurrentJobSkill, CompletedJobSkill
 
 from django.forms.util import ValidationError
@@ -9,7 +8,6 @@ from open_facebook.api import FacebookAuthorization, OpenFacebook
 from django_facebook.auth_backends import FacebookBackend
 
 import json
-import time
 
 FBAuth = FacebookAuthorization
 FBOpen = OpenFacebook
@@ -61,50 +59,22 @@ formatJobs:
 
 def formatJobs(jobs, hasEmployee=False):
     formattedJobs = None
-
+    
     if jobs is not None:
         formattedJobs = []
         for job in jobs:
-
-            if not hasEmployee:
-                skills = PostedJobSkill.objects.filter(job=job)
-            else:
-                skills = CurrentJobSkill.objects.filter(job=job) if \
-                    CurrentJobSkill.objects.filter(job=job).exists() else \
-                    CompletedJobSkill.objects.filter(job=job)
-
             formattedJob = {
                 'employerId': str(job.employer.userId),
-                'employerFirstName': str(job.employer.firstName),
-                'employerLastName': str(job.employer.lastName),
-                'employerProfileImageUrl': str(
-                    ProfileImage
-                    .objects
-                    .get(
-                        account=job.employer
-                    )
-                    .profileImageUrl),
+                'employerName': str(job.employer.name),
                 'type': str(job.jobType),
                 'description': str(job.jobDescription),
                 'compensation': str(job.jobCompensation),
-                'jobId': str(job.pk),
-                'time': str(job.timeCreated),
-                'lat': float(job.lat),
-                'long': float(job.long),
-                'skills': formatSkills(skills)
+                'jobId': str(job.pk)
             }
 
             if hasEmployee:
                 formattedJob['employeeId'] = str(job.employee.userId)
-                formattedJob['employeeFirstName'] = str(job.employee.firstName)
-                formattedJob['employeeLastName'] = str(job.employee.lastName)
-                formattedJob['employeeProfileImageUrl'] = str(
-                    ProfileImage
-                    .objects
-                    .get(
-                        account=job.employee
-                    )
-                    .profileImageUrl)
+                formattedJob['employeeName'] = str(job.employee.name)
 
             formattedJobs.append(formattedJob)
 
@@ -136,73 +106,6 @@ def formatSkills(skills, hasStrength=False):
     return formattedSkills
 
 
-'''
-getUserModel:
-    Helper method that gets the entire person model
-    formatted into a JSON for easy message passing
-'''
-
-
-def getUserModel(account):
-    firstName = str(account.firstName)
-    lastName = str(account.lastName)
-    aboutMe = str(account.aboutMe)
-    profileImageUrl = str(
-        ProfileImage.objects.get(account=account).profileImageUrl
-    )
-
-    # get jobs
-    postedJobs = None if not PostedJob.objects.filter(
-        employer=account).exists() else \
-        formatJobs(
-            PostedJob.objects.filter(
-                employer=account)
-        )
-
-    currentJobsAsEmployee = None if not CurrentJob.objects.filter(
-        employee=account).exists() else \
-        formatJobs(
-            CurrentJob.objects.filter(employee=account),
-            hasEmployee=True
-        )
-
-    currentJobsAsEmployer = None if not CurrentJob.objects.filter(
-        employer=account).exists() else \
-        formatJobs(
-            CurrentJob.objects.filter(employer=account),
-            hasEmployee=True
-        )
-
-    completedJobs = None if not CompletedJob.objects.filter(
-        employee=account).exists() else \
-        formatJobs(
-            CompletedJob.objects.filter(employee=account),
-            hasEmployee=True
-        )
-
-    jobs = {
-        'postedJobs': postedJobs,
-        'currentJobsAsEmployee': currentJobsAsEmployee,
-        'currentJobsAsEmployer': currentJobsAsEmployer,
-        'completedJobs': completedJobs
-    }
-
-    # get skills
-    skills = None if not UserSkill.objects.filter(
-        account=account).exists() else formatSkills(
-        UserSkill.objects.get(account=account), hasStrength=True)
-
-    userModel = {
-        'profileImageUrl': profileImageUrl,
-        'firstName': firstName,
-        'lastName': lastName,
-        'aboutMe': aboutMe,
-        'skills': skills,
-        'jobs': jobs
-    }
-
-    return userModel
-
 def loginWithFacebook(request):
     '''
     Required fields:
@@ -230,17 +133,14 @@ def loginWithFacebook(request):
         try:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
 
-            userInfo = graph.get('me', fields='first_name, last_name, picture')
+            userInfo = graph.get('me', fields='name, picture')
 
-            firstName = userInfo['first_name']
-            lastName = userInfo['last_name']
+            name = userInfo['name']
             profileImageUrl = userInfo['picture']['data']['url']
-            aboutMe = None
             skills = None
             jobs = None
 
-            account.firstName = firstName
-            account.lastName = lastName
+            account.name = name
             account.save()
             ProfileImage.objects.get_or_create(account=account,
                                                profileImageUrl=profileImageUrl)
@@ -250,58 +150,54 @@ def loginWithFacebook(request):
 
     # if returning user
     else:
-        userModel = getUserModel(account)
+        name = account.name
+        profileImageUrl = str(ProfileImage.objects.get(account=account).profileImageUrl)
 
-        profileImageUrl = userModel['profileImageUrl']
-        firstName = userModel['firstName']
-        lastName = userModel['lastName']
-        aboutMe = userModel['aboutMe']
-        skills = userModel['skills']
-        jobs = userModel['jobs']
+        # get jobs
+        postedJobs = None if not PostedJob.objects.filter(employer=account).exists() else \
+            formatJobs(
+                PostedJob.objects.filter(
+                    employer=account)
+            )
 
-    userModel = {
+        currentJobsAsEmployee = None if not CurrentJob.objects.filter(employee=account).exists() else \
+            formatJobs(
+                CurrentJob.objects.filter(employee=account),
+                hasEmployee=True
+            )
+
+        currentJobsAsEmployer = None if not CurrentJob.objects.filter(employer=account).exists() else \
+            formatJobs(
+                CurrentJob.objects.filter(employer=account),
+                hasEmployee=True
+            )
+
+        completedJobs = None if not CompletedJob.objects.filter(employee=account).exists() else \
+            formatJobs(
+                CompletedJob.objects.filter(employee=account),
+                hasEmployee=True
+            )
+
+        jobs = {
+            'postedJobs': postedJobs,
+            'currentJobsAsEmployee': currentJobsAsEmployee,
+            'currentJobsAsEmployer': currentJobsAsEmployer,
+            'completedJobs': completedJobs
+        }
+
+        # get skills
+        skills = None if not UserSkill.objects.filter(account=account).exists() else formatSkills(
+            UserSkill.objects.get(account=account), hasStrength=True)
+
+    data = {
         'isNewUser': isAccountCreated,
         'profileImageUrl': profileImageUrl,
-        'firstName': firstName,
-        'lastName': lastName,
-        'aboutMe': aboutMe,
+        'name': name,
         'skills': skills,
         'jobs': jobs
     }
 
-    return formattedResponse(data=userModel)
-
-def addAboutMeToAccount(request):
-    '''
-    Required fields:
-
-        accessToken
-        userId
-        aboutMe
-    '''
-    requiredFields = ['accessToken', 'userId', 'aboutMe']
-
-    verifiedRequestResponse = verifyRequest(request, requiredFields)
-    if verifiedRequestResponse['isMissingFields']:
-        errorMessage = verifiedRequestResponse['errorMessage']
-        return formattedResponse(isError=True, errorMessage=errorMessage)
-
-    request = request.POST
-
-    userId = request['userId']
-    aboutMe = request['aboutMe']
-
-    if Account.objects.filter(userId=userId):
-        account = Account.objects.get(userId=userId)
-        account.aboutMe = aboutMe
-        account.save()
-    else:
-        errorMessage = 'Unknown user'
-        return formattedResponse(isError=True, errorMessage=errorMessage)
-
-    userModel = getUserModel(account)
-
-    return formattedResponse(data=userModel)
+    return formattedResponse(data=data)
 
 
 '''
@@ -310,13 +206,13 @@ addSkillToAccount:
     Helper method for addSkillsToAccount
 '''
 
+
 def addSkillToAccount(skill, account):
-    accountSkill, isCreated = UserSkill.objects.get_or_create(account=account,
-                                                              skill=skill[
-                                                                  'skill'])
+    accountSkill, isCreated = UserSkill.objects.get_or_create(account=account, skill=skill['skill'])
     accountSkill.strength = skill['strength']
 
     accountSkill.save()
+
 
 def addSkillsToAccount(request):
     '''
@@ -347,11 +243,11 @@ def addSkillsToAccount(request):
     else:
         return formattedResponse(isError=True, errorMessage='Unknown user')
 
-    userSkills = {
-        'skills': formatSkills(UserSkill.objects.filter(account=account),
-                               hasStrength=True)
+    data = {
+        'skills': formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
     }
-    return formattedResponse(data=userSkills)
+    return formattedResponse(data=data)
+
 
 def removeSkillFromAccount(request):
     '''
@@ -382,11 +278,11 @@ def removeSkillFromAccount(request):
     else:
         return formattedResponse(isError=True, errorMessage='Unknown user')
 
-    userSkills = {
-        'skills': formatSkills(UserSkill.objects.filter(account=account),
-                               hasStrength=True)
+    data = {
+        'skills': formatSkills(UserSkill.objects.filter(account=account), hasStrength=True)
     }
-    return formattedResponse(data=userSkills)
+    return formattedResponse(data=data)
+
 
 def postJob(request):
     '''
@@ -415,23 +311,18 @@ def postJob(request):
         jobSkills = job['skills']
         jobDescription = job['description']
         jobCompensation = job['compensation']
-        jobLat = job['lat']
-        jobLong = job['long']
 
         postedJob, isPostedJobCreated = PostedJob.objects.get_or_create(
             employer=account,
             jobType=jobType,
             jobDescription=jobDescription,
-            jobCompensation=jobCompensation,
-            lat=jobLat,
-            long=jobLong
+            jobCompensation=jobCompensation
         )
 
         if isPostedJobCreated:
             for skill in jobSkills:
-                postedJobSkill, isPostedJobSkillCreated = PostedJobSkill.objects.get_or_create(
-                    job=postedJob,
-                    skill=skill)
+                postedJobSkill, isPostedJobSkillCreated = PostedJobSkill.objects.get_or_create(job=postedJob,
+                                                                                               skill=skill)
 
             postedJobs = formatJobs(
                 PostedJob.objects.filter(employer=account)
@@ -444,10 +335,11 @@ def postJob(request):
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
-    postedJobModel = {
+    data = {
         'postedJobs': postedJobs
     }
-    return formattedResponse(data=postedJobModel)
+    return formattedResponse(data=data)
+
 
 def deleteJob(request):
     '''
@@ -489,11 +381,12 @@ def deleteJob(request):
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
-    postedJobModel = {
+    data = {
         'postedJobs': postedJobs
     }
 
-    return formattedResponse(data=postedJobModel)
+    return formattedResponse(data=data)
+
 
 def takeJob(request):
     '''
@@ -524,37 +417,22 @@ def takeJob(request):
                 employee = Account.objects.get(userId=userId)
                 employer = Account.objects.get(userId=employerId)
 
-                if PostedJob.objects.filter(pk=jobId,
-                                            employer=employer).exists():
-                    jobToTake = PostedJob.objects.get(pk=jobId,
-                                                      employer=employer)
+                if PostedJob.objects.filter(pk=jobId, employer=employer).exists():
+                    jobToTake = PostedJob.objects.get(pk=jobId, employer=employer)
 
-                    jobSkills = PostedJobSkill.objects.filter(job=jobToTake)
                     jobType = str(jobToTake.jobType)
                     jobDescription = str(jobToTake.jobDescription)
                     jobCompensation = str(jobToTake.jobCompensation)
-                    jobLat = float(jobToTake.lat)
-                    jobLong = float(jobToTake.long)
 
                     newCurrentJob, newCurrentJobIsCreated = CurrentJob.objects.get_or_create(
                         employee=employee,
                         employer=employer,
                         jobType=jobType,
                         jobDescription=jobDescription,
-                        jobCompensation=jobCompensation,
-                        lat=jobLat,
-                        long=jobLong
+                        jobCompensation=jobCompensation
                     )
 
                     if newCurrentJobIsCreated:
-                        formattedSkills = formatSkills(jobSkills)
-
-                        for skillObject in formattedSkills:
-                            CurrentJobSkill.objects.create(
-                                job=newCurrentJob,
-                                skill=skillObject['skill']
-                            )
-
                         jobToTake.delete()
 
                         currentJobsAsEmployee = formatJobs(
@@ -564,12 +442,10 @@ def takeJob(request):
 
                     else:
                         errorMessage = 'Failed to take job'
-                        return formattedResponse(isError=True,
-                                                 errorMessage=errorMessage)
+                        return formattedResponse(isError=True, errorMessage=errorMessage)
             else:
                 errorMessage = 'Unknown employer'
-                return formattedResponse(isError=True,
-                                         errorMessage=errorMessage)
+                return formattedResponse(isError=True, errorMessage=errorMessage)
         else:
             errorMessage = 'Unknown user'
             return formattedResponse(isError=True, errorMessage=errorMessage)
@@ -577,10 +453,11 @@ def takeJob(request):
         errorMessage = 'userId and employerId are the same'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
-    currentJobsAsEmployeeModel = {
+    data = {
         'currentJobsAsEmployee': currentJobsAsEmployee
     }
-    return formattedResponse(data=currentJobsAsEmployeeModel)
+    return formattedResponse(data=data)
+
 
 def viewFriendProfile(request):
     '''
@@ -605,48 +482,74 @@ def viewFriendProfile(request):
     accessToken = request['accessToken']
 
     if Account.objects.filter(userId=userId).exists():
-        friendIsRegisteredUser = Account.objects.filter(
-            userId=friendId).exists()
+        friendIsRegisteredUser = Account.objects.filter(userId=friendId).exists()
         if friendIsRegisteredUser:
             friend = Account.objects.get(userId=friendId)
-            friendModel = getUserModel(friend)
 
-            friendFirstName = friendModel['firstName']
-            friendLastName = friendModel['lastName']
-            friendProfileImage = friendModel['profileImageUrl']
-            friendAboutMe = friendModel['aboutMe']
-            friendSkills = friendModel['skills']
-            friendJobs = friendModel['jobs']
+            friendName = friend.name
+            friendProfileImage = str(ProfileImage.objects.get(account=friend))
+
+            friendSkills = formatSkills(
+                UserSkill.objects.filter(account=friend),
+                hasStrength=True
+            )
+
+            friendPostedJobs = formatJobs(
+                PostedJob.objects.filter(employer=friend)
+            )
+
+            friendCurrentJobsAsEmployee = formatJobs(
+                CurrentJob.objects.filter(employee=friend),
+                hasEmployee=True
+            )
+            friendCurrentJobsAsEmployer = formatJobs(
+                CurrentJob.objects.filter(employer=friend),
+                hasEmployee=True
+            )
+
+            friendCompletedJobsAsEmployee = formatJobs(
+                CompletedJob.objects.filter(employee=friend),
+                hasEmployee=True
+            )
+            friendCompletedJobsAsEmployer = formatJobs(
+                CompletedJob.objects.filter(employer=friend),
+                hasEmployee=True
+            )
 
         else:
             graph = FBOpen(access_token=accessToken, current_user_id=userId)
-            friendInfo = graph.get(
-                friendId,
-                fields='picture, first_name, last_name'
-            )
+            friendInfo = graph.get(friendId, fields='picture, name')
 
-            friendFirstName = friendInfo['first_name']
-            friendLastName = friendInfo['last_name']
+            friendName = friendInfo['name']
             friendProfileImage = friendInfo['picture']['data']['url']
-            friendAboutMe = ''
-            friendJobs = None
+
             friendSkills = None
+            friendPostedJobs = None
+            friendCurrentJobsAsEmployee = None
+            friendCurrentJobsAsEmployer = None
+            friendCompletedJobsAsEmployee = None
+            friendCompletedJobsAsEmployer = None
 
     else:
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
-    friendModelToReturn = {
+    data = {
         'friendIsRegisteredUser': friendIsRegisteredUser,
         'friendProfileImageUrl': friendProfileImage,
         'friendSkills': friendSkills,
-        'friendFirstName': friendFirstName,
-        'friendLastName': friendLastName,
-        'friendAboutMe': friendAboutMe,
-        'friendJobs': friendJobs
+        'friendName': friendName,
+        'friendJobs': {
+            'postedJobs': friendPostedJobs,
+            'currentJobsAsEmployee': friendCurrentJobsAsEmployee,
+            'currentJobsAsEmployer': friendCurrentJobsAsEmployer,
+            'completedJobsAsEmployee': friendCompletedJobsAsEmployee,
+            'completedJobsAsEmployer': friendCompletedJobsAsEmployer,
+        }
     }
 
-    return formattedResponse(data=friendModelToReturn)
+    return formattedResponse(data=data)
+
 
 def completeJob(request):
     '''
@@ -675,31 +578,19 @@ def completeJob(request):
             jobToComplete = CurrentJob.objects.get(pk=jobId, employer=employer)
 
             employee = jobToComplete.employee
-            jobSkills = CurrentJobSkill.objects.filter(job=jobToComplete)
             jobType = str(jobToComplete.jobType)
             jobDescription = str(jobToComplete.jobDescription)
             jobCompensation = str(jobToComplete.jobCompenstation)
-            jobLat = float(jobToComplete.lat)
-            jobLong = float(jobToComplete.long)
 
             newCompletedJob, newCompletedJobIsCreated = CompletedJob.objects.get_or_create(
                 employer=employer,
                 employee=employee,
                 jobType=jobType,
                 jobDescription=jobDescription,
-                jobCompensation=jobCompensation,
-                lat=jobLat,
-                long=jobLong
+                jobCompensation=jobCompensation
             )
 
             if newCompletedJobIsCreated:
-                formattedSkills = formatSkills(jobSkills)
-                for skillObject in formattedSkills:
-                    CompletedJobSkill.objects.create(
-                        job=newCompletedJob,
-                        skill=skillObject['skill']
-                    )
-
                 jobToComplete.delete()
 
                 currentJobsAsEmployer = formatJobs(
@@ -713,8 +604,7 @@ def completeJob(request):
 
             else:
                 errorMessage = 'Failed to complete job'
-                return formattedResponse(isError=True,
-                                         errorMessage=errorMessage)
+                return formattedResponse(isError=True, errorMessage=errorMessage)
         else:
             errorMessage = 'Unknown job'
             return formattedResponse(isError=True, errorMessage=errorMessage)
@@ -728,6 +618,7 @@ def completeJob(request):
     }
 
     return formattedResponse(data=data)
+
 
 def getPostedJobs(request):
     '''
@@ -764,8 +655,8 @@ def getPostedJobs(request):
         for validFriendId in validPeople.copy():
             friendsOfValidFriend = graph.get(validFriendId + '/friends')['data']
             for person in friendsOfValidFriend:
-                if (Account.objects.filter(userId=person['id']).exists()):
-                    validPeople[person['id']] = person['name']
+                if (Account.objects.filter(userId=friend['id']).exists()):
+                    validPeople[friend['id']] = friend['name']
 
         postedJobs = PostedJob.objects.all()
         validPostedJobs = []

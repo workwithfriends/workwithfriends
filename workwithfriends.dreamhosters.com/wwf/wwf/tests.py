@@ -5,13 +5,16 @@ from django.test.client import RequestFactory
 import json
 
 
-TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BALkcYNYiGZCLWOwuqCCl2jAXSmvNJCqFf0Jw5WJ2bWtG7nXrhvMUaxUe5YjZCBKvA3eU6x25S1mYCJSMI4LKQiARa7lsauSZCSZCvOCUsNHX1MB0Hnmi6zVDNdZA0vHlnwfloBWFwYM9iCmCrVSDNsysoHmtc6D28u593EoBgmAZBgDzRY3xqYdUWGxlmn4wZDZD'
+
+TEST_ACCESS_TOKEN = 'CAAIv2leQPu8BADaCzZBnDQC3mskGWReFVXdpguNFI6R5ZCx5DWoIAZAadzgsumldTcmmRZARZBs3soZA0uJWWURtJm6bKq7oM0CtiNqiyuEJPdPuJZBZBrl4n3v8o5qvl1o8GSw1dRz3nUZAbwEHbHjoZCqF9jYMONDNWzKbQ0hUcFG7ZA8w8Y0o11aRj2if31CCxdRQvs8YfL8agZDZD'
 TEST_USER_ID = '570053410'
-TEST_ACCESS_TOKEN_2 = 'CAAIv2leQPu8BADA7MFkECJ8by5QEJ18G8rZCDgfJ11ZAAZCfl53FfV5A75kavhsjVf3gODpAhypZBC4AkLi1RoqtywvlIw8qcbljmYG5pDdQkYlpokIxgvoUy0QnbdiFlbi8PjKRiEAZCUG5VTnqnBcahedjyDtpzxcHSRf3BQ6xyR3A3hP1GU0bwzgf0vcDCfYLMbTXpVgZDZD'
+TEST_ACCESS_TOKEN_2 = 'CAAIv2leQPu8BALS8W83owP3fclYNAhZCZBjCCKDgreeVyKYZBcRR6RYTZAGaTkb7vAtZBXbIZADUsIoQLthreraQ9dQEt2gXBkGGpELnc4pgIP47tduC19ZCCfwY58FO1uFg3LwTGTTo4eHHpl6eeLYhZBZCd12LEf2O0s8ZBL7vipJrKZBF9VAZC1SAZBvoQwlYGLHIZD'
 TEST_USER_ID_2 = '524156482'
-TEST_SKILLS = [{'skill': 'writer', 'strength': '5'}, {'skill': 'photographer', 'strength': '8'}]
+TEST_SKILLS = [{'skill': 'writer', 'strength': '5'},
+               {'skill': 'photographer', 'strength': '8'}]
 TEST_JOB = {"type": "photography", "skills": ["photography", "writer"],
-            "description": "An easy job", "compensation": "dope herb"}
+            "description": "An easy job", "compensation": "dope herb",
+            'lat': 0.0, 'long': 0.0}
 
 
 def responseIsSuccess(response):
@@ -19,17 +22,19 @@ def responseIsSuccess(response):
     obj = json.loads(str(response)[lenToRemove:])
     return not obj['isError']
 
+
 def getResponseObject(response):
     lenToRemove = len('Content-Type: application/json')
     obj = str(response)[lenToRemove:]
     return json.loads(obj)
+
 
 def hasFields(data, fields):
     for field in fields:
         if not field in data:
             return False
     return True
-    
+
 
 class testAllRequests(TestCase):
     def setUp(self):
@@ -44,17 +49,17 @@ class testAllRequests(TestCase):
         request = self.factory.post('/loginWithFacebook',
                                     {'accessToken': TEST_ACCESS_TOKEN,
                                      'userId': TEST_USER_ID
-                                     }
-                                    )
-        return loginWithFacebook(request)        
-    
+                                    }
+        )
+        return loginWithFacebook(request)
+
     def addSkillsToAccount(self):
         request = self.factory.post('/addSkillsToAccount',
                                     {'accessToken': TEST_ACCESS_TOKEN,
                                      'userId': TEST_USER_ID,
                                      'skills': json.dumps(TEST_SKILLS),
-                                     }
-                                    )
+                                    }
+        )
         return addSkillsToAccount(request)
 
     def postJob(self):
@@ -69,14 +74,16 @@ class testAllRequests(TestCase):
         data = getResponseObject(response)['data']
         self.assertTrue(Account.objects.filter(userId=TEST_USER_ID).exists())
         self.assertTrue(hasFields(data, ['isNewUser', 'profileImageUrl',
-                                         'name', 'skills', 'jobs']))
+                                         'firstName', 'lastName', 'skills',
+                                         'jobs']))
         self.assertTrue(responseIsSuccess(response), str(response))
 
     def testAddSkillsToAccount(self):
         response = self.addSkillsToAccount()
         data = getResponseObject(response)['data']
-        self.assertTrue(hasFields(data, ['skills',]))
-        self.assertEqual(len(TEST_SKILLS), len(UserSkill.objects.filter(account=self.account)))
+        self.assertTrue(hasFields(data, ['skills', ]))
+        self.assertEqual(len(TEST_SKILLS),
+                         len(UserSkill.objects.filter(account=self.account)))
         self.assertTrue(responseIsSuccess(response), str(response))
 
     def testRemoveSkillFromAccount(self):
@@ -89,13 +96,13 @@ class testAllRequests(TestCase):
                                     {'accessToken': TEST_ACCESS_TOKEN,
                                      'userId': TEST_USER_ID,
                                      'skill': skillToRemove
-                                     }
-                                    )
+                                    }
+        )
         response = removeSkillFromAccount(request)
         data = getResponseObject(response)['data']
         self.assertTrue(not UserSkill.objects.filter(account=self.account,
-                                                 skill=skillToRemove).exists())
-        self.assertTrue(hasFields(data, ['skills',]))
+                                                     skill=skillToRemove).exists())
+        self.assertTrue(hasFields(data, ['skills', ]))
         self.assertTrue(responseIsSuccess(response))
 
     def testPostJob(self):
@@ -108,31 +115,34 @@ class testAllRequests(TestCase):
                          jobDescription=TEST_JOB['description'],
                          jobCompensation=TEST_JOB['compensation']).exists())
         self.assertTrue(responseIsSuccess(response), response)
-        
+
 
     def testDeleteJob(self):
         postedJobResponse = self.postJob()
-        self.assertTrue(PostedJob.objects.filter(employer=self.account).exists())
+        self.assertTrue(
+            PostedJob.objects.filter(employer=self.account).exists())
         jobId = PostedJob.objects.get(employer=self.account).pk
         request = self.factory.post('/deleteJob',
-                               {'accessToken': TEST_ACCESS_TOKEN,
-                                'userId': TEST_USER_ID,
-                                'jobId': jobId})
+                                    {'accessToken': TEST_ACCESS_TOKEN,
+                                     'userId': TEST_USER_ID,
+                                     'jobId': jobId})
         response = deleteJob(request)
         self.assertTrue(responseIsSuccess(response), response)
-        self.assertTrue(not PostedJob.objects.filter(employer=self.account).exists())
+        self.assertTrue(
+            not PostedJob.objects.filter(employer=self.account).exists())
 
 
     def testTakeJob(self):
         request = self.factory.post('/loginWithFacebook',
                                     {'accessToken': TEST_ACCESS_TOKEN_2,
                                      'userId': TEST_USER_ID_2
-                                     }
-                                    )
+                                    }
+        )
         loginWithFacebook(request)
         secondAccount = Account.objects.get(userId=TEST_USER_ID_2)
         postedJobResponse = self.postJob()
-        self.assertTrue(PostedJob.objects.filter(employer=self.account).exists())
+        self.assertTrue(
+            PostedJob.objects.filter(employer=self.account).exists())
         jobId = PostedJob.objects.get(employer=self.account).pk
         request = self.factory.post('takeJob',
                                     {'accessToken': TEST_ACCESS_TOKEN_2,
@@ -140,23 +150,26 @@ class testAllRequests(TestCase):
                                      'jobId': jobId,
                                      'employerId': TEST_USER_ID})
         response = takeJob(request)
-        self.assertTrue(CurrentJob.objects.filter(employer=self.account, employee=secondAccount).exists())
+        self.assertTrue(CurrentJob.objects.filter(employer=self.account,
+                                                  employee=secondAccount).exists())
         self.assertTrue(responseIsSuccess(response), response)
 
     def testViewFriendProfile(self):
         request = self.factory.post('/loginWithFacebook',
                                     {'accessToken': TEST_ACCESS_TOKEN_2,
                                      'userId': TEST_USER_ID_2
-                                     }
-                                    )
+                                    }
+        )
         loginWithFacebook(request)
         request = self.factory.post('/viewFriendProfile',
                                     {'accessToken': TEST_ACCESS_TOKEN,
                                      'userId': TEST_USER_ID,
-                                     'friendId': TEST_USER_ID_2,})
+                                     'friendId': TEST_USER_ID_2, })
         response = viewFriendProfile(request)
         data = getResponseObject(response)['data']
-        self.assertTrue(hasFields(data, ['friendIsRegisteredUser', 'friendProfileImageUrl',
-                                         'friendName', 'friendSkills',
-                                         'friendJobs',]))
+        self.assertTrue(
+            hasFields(data, ['friendIsRegisteredUser', 'friendProfileImageUrl',
+                             'friendLastName', 'friendFirstName',
+                             'friendSkills',
+                             'friendJobs', ]))
         self.assertTrue(responseIsSuccess(response), response)

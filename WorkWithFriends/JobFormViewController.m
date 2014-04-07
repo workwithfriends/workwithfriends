@@ -1,18 +1,18 @@
 //
-//  JobsViewController.m
+//  JobFormViewController.m
 //  WorkWithFriends
 //
-//  Created by Jeremy Wohlwend on 4/5/14.
+//  Created by LUIS SANMIGUEL on 4/6/14.
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
-#import "JobsViewController.h"
+#import "JobFormViewController.h"
 
-@interface JobsViewController ()
+@interface JobFormViewController ()
 
 @end
 
-@implementation JobsViewController
+@implementation JobFormViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,4 +46,13 @@
 }
 */
 
+
+- (IBAction)AcceptButton:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)goBack:(id)sender {
+
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 @end

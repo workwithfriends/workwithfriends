@@ -1,8 +1,10 @@
 from django.db import models
 
 class Account(models.Model):
-    name = models.CharField(max_length=200)
+    firstName = models.CharField(max_length=200, default='')
+    lastName = models.CharField(max_length=200, default='')
     userId = models.CharField(max_length=200)
+    aboutMe = models.CharField(max_length=200, default='')
 
     def __unicode__(self):
         return str(self.name) + ' ' +  str(self.userId)
@@ -19,6 +21,9 @@ class Job(models.Model):
     jobType = models.CharField(max_length=200)
     jobDescription = models.CharField(max_length=200)
     jobCompensation = models.CharField(max_length=200)
+    lat = models.FloatField(default=0.0)
+    long = models.FloatField(default=0.0)
+    timeCreated = models.DateTimeField(auto_now_add=True)
     
     def __unicode__(self):
         return str(self.jobType) + ' ' + str(self.employer)
@@ -37,13 +42,13 @@ class CompletedJob(Job):
 
 class Skill(models.Model):
     skill = models.CharField(max_length=200)
-    strength = models.CharField(max_length=200)
 
     class Meta:
         abstract = True
 
 class UserSkill(Skill):
     account = models.ForeignKey(Account)
+    strength = models.CharField(max_length=200)
 
     def __unicode__(self):
         return str(self.skill) + ' ' + str(self.account)
