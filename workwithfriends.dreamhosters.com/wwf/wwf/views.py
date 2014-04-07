@@ -225,8 +225,13 @@ def loginWithFacebook(request):
     accessToken = request['accessToken']
 
     graph = FBOpen(access_token=accessToken)
-    userInfo = graph.get('me', fields='first_name, last_name, '
+
+    try:
+        userInfo = graph.get('me', fields='first_name, last_name, '
                                       'picture, id')
+    except:
+        errorMessage = 'Bad access token'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
 
     firstName = userInfo['first_name']
     lastName = userInfo['last_name']
@@ -234,23 +239,22 @@ def loginWithFacebook(request):
 
     account, isAccountCreated = Account.objects.get_or_create(userId=userId)
 
-    # if new user
-    if (isAccountCreated):
-        try:
-            
-            profileImageUrl = userInfo['picture']['data']['url']
-            aboutMe = None
-            skills = None
-            jobs = None
 
-            account.firstName = firstName
-            account.lastName = lastName
-            account.save()
-            ProfileImage.objects.get_or_create(account=account,
-                                               profileImageUrl=profileImageUrl)
-        except:
-            errorMessage = 'Bad access token'
-            return formattedResponse(isError=True, errorMessage=errorMessage)
+    # if new user
+    if isAccountCreated:
+
+        profileImageUrl = userInfo['picture']['data']['url']
+
+        aboutMe = None
+        skills = None
+        jobs = None
+        account.firstName = firstName
+        account.lastName = lastName
+        account.save()
+        ProfileImage.objects.get_or_create(account=account,
+                                           profileImageUrl=profileImageUrl)
+        errorMessage = 'Bad access token'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
 
     # if returning user
     else:
