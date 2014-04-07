@@ -213,7 +213,7 @@ def loginWithFacebook(request):
         userId
         
     '''
-    requiredFields = ['accessToken', 'userId']
+    requiredFields = ['accessToken']
 
     verifiedRequestResponse = verifyRequest(request, requiredFields)
     if verifiedRequestResponse['isMissingFields']:
