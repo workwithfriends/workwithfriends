@@ -7,6 +7,7 @@ from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, \
 from django.forms.util import ValidationError
 from open_facebook.api import FacebookAuthorization, OpenFacebook
 from django_facebook.auth_backends import FacebookBackend
+from django.views.decorators.csrf import csrf_exempt
 
 import json
 import time
