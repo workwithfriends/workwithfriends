@@ -1052,10 +1052,13 @@ def viewJob(request):
     jobId = request['jobId']
     jobType = request['jobType']
 
+    # get the job information
+
     if jobType == NEWSFEED_POSTED_JOB_TYPE:
 
-        jobToView = formatJob(PostedJob.objects.get(pk=jobId)) if \
-            PostedJob.objects.filter(pk=jobId).exists() else None
+        jobToView = formatJob(
+            PostedJob.objects.get(pk=jobId)
+        ) if PostedJob.objects.filter(pk=jobId).exists() else None
 
     elif jobType == NEWSFEED_CURRENT_JOB_TYPE:
 
