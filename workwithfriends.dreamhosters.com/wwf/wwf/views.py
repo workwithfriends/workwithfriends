@@ -814,7 +814,7 @@ def getPostedJobs(request):
 def getFriendsWithApp(accessToken):
     graph = FBOpen(access_token=accessToken)
 
-    friendsById = graph('me/friends', fields='id')['data']
+    friendsById = graph.get('me/friends', fields='id')['data']
 
     friendsWithApp = []
 
