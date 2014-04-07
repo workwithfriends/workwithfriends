@@ -7,9 +7,11 @@
 //
 
 #import "LoginViewController.h"
+#import "GlobalVariables.h"
 
 @interface LoginViewController ()
 @end
+
 
 @implementation LoginViewController
 
@@ -23,7 +25,6 @@
 
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    
     NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/loginWithFacebook/";
     //Get access Token:
     NSString *token = [[[FBSession activeSession] accessTokenData] accessToken];
@@ -49,6 +50,7 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
+            //[self performSegueWithIdentifier:@"login_success" sender:self]; //Comment this lines out it the server is off
         }
         else{
             BOOL err = [[responseDict valueForKey:@"isError"] boolValue];
@@ -61,24 +63,25 @@
                                                       otherButtonTitles:nil];
             }
             else{
-                ACCESSTOKEN=token;
-                ME=[responseDict valueForKey:@"data"];
-                NSString *myName=(NSString*)[ME valueForKey:@"lastName"];
-                NSLog(myName,nil);
+                GlobalVariables *globals = [GlobalVariables sharedInstance];
+                globals.ACCESSTOKEN = token;
+                globals.ME=[responseDict valueForKey:@"data"];
                 [self performSegueWithIdentifier:@"login_success" sender:self];
             }
         }
     }
     else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
-                                                                message:@"An unexpected error was encoutered while communicating with our sever."
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
+                                                        message:@"An unexpected error was encoutered while communicating with our sever."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
         [alert show];
     }
-
+    
 }
+
+
 
 - (void)viewDidLoad
 {
