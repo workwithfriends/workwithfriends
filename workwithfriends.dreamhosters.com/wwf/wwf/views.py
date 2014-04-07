@@ -203,7 +203,7 @@ def getUserModel(account):
 
     return userModel
 
-
+@csrf_exempt
 def loginWithFacebook(request):
     '''
     Required fields:
@@ -272,7 +272,7 @@ def loginWithFacebook(request):
 
     return formattedResponse(data=userModel)
 
-
+@csrf_exempt
 def addAboutMeToAccount(request):
     '''
     Required fields:
@@ -312,7 +312,6 @@ addSkillToAccount:
     Helper method for addSkillsToAccount
 '''
 
-
 def addSkillToAccount(skill, account):
     accountSkill, isCreated = UserSkill.objects.get_or_create(account=account,
                                                               skill=skill[
@@ -321,7 +320,7 @@ def addSkillToAccount(skill, account):
 
     accountSkill.save()
 
-
+@csrf_exempt
 def addSkillsToAccount(request):
     '''
     Required fields:
@@ -357,7 +356,7 @@ def addSkillsToAccount(request):
     }
     return formattedResponse(data=userSkills)
 
-
+@csrf_exempt
 def removeSkillFromAccount(request):
     '''
     Required fields:
@@ -393,7 +392,7 @@ def removeSkillFromAccount(request):
     }
     return formattedResponse(data=userSkills)
 
-
+@csrf_exempt
 def postJob(request):
     '''
     Required fields:
@@ -455,7 +454,7 @@ def postJob(request):
     }
     return formattedResponse(data=postedJobModel)
 
-
+@csrf_exempt
 def deleteJob(request):
     '''
     Required fields:
@@ -502,7 +501,7 @@ def deleteJob(request):
 
     return formattedResponse(data=postedJobModel)
 
-
+@csrf_exempt
 def takeJob(request):
     '''
     Required fields:
@@ -590,7 +589,7 @@ def takeJob(request):
     }
     return formattedResponse(data=currentJobsAsEmployeeModel)
 
-
+@csrf_exempt
 def viewFriendProfile(request):
     '''
     Required fields:
@@ -657,7 +656,7 @@ def viewFriendProfile(request):
 
     return formattedResponse(data=friendModelToReturn)
 
-
+@csrf_exempt
 def completeJob(request):
     '''
     Required fields:
@@ -739,7 +738,7 @@ def completeJob(request):
 
     return formattedResponse(data=data)
 
-
+@csrf_exempt
 def getPostedJobs(request):
     '''
     Required fields:
