@@ -144,6 +144,7 @@ getUserModel:
 
 
 def getUserModel(account):
+    userId = str(account.userId)
     firstName = str(account.firstName)
     lastName = str(account.lastName)
     aboutMe = str(account.aboutMe)
@@ -193,6 +194,7 @@ def getUserModel(account):
         UserSkill.objects.get(account=account), hasStrength=True)
 
     userModel = {
+        'userId': userId,
         'profileImageUrl': profileImageUrl,
         'firstName': firstName,
         'lastName': lastName,
@@ -221,19 +223,21 @@ def loginWithFacebook(request):
     request = request.POST
 
     accessToken = request['accessToken']
-    userId = request['userId']
+
+    graph = FBOpen(access_token=accessToken)
+    userInfo = graph.get('me', fields='first_name, last_name, '
+                                      'picture, id')
+
+    firstName = userInfo['first_name']
+    lastName = userInfo['last_name']
+    userId = userInfo['id']
 
     account, isAccountCreated = Account.objects.get_or_create(userId=userId)
 
     # if new user
     if (isAccountCreated):
         try:
-            graph = FBOpen(access_token=accessToken, current_user_id=userId)
-
-            userInfo = graph.get('me', fields='first_name, last_name, picture')
-
-            firstName = userInfo['first_name']
-            lastName = userInfo['last_name']
+            
             profileImageUrl = userInfo['picture']['data']['url']
             aboutMe = None
             skills = None
@@ -260,6 +264,7 @@ def loginWithFacebook(request):
         jobs = userModel['jobs']
 
     userModel = {
+        'userId' : userId,
         'isNewUser': isAccountCreated,
         'profileImageUrl': profileImageUrl,
         'firstName': firstName,
