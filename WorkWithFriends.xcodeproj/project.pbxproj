@@ -32,6 +32,7 @@
 		3F323E4318F228E5007D26A0 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E3218F228E5007D26A0 /* ASINetworkQueue.m */; };
 		3F323E4618F28A91007D26A0 /* GlobalVariables.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E4518F28A91007D26A0 /* GlobalVariables.m */; };
 		3F323E4A18F3254E007D26A0 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E4818F3254E007D26A0 /* EditProfileViewController.m */; };
+		3F323E4E18F35459007D26A0 /* JobFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F323E4D18F35459007D26A0 /* JobFormViewController.m */; };
 		3FFCEF1A18F076BE00FDD05A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1918F076BE00FDD05A /* Foundation.framework */; };
 		3FFCEF1C18F076BE00FDD05A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */; };
 		3FFCEF1E18F076BE00FDD05A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFCEF1D18F076BE00FDD05A /* UIKit.framework */; };
@@ -52,7 +53,6 @@
 		3FFCEF5F18F099D000FDD05A /* JobsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF5E18F099D000FDD05A /* JobsViewController.m */; };
 		3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */; };
 		3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6718F0C29700FDD05A /* LoginViewController.m */; };
-		A0A3F7D818F2706500E9B89D /* JobFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A3F7D718F2706500E9B89D /* JobFormViewController.m */; };
 		A0CA1A4C18F1AF7400C44ACD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +99,8 @@
 		3F323E4518F28A91007D26A0 /* GlobalVariables.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalVariables.m; sourceTree = "<group>"; };
 		3F323E4718F3254E007D26A0 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		3F323E4818F3254E007D26A0 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		3F323E4C18F35459007D26A0 /* JobFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JobFormViewController.h; path = WorkWithFriends/JobFormViewController.h; sourceTree = "<group>"; };
+		3F323E4D18F35459007D26A0 /* JobFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobFormViewController.m; path = WorkWithFriends/JobFormViewController.m; sourceTree = "<group>"; };
 		3FFCEF1618F076BE00FDD05A /* WorkWithFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkWithFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCEF1918F076BE00FDD05A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FFCEF1B18F076BE00FDD05A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,8 +132,6 @@
 		3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableViewController.m; sourceTree = "<group>"; };
 		3FFCEF6618F0C29700FDD05A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3FFCEF6718F0C29700FDD05A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		A0A3F7D618F2706500E9B89D /* JobFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JobFormViewController.h; path = ../../workwithfriendsfix/WorkWithFriends/JobFormViewController.h; sourceTree = "<group>"; };
-		A0A3F7D718F2706500E9B89D /* JobFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobFormViewController.m; path = ../../workwithfriendsfix/WorkWithFriends/JobFormViewController.m; sourceTree = "<group>"; };
 		A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,6 +167,8 @@
 		3FFCEF0D18F076BE00FDD05A = {
 			isa = PBXGroup;
 			children = (
+				3F323E4C18F35459007D26A0 /* JobFormViewController.h */,
+				3F323E4D18F35459007D26A0 /* JobFormViewController.m */,
 				3FFCEF1F18F076BE00FDD05A /* WorkWithFriends */,
 				3FFCEF4118F076BE00FDD05A /* WorkWithFriendsTests */,
 				3FFCEF1818F076BE00FDD05A /* Frameworks */,
@@ -247,8 +249,6 @@
 				3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */,
 				3F323DA618F1A400007D26A0 /* SkillsPageViewController.h */,
 				3F323DA718F1A400007D26A0 /* SkillsPageViewController.m */,
-				A0A3F7D618F2706500E9B89D /* JobFormViewController.h */,
-				A0A3F7D718F2706500E9B89D /* JobFormViewController.m */,
 				3FFCEF3418F076BE00FDD05A /* Images.xcassets */,
 				3FFCEF2018F076BE00FDD05A /* Supporting Files */,
 			);
@@ -390,7 +390,6 @@
 				3FFCEF2A18F076BE00FDD05A /* AppDelegate.m in Sources */,
 				3F323DA818F1A400007D26A0 /* SkillsPageViewController.m in Sources */,
 				3F323E3A18F228E5007D26A0 /* ASIDownloadCache.m in Sources */,
-				A0A3F7D818F2706500E9B89D /* JobFormViewController.m in Sources */,
 				3F323E4018F228E5007D26A0 /* ASIInputStream.m in Sources */,
 				3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */,
 				3FFCEF5618F098B600FDD05A /* SettingsViewController.m in Sources */,
@@ -402,6 +401,7 @@
 				3FFCEF2618F076BE00FDD05A /* main.m in Sources */,
 				3F323E3C18F228E5007D26A0 /* ASIFormDataRequest.m in Sources */,
 				3F323E4618F28A91007D26A0 /* GlobalVariables.m in Sources */,
+				3F323E4E18F35459007D26A0 /* JobFormViewController.m in Sources */,
 				3F323E3818F228E5007D26A0 /* ASIDataDecompressor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
