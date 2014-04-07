@@ -13,8 +13,6 @@
     NSMutableArray *maListe;
     NSArray *searchResults;
 }
-
-
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 
 @end

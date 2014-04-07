@@ -5,34 +5,48 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>11637F4A-E05F-4866-9F0A-F953E786EA59</string>
+	<string>A4573B27-8CEB-43F4-A628-28E122855A91</string>
 	<key>IDESourceControlProjectName</key>
 	<string>WorkWithFriends</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>567B7030-240D-4A42-9CE1-B529D03CC1AB</key>
-		<string>ssh://github.com/workwithfriends/workwithfriends.git</string>
+		<key>0DE6576E-9D69-41EC-BA8E-F52B03BB7516</key>
+		<string>https://github.com/jwohlwend/wwffix</string>
+		<key>DCEE55E5-DBD1-452A-B481-7936910FEEDB</key>
+		<string>https://github.com/workwithfriends/workwithfriends.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>WorkWithFriends.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>567B7030-240D-4A42-9CE1-B529D03CC1AB</key>
-		<string>../../../WorkWithFriends</string>
+		<key>0DE6576E-9D69-41EC-BA8E-F52B03BB7516</key>
+		<string>../..</string>
+		<key>DCEE55E5-DBD1-452A-B481-7936910FEEDB</key>
+		<string>../../../workwithfriends</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/workwithfriends/workwithfriends.git</string>
+	<string>https://github.com/jwohlwend/wwffix</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>567B7030-240D-4A42-9CE1-B529D03CC1AB</string>
+	<string>0DE6576E-9D69-41EC-BA8E-F52B03BB7516</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>567B7030-240D-4A42-9CE1-B529D03CC1AB</string>
+			<string>DCEE55E5-DBD1-452A-B481-7936910FEEDB</string>
 			<key>IDESourceControlWCCName</key>
-			<string>WorkWithFriends</string>
+			<string>workwithfriends</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0DE6576E-9D69-41EC-BA8E-F52B03BB7516</string>
+			<key>IDESourceControlWCCName</key>
+			<string>workwithfriendsfix</string>
 		</dict>
 	</array>
 </dict>
