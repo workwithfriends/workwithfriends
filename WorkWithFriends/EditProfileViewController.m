@@ -66,6 +66,10 @@
     _firstNameLabel.text = self.firstName;
     _lastNameLabel.text = self.lastName;
     _aboutMeLabel.text = self.aboutMe;
+    _aboutMeLabel.layer.borderWidth = 2.0f;
+    _aboutMeLabel.layer.borderColor = [[UIColor grayColor] CGColor];
+    _aboutMeLabel.layer.cornerRadius = 8;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,4 +78,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)doneEditingLabel:(UIBarButtonItem *)sender {
+    //_aboutMeLabel.text
+}
 @end

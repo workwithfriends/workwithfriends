@@ -32,5 +32,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *firstNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastNameLabel;
 @property (weak, nonatomic) IBOutlet UITextView *aboutMeLabel;
+- (IBAction)doneEditingLabel:(UIBarButtonItem *)sender;
 
 @end
