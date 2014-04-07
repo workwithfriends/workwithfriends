@@ -652,7 +652,7 @@ def takeJob(request):
                             updateType=NEWSFEED_CURRENT_JOB_TYPE,
                             updateData=formatJobForNewsfeed(
                                 job=newCurrentJob,
-                                hasEmployee == True)
+                                hasEmployee=True)
                         )
 
                         # add skills to current job
@@ -1024,7 +1024,7 @@ def getNewsfeed(request):
     else:
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
-    
+
     # get newsfeed updates from friends with app
     for friendId in friendsWithAppById:
         friendAccount = Account.objects.get(userid=friendId)
