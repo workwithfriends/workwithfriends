@@ -27,9 +27,9 @@
 		3FFCEF5C18F0995500FDD05A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF5B18F0995500FDD05A /* ProfileViewController.m */; };
 		3FFCEF5F18F099D000FDD05A /* JobsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF5E18F099D000FDD05A /* JobsViewController.m */; };
 		3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */; };
-		3FFCEF6518F0AFA200FDD05A /* JobsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */; };
 		3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6718F0C29700FDD05A /* LoginViewController.m */; };
 		A0CA1A4C18F1AF7400C44ACD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */; };
+		A0CA1A4F18F1D80500C44ACD /* JobFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CA1A4E18F1D80500C44ACD /* JobFormViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,11 +74,11 @@
 		3FFCEF5E18F099D000FDD05A /* JobsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsViewController.m; sourceTree = "<group>"; };
 		3FFCEF6018F0A6C900FDD05A /* JobsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobsTableViewController.h; sourceTree = "<group>"; };
 		3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableViewController.m; sourceTree = "<group>"; };
-		3FFCEF6318F0AFA200FDD05A /* JobsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobsTableView.h; sourceTree = "<group>"; };
-		3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobsTableView.m; sourceTree = "<group>"; };
 		3FFCEF6618F0C29700FDD05A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3FFCEF6718F0C29700FDD05A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		A0CA1A4D18F1D80500C44ACD /* JobFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobFormViewController.h; sourceTree = "<group>"; };
+		A0CA1A4E18F1D80500C44ACD /* JobFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobFormViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,10 +159,10 @@
 				3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */,
 				3F323DA618F1A400007D26A0 /* SkillsPageViewController.h */,
 				3F323DA718F1A400007D26A0 /* SkillsPageViewController.m */,
-				3FFCEF6318F0AFA200FDD05A /* JobsTableView.h */,
-				3FFCEF6418F0AFA200FDD05A /* JobsTableView.m */,
 				3FFCEF3418F076BE00FDD05A /* Images.xcassets */,
 				3FFCEF2018F076BE00FDD05A /* Supporting Files */,
+				A0CA1A4D18F1D80500C44ACD /* JobFormViewController.h */,
+				A0CA1A4E18F1D80500C44ACD /* JobFormViewController.m */,
 			);
 			path = WorkWithFriends;
 			sourceTree = "<group>";
@@ -300,9 +300,9 @@
 				3F323DA818F1A400007D26A0 /* SkillsPageViewController.m in Sources */,
 				3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */,
 				3FFCEF5618F098B600FDD05A /* SettingsViewController.m in Sources */,
-				3FFCEF6518F0AFA200FDD05A /* JobsTableView.m in Sources */,
 				3FFCEF3018F076BE00FDD05A /* NewsFeedViewController.m in Sources */,
 				3FFCEF5C18F0995500FDD05A /* ProfileViewController.m in Sources */,
+				A0CA1A4F18F1D80500C44ACD /* JobFormViewController.m in Sources */,
 				3FFCEF2618F076BE00FDD05A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
