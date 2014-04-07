@@ -7,7 +7,6 @@ from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, \
 from django.forms.util import ValidationError
 from open_facebook.api import FacebookAuthorization, OpenFacebook
 from django_facebook.auth_backends import FacebookBackend
-from django.views.decorators.csrf import csrf_exempt
 
 import json
 import time
@@ -204,7 +203,6 @@ def getUserModel(account):
 
     return userModel
 
-@csrf_exempt
 def loginWithFacebook(request):
     '''
     Required fields:
@@ -274,7 +272,6 @@ def loginWithFacebook(request):
 
     return formattedResponse(data=userModel)
 
-@csrf_exempt
 def addAboutMeToAccount(request):
     '''
     Required fields:
@@ -322,7 +319,6 @@ def addSkillToAccount(skill, account):
 
     accountSkill.save()
 
-@csrf_exempt
 def addSkillsToAccount(request):
     '''
     Required fields:
@@ -358,7 +354,6 @@ def addSkillsToAccount(request):
     }
     return formattedResponse(data=userSkills)
 
-@csrf_exempt
 def removeSkillFromAccount(request):
     '''
     Required fields:
@@ -394,7 +389,6 @@ def removeSkillFromAccount(request):
     }
     return formattedResponse(data=userSkills)
 
-@csrf_exempt
 def postJob(request):
     '''
     Required fields:
@@ -456,7 +450,6 @@ def postJob(request):
     }
     return formattedResponse(data=postedJobModel)
 
-@csrf_exempt
 def deleteJob(request):
     '''
     Required fields:
@@ -503,7 +496,6 @@ def deleteJob(request):
 
     return formattedResponse(data=postedJobModel)
 
-@csrf_exempt
 def takeJob(request):
     '''
     Required fields:
@@ -591,7 +583,6 @@ def takeJob(request):
     }
     return formattedResponse(data=currentJobsAsEmployeeModel)
 
-@csrf_exempt
 def viewFriendProfile(request):
     '''
     Required fields:
@@ -658,7 +649,6 @@ def viewFriendProfile(request):
 
     return formattedResponse(data=friendModelToReturn)
 
-@csrf_exempt
 def completeJob(request):
     '''
     Required fields:
@@ -740,7 +730,6 @@ def completeJob(request):
 
     return formattedResponse(data=data)
 
-@csrf_exempt
 def getPostedJobs(request):
     '''
     Required fields:
