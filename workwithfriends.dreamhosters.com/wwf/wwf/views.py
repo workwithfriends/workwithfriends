@@ -61,6 +61,8 @@ def formattedResponse(isError=False, errorMessage=None, data=None):
 formatJobsForNewsFeed:
     Helper method to format a database job model
     into a python dictionary for newsfeed data
+
+    job: job database model
 '''
 
 
@@ -79,6 +81,50 @@ def formatJobForNewsfeed(job, hasEmployee=False):
     return formattedJob
 
 
+def formatJob(job, hasEmployee=False):
+    if not hasEmployee:
+        skills = PostedJobSkill.objects.filter(job=job)
+    else:
+        skills = CurrentJobSkill.objects.filter(job=job) if \
+            CurrentJobSkill.objects.filter(job=job).exists() else \
+            CompletedJobSkill.objects.filter(job=job)
+
+    formattedJob = {
+        'employerId': str(job.employer.userId),
+        'employerFirstName': str(job.employer.firstName),
+        'employerLastName': str(job.employer.lastName),
+        'employerProfileImageUrl': str(
+            ProfileImage
+            .objects
+            .get(
+                account=job.employer
+            )
+            .profileImageUrl),
+        'type': str(job.jobType),
+        'description': str(job.jobDescription),
+        'compensation': str(job.jobCompensation),
+        'jobId': str(job.pk),
+        'time': str(job.timeCreated),
+        'lat': float(job.lat),
+        'long': float(job.long),
+        'skills': formatSkills(skills)
+    }
+
+    if hasEmployee:
+        formattedJob['employeeId'] = str(job.employee.userId)
+        formattedJob['employeeFirstName'] = str(job.employee.firstName)
+        formattedJob['employeeLastName'] = str(job.employee.lastName)
+        formattedJob['employeeProfileImageUrl'] = str(
+            ProfileImage
+            .objects
+            .get(
+                account=job.employee
+            )
+            .profileImageUrl)
+
+    return formattedJob
+
+
 '''
 formatJobs:
     Helper method to format a database model
@@ -92,47 +138,7 @@ def formatJobs(jobs, hasEmployee=False):
     if jobs is not None:
         formattedJobs = []
         for job in jobs:
-
-            if not hasEmployee:
-                skills = PostedJobSkill.objects.filter(job=job)
-            else:
-                skills = CurrentJobSkill.objects.filter(job=job) if \
-                    CurrentJobSkill.objects.filter(job=job).exists() else \
-                    CompletedJobSkill.objects.filter(job=job)
-
-            formattedJob = {
-                'employerId': str(job.employer.userId),
-                'employerFirstName': str(job.employer.firstName),
-                'employerLastName': str(job.employer.lastName),
-                'employerProfileImageUrl': str(
-                    ProfileImage
-                    .objects
-                    .get(
-                        account=job.employer
-                    )
-                    .profileImageUrl),
-                'type': str(job.jobType),
-                'description': str(job.jobDescription),
-                'compensation': str(job.jobCompensation),
-                'jobId': str(job.pk),
-                'time': str(job.timeCreated),
-                'lat': float(job.lat),
-                'long': float(job.long),
-                'skills': formatSkills(skills)
-            }
-
-            if hasEmployee:
-                formattedJob['employeeId'] = str(job.employee.userId)
-                formattedJob['employeeFirstName'] = str(job.employee.firstName)
-                formattedJob['employeeLastName'] = str(job.employee.lastName)
-                formattedJob['employeeProfileImageUrl'] = str(
-                    ProfileImage
-                    .objects
-                    .get(
-                        account=job.employee
-                    )
-                    .profileImageUrl)
-
+            formattedJob = formatJob(job, hasEmployee=hasEmployee)
             formattedJobs.append(formattedJob)
 
     return formattedJobs
@@ -388,8 +394,19 @@ def addSkillsToAccount(request):
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
 
+        # add skills to account
         for skill in skills:
             addSkillToAccount(skill, account)
+
+        # push skills to newsfeed
+        pushUpdateToNewsFeed(
+            account=account,
+            updateType=NEWSFEED_SKILLS_UPDATE_TYPE,
+            updateData={
+                'skillsAdded': skills
+            }
+        )
+
     else:
         return formattedResponse(isError=True, errorMessage='Unknown user')
 
@@ -1012,3 +1029,53 @@ def getNewsFeed(request):
     }
 
     return formattedResponse(data=newsfeedResponseObject)
+
+
+def viewJob(request):
+    '''
+    Required fields:
+
+        accessToken
+        jobId
+        jobType
+    '''
+    requiredFields = ['accessToken', 'jobId', 'jobType']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    jobId = request['jobId']
+    jobType = request['jobType']
+
+    if jobType == NEWSFEED_POSTED_JOB_TYPE:
+
+        jobToView = formatJob(PostedJob.objects.get(pk=jobId)) if \
+            PostedJob.objects.filter(pk=jobId).exists() else None
+
+    elif jobType == NEWSFEED_CURRENT_JOB_TYPE:
+
+        jobToView = formatJob(
+            CurrentJob.objects.get(pk=jobId),
+            hasEmployee=True
+        ) if CurrentJob.objects.filter(pk=jobId).exists() else None
+
+    elif jobType == NEWSFEED_COMPLETED_JOB_TYPE:
+
+        jobToView = formatJob(
+            CompletedJob.objects.get(pk=jobId),
+            hasEmployee=True
+        ) if CompletedJob.objects.filter(pk=jobId).exists() else None
+    else:
+        errorMessage = 'Bad job type'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    if jobToView is None:
+        errorMessage = 'Unknown job'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    return formattedResponse(data=jobToView)
