@@ -17,7 +17,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-    
     }
     return self;
 }
@@ -25,6 +24,58 @@
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     
+    NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/loginWithFacebook/";
+    //Get access Token:
+    NSString *ACCESSTOKEN = [[[FBSession activeSession] accessTokenData] accessToken];
+    NSLog(ACCESSTOKEN);
+    
+    //Make login request to server:
+    NSURL *urlForRequest = [NSURL URLWithString:SERVERURL];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
+    [request setPostValue:ACCESSTOKEN forKey:@"accessToken"];
+    [request setShouldUseRFC2616RedirectBehaviour:YES];
+    [request setRequestMethod:@"POST"];
+    [request setDelegate:self];
+    [request startSynchronous];
+    NSError *error = [request error];
+    if (!error) {
+        NSString *response = [request responseString];
+        NSLog(@"%@", response);
+        NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (responseDict == NULL){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
+                                                            message:@"An unexpected response was received from our server."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else{
+            BOOL err = [[responseDict valueForKey:@"isError"] boolValue];
+            if (err){
+                NSString *errorMessage = [[responseDict valueForKey:@"errorMessage"] stringValue];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
+                                                                message:errorMessage
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+            }
+            else{
+            
+            }
+        }
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
+                                                                message:@"An unexpected error was encoutered while communicating with our sever."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+        [alert show];
+    }
+
+
     [self performSegueWithIdentifier:@"login_success" sender:self];
 
 }

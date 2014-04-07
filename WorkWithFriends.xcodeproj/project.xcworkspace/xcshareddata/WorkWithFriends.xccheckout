@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>F073F586-8247-41A6-B91D-E9EBF9D7F01E</string>
+	<string>11637F4A-E05F-4866-9F0A-F953E786EA59</string>
 	<key>IDESourceControlProjectName</key>
 	<string>WorkWithFriends</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -13,12 +13,10 @@
 		<key>567B7030-240D-4A42-9CE1-B529D03CC1AB</key>
 		<string>ssh://github.com/workwithfriends/workwithfriends.git</string>
 	</dict>
-	<key>IDESourceControlProjectPath</key>
-	<string>WorkWithFriends.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>567B7030-240D-4A42-9CE1-B529D03CC1AB</key>
-		<string>../..</string>
+		<string>../../../WorkWithFriends</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/workwithfriends/workwithfriends.git</string>

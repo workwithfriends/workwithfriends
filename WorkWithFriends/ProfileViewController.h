@@ -9,5 +9,29 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileViewController : UIViewController
+{
+    NSString* firstName;
+    NSString* lastName;
+    NSString* aboutMe;
+    NSArray* mySkills;
+    UIImage* profilePicture;
+}
+
+- (NSString*) aboutMe;
+- (NSArray*) mySkills;
+- (NSString*) firstName;
+- (NSString*) lastName;
+- (UIImage*) profilePicture;
+- (void) setAboutMe;
+- (void) setMySkills;
+- (void) setFirstName;
+- (void) setLastName;
+- (void) setProfilePicture;
+
+@property (weak, nonatomic) IBOutlet UIImageView *profilePictureLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *firstNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastNameLabel;
+@property (weak, nonatomic) IBOutlet UITextView *aboutMeLabel;
 
 @end
