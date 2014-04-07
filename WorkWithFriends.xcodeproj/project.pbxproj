@@ -51,7 +51,6 @@
 		3FFCEF6218F0A6C900FDD05A /* JobsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */; };
 		3FFCEF6818F0C29700FDD05A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCEF6718F0C29700FDD05A /* LoginViewController.m */; };
 		A0CA1A4C18F1AF7400C44ACD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */; };
-		A0CA1A5218F2546900C44ACD /* JobFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CA1A5118F2546900C44ACD /* JobFormViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,8 +124,6 @@
 		3FFCEF6618F0C29700FDD05A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3FFCEF6718F0C29700FDD05A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		A0CA1A4B18F1AF7400C44ACD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		A0CA1A5018F2546900C44ACD /* JobFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JobFormViewController.h; path = ../../workwithfriends/WorkWithFriends/JobFormViewController.h; sourceTree = "<group>"; };
-		A0CA1A5118F2546900C44ACD /* JobFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobFormViewController.m; path = ../../workwithfriends/WorkWithFriends/JobFormViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,8 +234,6 @@
 				3FFCEF6118F0A6C900FDD05A /* JobsTableViewController.m */,
 				3F323DA618F1A400007D26A0 /* SkillsPageViewController.h */,
 				3F323DA718F1A400007D26A0 /* SkillsPageViewController.m */,
-				A0CA1A5018F2546900C44ACD /* JobFormViewController.h */,
-				A0CA1A5118F2546900C44ACD /* JobFormViewController.m */,
 				3FFCEF3418F076BE00FDD05A /* Images.xcassets */,
 				3FFCEF2018F076BE00FDD05A /* Supporting Files */,
 			);
@@ -388,7 +383,6 @@
 				3FFCEF3018F076BE00FDD05A /* NewsFeedViewController.m in Sources */,
 				3FFCEF5C18F0995500FDD05A /* ProfileViewController.m in Sources */,
 				3FFCEF2618F076BE00FDD05A /* main.m in Sources */,
-				A0CA1A5218F2546900C44ACD /* JobFormViewController.m in Sources */,
 				3F323E3C18F228E5007D26A0 /* ASIFormDataRequest.m in Sources */,
 				3F323E3818F228E5007D26A0 /* ASIDataDecompressor.m in Sources */,
 			);
