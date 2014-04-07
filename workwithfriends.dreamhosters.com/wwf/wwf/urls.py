@@ -23,43 +23,43 @@ urlpatterns = patterns('',
                        ),
                        url(
                            r'^loginWithFacebook/',
-                           include('views.loginWithFacebook')
+                           'wwf.views.loginWithFacebook'
                        ),
                        url(
                            r'^addAboutMeToAccount',
-                           include('wwf.views.addAboutMeToAccount')
+                           'wwf.views.addAboutMeToAccount'
                        ),
                        url(
                            r'^addSkillsToAccount/',
-                           include('wwf.views.addSkillsToAccount')
+                           'wwf.views.addSkillsToAccount'
                        ),
                        url(
                            r'^removeSkillFromAccount/',
-                           include('wwf.views.removeSkillFromAccount')
+                           'wwf.views.removeSkillFromAccount'
                        ),
                        url(
                            r'^postJob/',
-                           include('wwf.views.postJob')
+                           'wwf.views.postJob'
                        ),
                        url(
                            r'^deleteJob/',
-                           include('wwf.views.deleteJob')
+                           'wwf.views.deleteJob'
                        ),
                        url(
                            r'^takeJob/',
-                           include('wwf.views.takeJob')
+                           'wwf.views.takeJob'
                        ),
                        url(
                            r'^completeJob/',
-                           include('wwf.views.completeJob')
+                           'wwf.views.completeJob'
                        ),
                        url(
                            r'^viewFriendProfile/',
-                           include('wwf.views.viewFriendProfile')
+                           'wwf.views.viewFriendProfile'
                        ),
                        url(
                            r'^getPostedJobs/',
-                           include('wwf.views.getPostedJobs')
+                           'wwf.views.getPostedJobs'
                        ),
 )
 
