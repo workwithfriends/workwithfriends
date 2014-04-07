@@ -177,7 +177,6 @@
         <!--Job Form View Controller-->
         <scene sceneID="87N-SC-esG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Foh-Ti-D0r" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ijb-es-wUc" customClass="JobFormViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="axd-cB-BIt"/>
@@ -278,6 +277,7 @@
                         <outlet property="skills" destination="Ago-x2-WHh" id="IRi-rG-3jo"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Foh-Ti-D0r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="693" y="1628"/>
         </scene>
