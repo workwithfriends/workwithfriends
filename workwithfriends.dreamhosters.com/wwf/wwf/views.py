@@ -543,7 +543,7 @@ def deleteJob(request):
                     data=jobNewsfeedData
                 )
                 newsfeedItemToDelete.delete()
-                
+
             jobToDelete.delete()
 
             postedJobs = formatJobs(
@@ -616,6 +616,15 @@ def takeJob(request):
                     )
 
                     if newCurrentJobIsCreated:
+
+                        # push new current job to newsfeed
+                        pushUpdateToNewsFeed(
+                            account=employer,
+                            updateType=NEWSFEED_CURRENT_JOB_TYPE,
+                            updateData=formatJobForNewsfeed(job=newCurrentJob)
+                        )
+
+                        # add skills to current job
                         formattedSkills = formatSkills(jobSkills)
 
                         for skillObject in formattedSkills:
@@ -764,6 +773,15 @@ def completeJob(request):
             )
 
             if newCompletedJobIsCreated:
+
+                # push completed job to newsfeed
+                pushUpdateToNewsFeed(
+                    account=employer,
+                    updateType=NEWSFEED_COMPLETED_JOB_TYPE,
+                    updateData=formatJobForNewsfeed(job=newCompletedJob)
+                )
+
+                # add skills to completed job
                 formattedSkills = formatSkills(jobSkills)
                 for skillObject in formattedSkills:
                     CompletedJobSkill.objects.create(
@@ -789,6 +807,7 @@ def completeJob(request):
         else:
             errorMessage = 'Unknown job'
             return formattedResponse(isError=True, errorMessage=errorMessage)
+
     else:
         errorMessage = 'Unknown user'
         return formattedResponse(isError=True, errorMessage=errorMessage)
