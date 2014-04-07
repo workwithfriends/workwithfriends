@@ -1021,7 +1021,10 @@ def getNewsfeed(request):
                     'newsfeedItemTime': str(newsfeedItem.timeCreated),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
-
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+    
     # get newsfeed updates from friends with app
     for friendId in friendsWithAppById:
         friendAccount = Account.objects.get(userid=friendId)
