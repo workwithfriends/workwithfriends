@@ -77,6 +77,11 @@ def formatJobForNewsfeed(job, hasEmployee=False):
         formattedJob['employeeFirstName'] = str(job.employee.firstName)
         formattedJob['employeeLastName'] = str(job.employee.lastName)
         formattedJob['employeeId'] = str(job.employee.userId)
+        formattedJob['employeeProfileImageUrl'] = str(
+            ProfileImage
+            .objects
+            .get(account=job.employee)
+            .profileImageUrl)
 
     return formattedJob
 
@@ -638,7 +643,9 @@ def takeJob(request):
                         pushUpdateToNewsFeed(
                             account=employer,
                             updateType=NEWSFEED_CURRENT_JOB_TYPE,
-                            updateData=formatJobForNewsfeed(job=newCurrentJob)
+                            updateData=formatJobForNewsfeed(
+                                job=newCurrentJob,
+                                hasEmployee == True)
                         )
 
                         # add skills to current job
@@ -795,7 +802,9 @@ def completeJob(request):
                 pushUpdateToNewsFeed(
                     account=employer,
                     updateType=NEWSFEED_COMPLETED_JOB_TYPE,
-                    updateData=formatJobForNewsfeed(job=newCompletedJob)
+                    updateData=formatJobForNewsfeed(
+                        job=newCompletedJob,
+                        hasEmployee=True)
                 )
 
                 # add skills to completed job
@@ -995,6 +1004,8 @@ def getNewsfeed(request):
             for newsfeedItem in accountNewsfeedItems:
                 newsfeed.append({
                     'userId': str(account.userId),
+                    'userFirstName': str(account.firstName),
+                    'userLastName': str(account.lastName),
                     'profileImageUrl': str(ProfileImage
                                            .objects
                                            .get(account=account)
