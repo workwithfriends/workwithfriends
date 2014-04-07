@@ -410,10 +410,10 @@
             </objects>
             <point key="canvasLocation" x="-471" y="-304"/>
         </scene>
-        <!--View Controller-->
+        <!--Edit Profile View Controller-->
         <scene sceneID="aFi-Q7-KCL">
             <objects>
-                <viewController id="8bP-qt-lmo" sceneMemberID="viewController">
+                <viewController id="8bP-qt-lmo" customClass="EditProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UGF-yo-rwJ"/>
                         <viewControllerLayoutGuide type="bottom" id="JyM-md-vHO"/>
@@ -473,6 +473,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="aboutMeLabel" destination="yVZ-U0-67a" id="hDD-Fq-poT"/>
+                        <outlet property="firstNameLabel" destination="Z4N-lb-m9c" id="TgD-uk-wTb"/>
+                        <outlet property="lastNameLabel" destination="y6Z-zK-eBi" id="ufD-vh-Zgz"/>
+                        <outlet property="profilePictureLabel" destination="MuR-kj-6ym" id="MhC-aH-SKu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dse-xx-CLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
