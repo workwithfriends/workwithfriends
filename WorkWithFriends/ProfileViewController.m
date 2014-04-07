@@ -14,11 +14,46 @@
 
 @implementation ProfileViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (NSString*) aboutMe{
+    return aboutMe;
+}
+- (NSArray*) mySkills{
+    return mySkills;
+}
+- (NSString*) firstName{
+    return firstName;
+}
+- (NSString*) lastName{
+    return lastName;
+}
+- (UIImage*) profilePicture{
+    return profilePicture;
+}
+- (void) setAboutMe {
+    aboutMe=@"I'm Jeremy and I love Work with Friends!";
+}
+- (void) setMySkills{
+    mySkills=[NSArray arrayWithObjects:@"Maths",@"Soccer","blabla", nil];
+}
+- (void) setProfilePicture{
+    NSURL *profileURL = [NSURL URLWithString: @"https://scontent-b.xx.fbcdn.net/hphotos-frc3/l/t31.0-8/1801135_10152417296136042_2112033691_o.jpg"];
+    profilePicture= [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
+}
+- (void) setFirstName {
+    firstName=@"Jeremy";
+}
+- (void) setLastName {
+    lastName=@"Wohlwend";
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Custom initialization
+        [self setFirstName];
+        [self setLastName];
+        [self setAboutMe];
+        [self setProfilePicture];
     }
     return self;
 }
@@ -26,7 +61,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    _profilePictureLabel.image = self.profilePicture;
+    _firstNameLabel.text = self.firstName;
+    _lastNameLabel.text = self.lastName;
+    _aboutMeLabel.text = self.aboutMe;
 }
 
 - (void)didReceiveMemoryWarning
@@ -34,6 +72,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation
