@@ -26,13 +26,12 @@
     
     NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/loginWithFacebook/";
     //Get access Token:
-    NSString *ACCESSTOKEN = [[[FBSession activeSession] accessTokenData] accessToken];
-    NSLog(ACCESSTOKEN);
+    NSString *token = [[[FBSession activeSession] accessTokenData] accessToken];
     
     //Make login request to server:
     NSURL *urlForRequest = [NSURL URLWithString:SERVERURL];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
-    [request setPostValue:ACCESSTOKEN forKey:@"accessToken"];
+    [request setPostValue:token forKey:@"accessToken"];
     [request setShouldUseRFC2616RedirectBehaviour:YES];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
@@ -62,7 +61,11 @@
                                                       otherButtonTitles:nil];
             }
             else{
-            
+                ACCESSTOKEN=token;
+                ME=[responseDict valueForKey:@"data"];
+                NSString *myName=(NSString*)[ME valueForKey:@"lastName"];
+                NSLog(myName,nil);
+                [self performSegueWithIdentifier:@"login_success" sender:self];
             }
         }
     }
@@ -74,9 +77,6 @@
                                                       otherButtonTitles:nil];
         [alert show];
     }
-
-
-    [self performSegueWithIdentifier:@"login_success" sender:self];
 
 }
 
