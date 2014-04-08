@@ -88,6 +88,7 @@
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
+                [alert show];
             }
             else{
                 NSLog(@"Success! Now returning the responseDict");
