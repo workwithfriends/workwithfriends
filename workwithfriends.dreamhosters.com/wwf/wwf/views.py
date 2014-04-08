@@ -54,6 +54,8 @@ def formattedResponse(isError=False, errorMessage=None, data=None):
         'errorMessage': errorMessage,
         'data': data,
     }
+
+    print str(response)
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 
