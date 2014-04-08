@@ -336,6 +336,7 @@ def addAboutMeToAccount(request):
     '''
     requiredFields = ['accessToken', 'userId', 'aboutMe']
 
+    print str(request.POST)
     verifiedRequestResponse = verifyRequest(request, requiredFields)
     if verifiedRequestResponse['isMissingFields']:
         errorMessage = verifiedRequestResponse['errorMessage']
