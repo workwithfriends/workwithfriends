@@ -21,7 +21,7 @@
 - (NSString*) requestType;
 - (NSMutableDictionary*) parameterDict;
 - (void) setRequestType:(NSString*) type;
-- (void) addParameter:(NSString*) parameter;
+- (void) addParameter:(NSString *)parameterName:(NSString *)parameterData;
 - (NSDictionary*) makeRequest;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GlobalVariables.h"
+#import "RequestToServer.h"
 
 @interface EditProfileViewController : UIViewController
 {
