@@ -63,7 +63,7 @@
 {
     [super viewDidLoad];
     _profilePictureLabel.image = self.profilePicture;
-    _firstNameLabel.text = self.firstName;
+    _firstNameLabel.text = [[self.firstName stringByAppendingString:@" "] stringByAppendingString:self.lastName];
     _aboutMeLabel.text = self.aboutMe;
     _aboutMeLabel.layer.borderWidth = 2.0f;
     _aboutMeLabel.layer.borderColor = [[UIColor grayColor] CGColor];

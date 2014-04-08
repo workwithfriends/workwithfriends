@@ -8,6 +8,8 @@
 
 #import "JobsTableViewController.h"
 #import "RequestToServer.h"
+#import "JobFormViewController.h"
+
 @interface JobsTableViewController ()
 
 @end
@@ -18,11 +20,17 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
 
+- (NSInteger*) rowSelected{
+    return rowSelected;
+}
+- (void) setRowSelected:(NSInteger *) row{
+    rowSelected=row;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,10 +46,14 @@
     [jobsRequest addParameter:@"query" withValue:@""];
     NSDictionary *data = [jobsRequest makeRequest];
     jobs= [data valueForKey:@"jobs"];
+    jobStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *job in jobs){
-        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@ who's good at %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"], [((NSArray*)[job valueForKey:@"skills"]) objectAtIndex:1]];
+        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@ who's good at %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"], [((NSArray*)[job valueForKey:@"skills"]) objectAtIndex:0]];
         [jobStringList addObject:jobString];
+
     }
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    globals.JOBPOSTS=jobs;
     
 
 }
@@ -78,7 +90,7 @@
     if (cell == nil)
     cell = [[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-    // Configuration de la cellule
+    // Configure the cell
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         NSString *cellValue = [searchResults objectAtIndex:indexPath.row];
         cell.textLabel.text = cellValue;
@@ -107,8 +119,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.rowSelected=(NSInteger *)indexPath.row;
     [self performSegueWithIdentifier:@"jobDetails" sender:self];
     
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"preparing for segue: %@", segue.identifier);
+    if ([[segue identifier] isEqualToString:@"jobDetails"]) {
+        
+        // Get destination view
+        JobFormViewController *vc = [segue destinationViewController];
+        NSLog(@"number is %d", (int) self.rowSelected);
+        
+        // Pass the information to your destination view
+        [vc setJobForm:((int) self.rowSelected)];
+    }
 }
 
 @end

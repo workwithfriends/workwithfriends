@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GlobalVariables.h"
 
 @interface JobsTableViewController : UITableViewController
 {
     NSArray *jobs;
     NSArray *searchResults;
     NSMutableArray *jobStringList;
-    
+    NSInteger *rowSelected;
 }
+- (NSInteger*) rowSelected;
+- (void) setRowSelected:(NSInteger *) row;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
-
 @end

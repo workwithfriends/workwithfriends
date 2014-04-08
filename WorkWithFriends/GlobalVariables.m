@@ -12,6 +12,7 @@
 
 @synthesize ME = _ME;
 @synthesize ACCESSTOKEN= _ACCESSTOKEN;
+@synthesize JOBPOSTS= _JOBPOSTS;
 
 + (GlobalVariables *)sharedInstance {
     static dispatch_once_t onceToken;
@@ -27,6 +28,7 @@
     if (self) {
         _ME = [[NSMutableDictionary alloc] init];
         _ACCESSTOKEN = [[NSString alloc] init];
+        _JOBPOSTS = [[NSArray alloc] init];
     }
     return self;
 }
