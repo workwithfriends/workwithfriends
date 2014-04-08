@@ -51,33 +51,33 @@
         NSLog(@"Step 2");
         self.jobStringList = [[NSMutableArray alloc] init];
         NSLog(@"Step 3");
-        if (myCurrentJobsAsEmployer != NULL){
-        for(NSDictionary *job in myCurrentJobsAsEmployer){
-            NSString *jobString=[NSString stringWithFormat: @"You hired %@ as a %@", [job valueForKey:@"employeeFirstName"], [job valueForKey:@"type"] ];
-            [jobStringList addObject:jobString];
+        if (myCurrentJobsAsEmployer != [NSNull null]){
+            for(int i=0; i < [myCurrentJobsAsEmployer count];i++){
+                NSString *jobString=[NSString stringWithFormat: @"You hired %@ as a %@", [[myCurrentJobsAsEmployer objectAtIndex: i] valueForKey:@"employeeFirstName"], [[myCurrentJobsAsEmployer objectAtIndex: i] valueForKey:@"type"]];
+                [self.jobStringList addObject:jobString];
         }
         }
-        NSLog(@"Step 4");
-        if (myCurrentJobsAsEmployee != NULL){
+        NSLog(@"Step 5");
+        if (myCurrentJobsAsEmployee != [NSNull null]){
         for(NSDictionary *job in myCurrentJobsAsEmployee){
             NSString *jobString=[NSString stringWithFormat: @"%@ hired you as a %@ !", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"]];
-            [jobStringList addObject:jobString];
+            [self.jobStringList addObject:jobString];
         }
         }
-        if (myCompletedJobs != NULL){
+        if (myCompletedJobs != [NSNull null]){
         for(NSDictionary *job in myCompletedJobs){
             NSString *jobString=[NSString stringWithFormat: @"You have completed a job for %@", [job valueForKey:@"employerFirstName"]];
-            [jobStringList addObject:jobString];
+            [self.jobStringList addObject:jobString];
         }
         }
-        if (myPostedJobs != NULL){
+        if (myPostedJobs != [NSNull null]){
         for(NSDictionary *job in myPostedJobs){
             NSString *jobString=[NSString stringWithFormat: @"You need a %@ who's good at %@", [job valueForKey:@"type"], [[job valueForKey:@"skills"] objectAtIndex:0]];
             NSLog(@"%@",jobString);
-            [jobStringList addObject:jobString];
+            [self.jobStringList addObject:jobString];
         }
         }
-        [jobStringList addObject:@"This is a fake job"];
+        [self.jobStringList addObject:@"This is a fake job"];
         NSLog(@"This code has run succesfully");
 
     }
