@@ -33,7 +33,7 @@
     aboutMe=[me valueForKey:@"aboutMe"];
 }
 - (void) setMySkills: (NSDictionary*) me{
-    mySkills=[NSArray arrayWithObjects:@"Maths",@"Soccer","blabla", nil];
+    mySkills=[me valueForKey:@"skills"];
 }
 - (void) setProfilePicture: (NSDictionary*) me{
     NSURL *profileURL = [NSURL URLWithString:[me valueForKey:@"profileImageUrl"]];
@@ -55,6 +55,7 @@
         [self setLastName: globals.ME];
         [self setAboutMe: globals.ME];
         [self setProfilePicture: globals.ME];
+        [self setMySkills: globals.ME];
     }
     return self;
 }
@@ -63,7 +64,7 @@
 {
     [super viewDidLoad];
     _profilePictureLabel.image = self.profilePicture;
-    _firstNameLabel.text = self.firstName;
+    _firstNameLabel.text = [[self.firstName stringByAppendingString:@" "] stringByAppendingString:self.lastName];
     _aboutMeLabel.text = self.aboutMe;
 }
 
