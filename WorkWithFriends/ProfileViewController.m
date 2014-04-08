@@ -64,7 +64,6 @@
     [super viewDidLoad];
     _profilePictureLabel.image = self.profilePicture;
     _firstNameLabel.text = self.firstName;
-    _lastNameLabel.text = self.lastName;
     _aboutMeLabel.text = self.aboutMe;
 }
 
@@ -72,6 +71,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) viewWillAppear:(BOOL)animated{
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    [self setAboutMe: globals.ME];
+    _aboutMeLabel.text = self.aboutMe;
 }
 
 

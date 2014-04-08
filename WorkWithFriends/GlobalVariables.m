@@ -25,7 +25,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _ME = [[NSDictionary alloc] init];
+        _ME = [[NSMutableDictionary alloc] init];
         _ACCESSTOKEN = [[NSString alloc] init];
     }
     return self;

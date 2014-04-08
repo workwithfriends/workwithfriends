@@ -1,18 +1,18 @@
 //
-//  FriendJobTableViewController.m
+//  NewsFeedTableViewController.m
 //  WorkWithFriends
 //
 //  Created by LUIS SANMIGUEL on 4/7/14.
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
-#import "FriendJobTableViewController.h"
+#import "NewsFeedTableViewController.h"
 
-@interface FriendJobTableViewController ()
+@interface NewsFeedTableViewController ()
 
 @end
 
-@implementation FriendJobTableViewController
+@implementation NewsFeedTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,10 +27,6 @@
 {
     [super viewDidLoad];
     
-    maListe = [NSMutableArray array];
-    [maListe addObject:@"Sample Job 1"];
-    [maListe addObject:@"Sample Job 2"];
-    [maListe addObject:@"Sample Job 3"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,27 +44,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [maListe count];
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendJob" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
     // Configure the cell...
-    NSString *cellValue = [maListe objectAtIndex:indexPath.row];
-    cell.textLabel.text = cellValue;
+    
     return cell;
 }
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
