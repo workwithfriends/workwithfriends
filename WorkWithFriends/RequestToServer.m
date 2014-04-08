@@ -32,13 +32,11 @@
 }
 - (void) addParameter:(NSString *)key withValue:(NSString *)value{
     [self.parameterDict setValue:value forKey:key];
-    NSLog(@"Added paramter successfully, the parameter is %@, with value %@",key, value);
 }
 -(NSDictionary*)makeRequest{
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8001/";
     SERVERURL = [[SERVERURL stringByAppendingString:self.requestType] stringByAppendingString:@"/"];
-    NSLog(@"Yes we do get here");
     //Get access Token:
     NSString *token;
     NSString *userID;
@@ -68,7 +66,7 @@
     NSError *error = [request error];
     if (!error) {
         NSString *response = [request responseString];
-        NSLog(@"%@", response);
+        //NSLog(@"%@", response);
         NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
         if (responseDict == NULL){
@@ -82,7 +80,7 @@
         else{
             BOOL err = [[responseDict valueForKey:@"isError"] boolValue];
             if (err){
-                NSString *errorMessage = [[responseDict valueForKey:@"errorMessage"] stringValue];
+                NSString *errorMessage = [responseDict valueForKey:@"errorMessage"];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
                                                                 message:errorMessage
                                                                delegate:nil

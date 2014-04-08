@@ -27,7 +27,7 @@
     RequestToServer *loginRequest = [[RequestToServer alloc] init];
     [loginRequest setRequestType:@"loginWithFacebook"];
     NSDictionary *data = [loginRequest makeRequest];
-    if (data != NULL){
+    if (data != [NSNull null]){
         GlobalVariables *globals = [GlobalVariables sharedInstance];
         globals.ME=[NSMutableDictionary dictionaryWithDictionary: data];
         [self performSegueWithIdentifier:@"login_success" sender:self];

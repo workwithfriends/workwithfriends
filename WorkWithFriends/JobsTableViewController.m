@@ -65,6 +65,20 @@
 
 -(void)refresh {
     NSLog(@"Yay Refreshed");
+    RequestToServer *jobsRequest = [[RequestToServer alloc] init];
+    [jobsRequest setRequestType:@"getPostedJobs"];
+    [jobsRequest addParameter:@"query" withValue:@""];
+    NSDictionary *data = [jobsRequest makeRequest];
+    jobs= [data valueForKey:@"jobs"];
+    jobStringList = [[NSMutableArray alloc] init];
+    for(NSDictionary *job in jobs){
+        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@ who's good at %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"], [((NSArray*)[job valueForKey:@"skills"]) objectAtIndex:0]];
+        [jobStringList addObject:jobString];
+        
+    }
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    globals.JOBPOSTS=jobs;
+    [self.tableView reloadData];
     [self.refreshControl endRefreshing];
 }
 
