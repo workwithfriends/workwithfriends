@@ -490,8 +490,8 @@ def postJob(request):
         jobSkills = job['skills']
         jobDescription = job['description']
         jobCompensation = job['compensation']
-        jobLat = job['lat']
-        jobLong = job['long']
+        jobLat = job['lat'] if 'lat' in job else None
+        jobLong = job['long'] if 'long' in job else None
 
         postedJob, isPostedJobCreated = PostedJob.objects.get_or_create(
             employer=account,
