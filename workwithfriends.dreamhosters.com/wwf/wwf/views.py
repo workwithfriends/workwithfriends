@@ -263,7 +263,6 @@ def loginWithFacebook(request):
     request = request.POST
 
     accessToken = request['accessToken']
-    print accessToken
 
     graph = FBOpen(access_token=accessToken)
 
@@ -348,7 +347,6 @@ def addAboutMeToAccount(request):
 
     userId = request['userId']
     aboutMe = request['aboutMe']
-    print userId
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
