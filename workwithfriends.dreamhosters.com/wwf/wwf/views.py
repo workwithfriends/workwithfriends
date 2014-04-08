@@ -488,7 +488,7 @@ def postJob(request):
         account = Account.objects.get(userId=userId)
 
         jobType = job['type']
-        jobSkills = job['skills']
+        jobSkills = json.loads(job['skills'])
         jobDescription = job['description']
         jobCompensation = job['compensation']
         jobLat = job['lat'] if 'lat' in job else None
