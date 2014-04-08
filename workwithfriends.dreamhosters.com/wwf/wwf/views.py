@@ -489,7 +489,7 @@ def postJob(request):
         account = Account.objects.get(userId=userId)
 
         jobType = job['type']
-        jobSkills = ast.literal_eval(job['skills'])
+        jobSkills = [n.strip() for n in ast.literal_eval(job['skills'])]
         jobDescription = job['description']
         jobCompensation = job['compensation']
         jobLat = job['lat'] if 'lat' in job else None
