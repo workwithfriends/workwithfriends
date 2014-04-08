@@ -42,34 +42,40 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        NSLog(@"This code has run");
+        NSLog(@"Step 1");
         GlobalVariables *globals = [GlobalVariables sharedInstance];
         NSArray *myCurrentJobsAsEmployer = [[globals.ME objectForKey:@"jobs"] objectForKey:@"currentJobsAsEmployer"];
         NSArray *myCurrentJobsAsEmployee = [[globals.ME objectForKey:@"jobs"] objectForKey:@"currentJobsAsEmployee"];
         NSArray *myCompletedJobs = [[globals.ME objectForKey:@"jobs"] objectForKey:@"completedJobs"];
         NSArray *myPostedJobs= [[globals.ME objectForKey:@"jobs"] objectForKey:@"postedJobs"];
-        
+        NSLog(@"Step 2");
         self.jobStringList = [[NSMutableArray alloc] init];
-        
+        NSLog(@"Step 3");
+        if (myCurrentJobsAsEmployer != NULL){
         for(NSDictionary *job in myCurrentJobsAsEmployer){
             NSString *jobString=[NSString stringWithFormat: @"You hired %@ as a %@", [job valueForKey:@"employeeFirstName"], [job valueForKey:@"type"] ];
             [jobStringList addObject:jobString];
         }
-        
+        }
+        NSLog(@"Step 4");
+        if (myCurrentJobsAsEmployee != NULL){
         for(NSDictionary *job in myCurrentJobsAsEmployee){
             NSString *jobString=[NSString stringWithFormat: @"%@ hired you as a %@ !", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"]];
             [jobStringList addObject:jobString];
         }
-        
+        }
+        if (myCompletedJobs != NULL){
         for(NSDictionary *job in myCompletedJobs){
             NSString *jobString=[NSString stringWithFormat: @"You have completed a job for %@", [job valueForKey:@"employerFirstName"]];
             [jobStringList addObject:jobString];
         }
-        
+        }
+        if (myPostedJobs != NULL){
         for(NSDictionary *job in myPostedJobs){
             NSString *jobString=[NSString stringWithFormat: @"You need a %@ who's good at %@", [job valueForKey:@"type"], [[job valueForKey:@"skills"] objectAtIndex:0]];
             NSLog(@"%@",jobString);
             [jobStringList addObject:jobString];
+        }
         }
         [jobStringList addObject:@"This is a fake job"];
         NSLog(@"This code has run succesfully");
