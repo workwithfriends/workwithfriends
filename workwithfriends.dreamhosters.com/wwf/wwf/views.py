@@ -479,7 +479,7 @@ def postJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
-
+    print str(request)
     userId = request['userId']
     job = json.loads(request['job'])
 
