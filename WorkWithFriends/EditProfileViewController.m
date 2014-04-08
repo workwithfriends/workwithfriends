@@ -80,10 +80,10 @@
 
 - (IBAction)doneEditingLabel:(UIBarButtonItem *)sender {
     RequestToServer *modifyAboutMeRequest = [[RequestToServer alloc] init];
-    [modifyAboutMeRequest setRequestType:@"modifyAboutMeRequest"];
-    [modifyAboutMeRequest addParameter:@"aboutMe":_aboutMeLabel.text];
+    [modifyAboutMeRequest addParameter:@"aboutMe" withValue:_aboutMeLabel.text];
+    [modifyAboutMeRequest setRequestType:@"addAboutMeToAccount"];
     NSDictionary *data = [modifyAboutMeRequest makeRequest];
-    if ([[data valueForKey:@"aboutMe"] isEqualToString:_aboutMeLabel.text]){
+    if ([[data valueForKey:@"aboutMe"] isEqualToString :_aboutMeLabel.text]){
        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
 

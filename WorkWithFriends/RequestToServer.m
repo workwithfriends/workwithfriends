@@ -14,6 +14,7 @@
 {
     if ( self = [super init] )
     {
+        [self setParameterDict];
     }
     return self;
 }
@@ -26,8 +27,12 @@
 - (void) setRequestType: (NSString*) type {
     requestType = type;
 }
-- (void) addParameter:(NSString *)parameterName:(NSString *)parameterData{
-    [self.parameterDict setObject:parameterData forKey:parameterData];
+- (void) setParameterDict{
+    parameterDict = [[NSMutableDictionary alloc] init];
+}
+- (void) addParameter:(NSString *)key withValue:(NSString *)value{
+    [self.parameterDict setValue:value forKey:key];
+    NSLog(@"Added paramter successfully, the parameter is %@, with value %@",key, value);
 }
 -(NSDictionary*)makeRequest{
     GlobalVariables *globals = [GlobalVariables sharedInstance];
@@ -43,16 +48,18 @@
     }
     else{
         token = globals.ACCESSTOKEN;
-        userID = [globals.ME valueForKey:@"userID"];
+        userID = [globals.ME valueForKey:@"userId"];
     }
     NSURL *urlForRequest = [NSURL URLWithString:SERVERURL];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
     [request setPostValue:token forKey:@"accessToken"];
     if (![self.requestType isEqualToString:@"loginWithFacebook"]){
-        [request setPostValue:userID forKey:@"userID"];
+        [request setPostValue:userID forKey:@"userId"];
     }
-    for(id key in self.parameterDict){
-        [request setPostValue:[self.parameterDict objectForKey:key] forKey:key];
+    NSArray *parameters = [self.parameterDict allKeys];
+    for(int i=0;i < [parameters count];i++){
+        NSString *theParameter = [parameters objectAtIndex:i];
+        [request setPostValue:[self.parameterDict valueForKey:theParameter] forKey:theParameter];
     }
     [request setShouldUseRFC2616RedirectBehaviour:YES];
     [request setRequestMethod:@"POST"];
