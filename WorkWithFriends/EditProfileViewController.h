@@ -31,7 +31,6 @@
 - (void) setProfilePicture:(NSDictionary*) me;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureLabel;
 @property (weak, nonatomic) IBOutlet UILabel *firstNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *lastNameLabel;
 @property (weak, nonatomic) IBOutlet UITextView *aboutMeLabel;
 - (IBAction)doneEditingLabel:(UIBarButtonItem *)sender;
 

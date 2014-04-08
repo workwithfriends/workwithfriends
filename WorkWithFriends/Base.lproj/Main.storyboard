@@ -28,6 +28,14 @@
                                     <navigationItem title="Work With Friends" id="rjE-mi-6pn" colorLabel="IBBuiltInLabel-Blue"/>
                                 </items>
                             </navigationBar>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ygu-pO-c3t">
+                                <rect key="frame" x="0.0" y="84" width="320" height="434"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="86P-Qw-AzM" kind="embed" id="Qmy-58-wDc"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -37,13 +45,43 @@
             </objects>
             <point key="canvasLocation" x="-581" y="-943"/>
         </scene>
+        <!--News Feed Table View Controller-->
+        <scene sceneID="qDc-yV-2R8">
+            <objects>
+                <tableViewController id="86P-Qw-AzM" customClass="NewsFeedTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cNG-C8-ojj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="434"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="2rJ-Us-N8h">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2rJ-Us-N8h" id="0bX-L0-BxH">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="86P-Qw-AzM" id="9gU-gd-tDC"/>
+                            <outlet property="delegate" destination="86P-Qw-AzM" id="dhw-KO-Oc2"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7jQ-XW-OVT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-91" y="-876"/>
+        </scene>
         <!--Skills Page View Controller-->
         <scene sceneID="C51-bJ-dqn">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="l9C-OS-6Sn" customClass="SkillsPageViewController" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="l9C-OS-6Sn" customClass="SkillsPageViewController" sceneMemberID="viewController">
+                    <keyCommands/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Koj-6L-RC6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-581" y="390"/>
+            <point key="canvasLocation" x="-207" y="418"/>
         </scene>
         <!--Job Form View Controller-->
         <scene sceneID="nl2-8G-0b9">
@@ -513,7 +551,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdl-65-loP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1634" y="-895"/>
+            <point key="canvasLocation" x="-1670" y="-935"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -584,7 +622,7 @@
                                 <rect key="frame" x="40" y="151" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -601,6 +639,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="user-alt-2" id="bxu-NL-gBE"/>
                     <connections>
+                        <outlet property="aboutMeLabel" destination="ysm-fT-ExV" id="sOb-L9-ml1"/>
                         <outlet property="firstNameLabel" destination="Cs6-p4-qJ2" id="RsX-9f-9az"/>
                         <outlet property="profilePictureLabel" destination="nmA-6c-gVR" id="Ffe-aw-niq"/>
                     </connections>

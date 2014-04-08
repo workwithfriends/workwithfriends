@@ -64,7 +64,6 @@
     [super viewDidLoad];
     _profilePictureLabel.image = self.profilePicture;
     _firstNameLabel.text = self.firstName;
-    _lastNameLabel.text = self.lastName;
     _aboutMeLabel.text = self.aboutMe;
 }
 

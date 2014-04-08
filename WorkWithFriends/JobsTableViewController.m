@@ -7,7 +7,7 @@
 //
 
 #import "JobsTableViewController.h"
-
+#import "RequestToServer.h"
 @interface JobsTableViewController ()
 
 @end
@@ -32,6 +32,14 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    RequestToServer *loginRequest = [[RequestToServer alloc] init];
+    [loginRequest setRequestType:@"loginWithFacebook"];
+    NSDictionary *data = [loginRequest makeRequest];
+    if (data != NULL){
+        GlobalVariables *globals = [GlobalVariables sharedInstance];
+        globals.ME=data;
+        [self performSegueWithIdentifier:@"login_success" sender:self];
+    }
     maListe = [NSMutableArray array];
     [maListe addObject:@"Paris"];
     [maListe addObject:@"Lyon"];
