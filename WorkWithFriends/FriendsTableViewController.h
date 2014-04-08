@@ -12,7 +12,9 @@
 
 {
     NSArray *friends;
-    NSArray *searchResults;
-    NSMutableArray *maListe;
+    NSMutableArray *friendStringList;
+    NSInteger *rowSelected;
 }
+- (NSInteger*) rowSelected;
+- (void) setRowSelected:(NSInteger *) row;
 @end

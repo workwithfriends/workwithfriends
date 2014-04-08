@@ -18,7 +18,6 @@
 - (void) setRowSelected: (int*) rowNumber;
 - (IBAction)backButton:(id)sender;
 - (IBAction)acceptButton:(id)sender;
-- (void) setJobForm: (int*) rowNumber;
 @property (weak, nonatomic) IBOutlet UIImageView *employerPicture;
 @property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
 @property (weak, nonatomic) IBOutlet UITextView *description;

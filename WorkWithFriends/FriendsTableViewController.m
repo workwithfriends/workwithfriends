@@ -8,6 +8,8 @@
 
 #import "FriendsTableViewController.h"
 #import "RequestToServer.h"
+#import "FriendProfileViewController.h"
+
 @interface FriendsTableViewController ()
 
 @end
@@ -23,6 +25,14 @@
     return self;
 }
 
+- (NSInteger*) rowSelected{
+    return rowSelected;
+}
+
+- (void) setRowSelected:(NSInteger *) row{
+    rowSelected=row;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -33,11 +43,20 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-     maListe = [NSMutableArray array];
-    [maListe addObject:@"Luis Sanmiguel"];
-    [maListe addObject:@"Demitri Nava"];
-    [maListe addObject:@"Will Haack"];
-    [maListe addObject:@"Jeremy Wohlwend"];
+    RequestToServer *friendsRequest = [[RequestToServer alloc] init];
+    [friendsRequest setRequestType:@"getFriends"];
+    NSDictionary *data = [friendsRequest makeRequest];
+    NSLog(@"data object is :%@", data);
+    friends = [data valueForKey:@"friends"];
+    NSLog(@"friends object is :%@", friends);
+    friendStringList = [[NSMutableArray alloc] init];
+    for(NSDictionary *friend in friends){
+        NSString *friendString=[NSString stringWithFormat: @"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
+        [friendStringList addObject:friendString];
+        
+    }
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    globals.FRIENDS = friends;
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,7 +76,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [maListe count];
+    return [friendStringList count];
 }
 
 
@@ -65,7 +84,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friend" forIndexPath:indexPath];
     
-    NSString *cellValue = [maListe objectAtIndex:indexPath.row];
+    NSString *cellValue = [friendStringList objectAtIndex:indexPath.row];
     cell.textLabel.text = cellValue;
     // Configure the cell...
     
@@ -111,15 +130,23 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSLog(@"preparing for segue: %@", segue.identifier);
+    if ([[segue identifier] isEqualToString:@"friendDetails"]) {
+        
+        // Get destination view
+        FriendProfileViewController *vc = [segue destinationViewController];
+        NSLog(@"number is %d", (int) self.rowSelected);
+        
+        // Pass the information to your destination view
+        [vc setRowSelected:((int) self.rowSelected)];
+    }
 }
-*/
+
 
 @end
