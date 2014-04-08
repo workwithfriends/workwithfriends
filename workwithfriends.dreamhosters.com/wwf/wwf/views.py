@@ -346,7 +346,7 @@ def addAboutMeToAccount(request):
     userId = request['userId']
     aboutMe = request['aboutMe']
 
-    if Account.objects.filter(userId=userId):
+    if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
         account.aboutMe = aboutMe
         account.save()
