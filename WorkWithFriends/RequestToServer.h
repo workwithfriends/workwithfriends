@@ -14,12 +14,14 @@
 @interface RequestToServer : NSObject
 {
     NSString* requestType;
+    NSMutableDictionary* parameterDict;
 
 }
 
 - (NSString*) requestType;
+- (NSMutableDictionary*) parameterDict;
 - (void) setRequestType:(NSString*) type;
-
+- (void) addParameter:(NSString*) parameter;
 - (NSDictionary*) makeRequest;
 
 @end

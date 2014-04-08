@@ -18,10 +18,16 @@
     return self;
 }
 - (NSString*) requestType{
-    return requestType;
+  return requestType;
+}
+- (NSMutableDictionary*) parameterDict{
+    return parameterDict;
 }
 - (void) setRequestType: (NSString*) type {
     requestType = type;
+}
+- (void) addParameter:(NSString *)parameterName:(NSString *)parameterData{
+    [self.parameterDict setObject:parameterData forKey:parameterData];
 }
 -(NSDictionary*)makeRequest{
     GlobalVariables *globals = [GlobalVariables sharedInstance];
@@ -44,6 +50,9 @@
     [request setPostValue:token forKey:@"accessToken"];
     if (![self.requestType isEqualToString:@"loginWithFacebook"]){
         [request setPostValue:userID forKey:@"userID"];
+    }
+    for(id key in self.parameterDict){
+        [request setPostValue:[self.parameterDict objectForKey:key] forKey:key];
     }
     [request setShouldUseRFC2616RedirectBehaviour:YES];
     [request setRequestMethod:@"POST"];
@@ -75,7 +84,7 @@
             }
             else{
                 NSLog(@"Success! Now returning the responseDict");
-                return responseDict;
+                return [responseDict valueForKey:@"data"];
             }
         }
     }

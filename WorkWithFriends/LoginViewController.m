@@ -24,14 +24,12 @@
 
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    NSLog(@"hello");
     RequestToServer *loginRequest = [[RequestToServer alloc] init];
     [loginRequest setRequestType:@"loginWithFacebook"];
-    NSLog(loginRequest.requestType);
-    NSDictionary *responseDict = [loginRequest makeRequest];
-    if (responseDict != NULL){
+    NSDictionary *data = [loginRequest makeRequest];
+    if (data != NULL){
         GlobalVariables *globals = [GlobalVariables sharedInstance];
-        globals.ME=[responseDict valueForKey:@"data"];
+        globals.ME=data;
         [self performSegueWithIdentifier:@"login_success" sender:self];
     }
 }
