@@ -909,7 +909,7 @@ def getPostedJobs(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     data = {
-        'postedJobs': formattedPostedJobs
+        'jobs': formattedPostedJobs
     }
     return formattedResponse(data=data)
 
