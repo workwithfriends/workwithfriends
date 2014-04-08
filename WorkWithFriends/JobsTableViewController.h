@@ -10,8 +10,10 @@
 
 @interface JobsTableViewController : UITableViewController
 {
-    NSMutableArray *maListe;
+    NSArray *jobs;
     NSArray *searchResults;
+    NSMutableArray *jobStringList;
+    
 }
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 
