@@ -654,10 +654,10 @@ def takeJob(request):
                         # add skills to current job
                         formattedSkills = formatSkills(jobSkills)
 
-                        for skillObject in formattedSkills:
+                        for skill in formattedSkills:
                             CurrentJobSkill.objects.create(
                                 job=newCurrentJob,
-                                skill=skillObject['skill']
+                                skill=skill
                             )
 
                         jobToTake.delete()
