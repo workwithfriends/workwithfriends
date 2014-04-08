@@ -7,7 +7,9 @@ class Account(models.Model):
     aboutMe = models.CharField(max_length=200, default='')
 
     def __unicode__(self):
-        return str(self.name) + ' ' +  str(self.userId)
+        return str(self.firstName) + ' ' + str(self.lastName) + ' ' + str(
+            self
+                                                                    .userId)
 
 class ProfileImage(models.Model):
     account = models.ForeignKey(Account)
