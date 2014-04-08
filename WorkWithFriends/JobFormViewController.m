@@ -23,10 +23,24 @@
     return self;
 }
 
+- (int *) rowSelected{
+   return rowSelected;
+}
+- (void) setRowSelected: (int*) rowNumber{
+    rowSelected=rowNumber;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    job = [globals.JOBPOSTS objectAtIndex: self.rowSelected];
+    _skills.text = [[job valueForKey:@"skills"] objectAtIndex:0];
+    _description.text =[NSString stringWithFormat:@"%@",[job valueForKey:@"description"]];
+    NSLog(@"Description: %@", [job valueForKey:@"description"]);
+    NSLog(@"%@", _description.text);
+    _compensation.text = [job valueForKey:@"compensation"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,11 +63,17 @@
 
 
 - (IBAction)backButton:(id)sender {
+    NSLog(@"%@", _description.text);
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)acceptButton:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) setJobForm: (int*) rowNumber
+{
+    self.rowSelected=rowNumber;
 }
 
 @end
