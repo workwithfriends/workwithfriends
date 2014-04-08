@@ -28,7 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    _myName.text = [NSString stringWithFormat:@"%@ %@",[globals.ME valueForKey: @"firstName"],[globals.ME valueForKey: @"lastName"]];
+    NSURL *profileURL = [NSURL URLWithString:[globals.ME valueForKey:@"profileImageUrl"]];
+    _myProfilePicture.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
