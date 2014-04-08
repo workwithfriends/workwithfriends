@@ -482,6 +482,7 @@ def postJob(request):
     print str(request)
     userId = request['userId']
     job = json.loads(request['job'])
+    print str(job)
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
