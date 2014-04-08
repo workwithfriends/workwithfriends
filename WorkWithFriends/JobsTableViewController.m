@@ -32,23 +32,18 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    maListe = [NSMutableArray array];
-    [maListe addObject:@"Paris"];
-    [maListe addObject:@"Lyon"];
-    [maListe addObject:@"Marseille"];
-    [maListe addObject:@"Toulouse"];
-    [maListe addObject:@"Nantes"];
-    [maListe addObject:@"Nice"];
-    [maListe addObject:@"Bordeaux"];
-    [maListe addObject:@"Montpellier"];
-    [maListe addObject:@"Rennes"];
-    [maListe addObject:@"Lille"];
-    [maListe addObject:@"Le Havre"];
-    [maListe addObject:@"Reims"];
-    [maListe addObject:@"Le Mans"];
-    [maListe addObject:@"Dijon"];
-    [maListe addObject:@"Grenoble"];
-    [maListe addObject:@"Brest"]; self.navigationItem.title = @"Grandes villes";
+    
+    RequestToServer *jobsRequest = [[RequestToServer alloc] init];
+    [jobsRequest setRequestType:@"getPostedJobs"];
+    [jobsRequest addParameter:@"query" withValue:@""];
+    NSDictionary *data = [jobsRequest makeRequest];
+    jobs= [data valueForKey:@"jobs"];
+    for(NSDictionary *job in jobs){
+        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@ who's good at %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"], [((NSArray*)[job valueForKey:@"skills"]) objectAtIndex:1]];
+        [jobStringList addObject:jobString];
+    }
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,7 +67,7 @@
         return [searchResults count];
         
     } else {
-        return [maListe count];
+        return [jobStringList count];
     }
 }
 
@@ -88,7 +83,7 @@
         NSString *cellValue = [searchResults objectAtIndex:indexPath.row];
         cell.textLabel.text = cellValue;
     } else {
-        NSString *cellValue = [maListe objectAtIndex:indexPath.row];
+        NSString *cellValue = [jobStringList objectAtIndex:indexPath.row];
         cell.textLabel.text = cellValue;
     }
     return cell;
@@ -97,7 +92,7 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
-    searchResults = [maListe filteredArrayUsingPredicate:resultPredicate];
+    searchResults = [jobStringList filteredArrayUsingPredicate:resultPredicate];
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
