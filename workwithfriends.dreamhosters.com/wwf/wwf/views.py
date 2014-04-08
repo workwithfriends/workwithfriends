@@ -257,7 +257,6 @@ def loginWithFacebook(request):
         userId
         
     '''
-    print str(request.POST)
     requiredFields = ['accessToken']
 
     verifiedRequestResponse = verifyRequest(request, requiredFields)
@@ -334,7 +333,6 @@ def addAboutMeToAccount(request):
     '''
     requiredFields = ['accessToken', 'userId', 'aboutMe']
 
-    print str(request.POST)
     verifiedRequestResponse = verifyRequest(request, requiredFields)
     if verifiedRequestResponse['isMissingFields']:
         errorMessage = verifiedRequestResponse['errorMessage']
@@ -480,10 +478,8 @@ def postJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
-    print str(request)
     userId = request['userId']
     job = json.loads(request['job'])
-    print str(job)
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
