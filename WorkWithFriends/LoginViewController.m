@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "GlobalVariables.h"
 
 @interface LoginViewController ()
 @end
@@ -25,63 +24,17 @@
 
 // Logged-in user experience
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/loginWithFacebook/";
-    //Get access Token:
-    NSString *token = [[[FBSession activeSession] accessTokenData] accessToken];
-    
-    //Make login request to server:
-    NSURL *urlForRequest = [NSURL URLWithString:SERVERURL];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:urlForRequest];
-    [request setPostValue:token forKey:@"accessToken"];
-    [request setShouldUseRFC2616RedirectBehaviour:YES];
-    [request setRequestMethod:@"POST"];
-    [request setDelegate:self];
-    [request startSynchronous];
-    NSError *error = [request error];
-    if (!error) {
-        NSString *response = [request responseString];
-        NSLog(@"%@", response);
-        NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-        if (responseDict == NULL){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
-                                                            message:@"An unexpected response was received from our server."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            //[self performSegueWithIdentifier:@"login_success" sender:self]; //Comment this lines out it the server is off
-        }
-        else{
-            BOOL err = [[responseDict valueForKey:@"isError"] boolValue];
-            if (err){
-                NSString *errorMessage = [[responseDict valueForKey:@"errorMessage"] stringValue];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
-                                                                message:errorMessage
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-            }
-            else{
-                GlobalVariables *globals = [GlobalVariables sharedInstance];
-                globals.ACCESSTOKEN = token;
-                globals.ME=[responseDict valueForKey:@"data"];
-                [self performSegueWithIdentifier:@"login_success" sender:self];
-            }
-        }
+    NSLog(@"hello");
+    RequestToServer *loginRequest = [[RequestToServer alloc] init];
+    [loginRequest setRequestType:@"loginWithFacebook"];
+    NSLog(loginRequest.requestType);
+    NSDictionary *responseDict = [loginRequest makeRequest];
+    if (responseDict != NULL){
+        GlobalVariables *globals = [GlobalVariables sharedInstance];
+        globals.ME=[responseDict valueForKey:@"data"];
+        [self performSegueWithIdentifier:@"login_success" sender:self];
     }
-    else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Error"
-                                                        message:@"An unexpected error was encoutered while communicating with our sever."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
 }
-
-
 
 - (void)viewDidLoad
 {
