@@ -884,6 +884,7 @@ def getPostedJobs(request):
             if (Account.objects.filter(userId=friend['id']).exists()):
                 validPeople[friend['id']] = friend['name']
 
+        '''
         # get user's friends of friends that have an account
         for validFriendId in validPeople.copy():
             friendsOfValidFriend = graph.get(validFriendId + '/friends')['data']
@@ -891,7 +892,8 @@ def getPostedJobs(request):
                 if userId != person['id'] and \
                         Account.objects.filter(userId=person['id']).exists():
                     validPeople[person['id']] = person['name']
-
+        '''
+        
         postedJobs = PostedJob.objects.all()
         validPostedJobs = []
         for job in postedJobs:
