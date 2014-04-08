@@ -79,6 +79,6 @@
 }
 
 - (IBAction)doneEditingLabel:(UIBarButtonItem *)sender {
-    //_aboutMeLabel.text
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 @end
