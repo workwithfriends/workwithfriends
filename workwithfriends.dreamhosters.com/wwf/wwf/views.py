@@ -10,6 +10,7 @@ from django_facebook.auth_backends import FacebookBackend
 
 import json
 import time
+import ast
 
 FBAuth = FacebookAuthorization
 FBOpen = OpenFacebook
@@ -479,9 +480,10 @@ def postJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
-
+    print str(request)
     userId = request['userId']
     job = json.loads(request['job'])
+    print str(job)
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
@@ -490,16 +492,16 @@ def postJob(request):
         jobSkills = job['skills']
         jobDescription = job['description']
         jobCompensation = job['compensation']
-        jobLat = job['lat']
-        jobLong = job['long']
+        jobLat = job['lat'] if 'lat' in job else None
+        jobLong = job['long'] if 'long' in job else None
 
         postedJob, isPostedJobCreated = PostedJob.objects.get_or_create(
             employer=account,
             jobType=jobType,
             jobDescription=jobDescription,
             jobCompensation=jobCompensation,
-            lat=jobLat,
-            long=jobLong
+            #lat=jobLat,
+            #long=jobLong
         )
 
         if isPostedJobCreated:

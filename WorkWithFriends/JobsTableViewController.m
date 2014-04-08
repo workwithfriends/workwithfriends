@@ -55,7 +55,17 @@
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     globals.JOBPOSTS=jobs;
     
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh)
+             forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
 
+}
+
+-(void)refresh {
+    NSLog(@"Yay Refreshed");
+    [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
