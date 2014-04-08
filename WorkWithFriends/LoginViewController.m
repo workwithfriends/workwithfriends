@@ -29,7 +29,7 @@
     NSDictionary *data = [loginRequest makeRequest];
     if (data != NULL){
         GlobalVariables *globals = [GlobalVariables sharedInstance];
-        globals.ME=data;
+        globals.ME=[NSMutableDictionary dictionaryWithDictionary: data];
         [self performSegueWithIdentifier:@"login_success" sender:self];
     }
 }

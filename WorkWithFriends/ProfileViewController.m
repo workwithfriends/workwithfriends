@@ -73,6 +73,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    [self setAboutMe: globals.ME];
+    _aboutMeLabel.text = self.aboutMe;
+}
+
 
 /*
 #pragma mark - Navigation

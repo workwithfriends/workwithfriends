@@ -64,7 +64,6 @@
     [super viewDidLoad];
     _profilePictureLabel.image = self.profilePicture;
     _firstNameLabel.text = self.firstName;
-    _lastNameLabel.text = self.lastName;
     _aboutMeLabel.text = self.aboutMe;
     _aboutMeLabel.layer.borderWidth = 2.0f;
     _aboutMeLabel.layer.borderColor = [[UIColor grayColor] CGColor];
@@ -79,12 +78,14 @@
 }
 
 - (IBAction)doneEditingLabel:(UIBarButtonItem *)sender {
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
     RequestToServer *modifyAboutMeRequest = [[RequestToServer alloc] init];
     [modifyAboutMeRequest addParameter:@"aboutMe" withValue:_aboutMeLabel.text];
     [modifyAboutMeRequest setRequestType:@"addAboutMeToAccount"];
     NSDictionary *data = [modifyAboutMeRequest makeRequest];
     if ([[data valueForKey:@"aboutMe"] isEqualToString :_aboutMeLabel.text]){
-       [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+         [globals.ME setValue:_aboutMeLabel.text forKey:@"aboutMe"];
+         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
 
 }

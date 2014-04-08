@@ -11,12 +11,12 @@
 @interface GlobalVariables : NSObject
 {
     NSString *_ACCESSTOKEN;
-    NSDictionary *_ME;
+    NSMutableDictionary *_ME;
 }
 
 + (GlobalVariables *)sharedInstance;
 
-@property(strong, nonatomic, readwrite) NSDictionary *ME;
+@property(strong, nonatomic, readwrite) NSMutableDictionary *ME;
 
 @property(strong, nonatomic, readwrite) NSString *ACCESSTOKEN;
 

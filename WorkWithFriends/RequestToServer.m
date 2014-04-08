@@ -91,7 +91,6 @@
                 [alert show];
             }
             else{
-                NSLog(@"Success! Now returning the responseDict");
                 return [responseDict valueForKey:@"data"];
             }
         }
