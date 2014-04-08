@@ -164,13 +164,15 @@ def formatSkills(skills, hasStrength=False):
     if skills is not None:
         formattedSkills = []
         for skill in skills:
-            formattedSkill = {
-                'skill': str(skill.skill)
-            }
 
             if hasStrength:
+                formattedSkill = {
+                    'skill': str(skill.skill)
+                }
                 formattedSkill['strength'] = str(skill.strength)
-
+            else:
+                formattedSkill = str(skill.skill)
+                
             formattedSkills.append(formattedSkill)
 
     return formattedSkills
