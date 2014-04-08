@@ -167,12 +167,12 @@ def formatSkills(skills, hasStrength=False):
 
             if hasStrength:
                 formattedSkill = {
-                    'skill': str(skill.skill)
+                    'skill': str(skill.skill),
+                    'strength': str(skill.strength)
                 }
-                formattedSkill['strength'] = str(skill.strength)
             else:
                 formattedSkill = str(skill.skill)
-                
+
             formattedSkills.append(formattedSkill)
 
     return formattedSkills
