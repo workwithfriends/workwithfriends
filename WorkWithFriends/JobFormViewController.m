@@ -7,6 +7,8 @@
 //
 
 #import "JobFormViewController.h"
+#import "RequestToServer.h"
+
 
 @interface JobFormViewController ()
 
@@ -70,6 +72,7 @@
 
 - (IBAction)acceptButton:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 @end
