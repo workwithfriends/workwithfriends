@@ -36,7 +36,7 @@
 }
 -(NSDictionary*)makeRequest{
     GlobalVariables *globals = [GlobalVariables sharedInstance];
-    NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8000/";
+    NSString *SERVERURL=@"http://www.workwithfriends.dreamhosters.com:8001/";
     SERVERURL = [[SERVERURL stringByAppendingString:self.requestType] stringByAppendingString:@"/"];
     NSLog(@"Yes we do get here");
     //Get access Token:
