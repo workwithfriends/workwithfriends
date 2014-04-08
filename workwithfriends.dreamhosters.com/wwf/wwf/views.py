@@ -499,8 +499,8 @@ def postJob(request):
             jobType=jobType,
             jobDescription=jobDescription,
             jobCompensation=jobCompensation,
-            lat=jobLat,
-            long=jobLong
+            #lat=jobLat,
+            #long=jobLong
         )
 
         if isPostedJobCreated:
