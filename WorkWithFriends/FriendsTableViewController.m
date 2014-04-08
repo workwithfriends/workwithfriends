@@ -7,7 +7,7 @@
 //
 
 #import "FriendsTableViewController.h"
-
+#import "RequestToServer.h"
 @interface FriendsTableViewController ()
 
 @end

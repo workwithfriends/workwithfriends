@@ -12,6 +12,7 @@
 {
     NSString *_ACCESSTOKEN;
     NSMutableDictionary *_ME;
+    NSArray *_JOBPOSTS;
 }
 
 + (GlobalVariables *)sharedInstance;
@@ -19,5 +20,7 @@
 @property(strong, nonatomic, readwrite) NSMutableDictionary *ME;
 
 @property(strong, nonatomic, readwrite) NSString *ACCESSTOKEN;
+
+@property(strong, nonatomic, readwrite) NSArray *JOBPOSTS;
 
 @end

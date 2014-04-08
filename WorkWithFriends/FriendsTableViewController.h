@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface FriendsTableViewController : UITableViewController
+
 {
+    NSArray *friends;
+    NSArray *searchResults;
     NSMutableArray *maListe;
 }
 @end
