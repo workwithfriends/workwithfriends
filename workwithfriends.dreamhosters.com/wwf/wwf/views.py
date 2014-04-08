@@ -812,10 +812,10 @@ def completeJob(request):
 
                 # add skills to completed job
                 formattedSkills = formatSkills(jobSkills)
-                for skillObject in formattedSkills:
+                for skill in formattedSkills:
                     CompletedJobSkill.objects.create(
                         job=newCompletedJob,
-                        skill=skillObject['skill']
+                        skill=skill
                     )
 
                 jobToComplete.delete()
