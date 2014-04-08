@@ -38,9 +38,11 @@
     job = [globals.JOBPOSTS objectAtIndex: self.rowSelected];
     _skills.text = [[job valueForKey:@"skills"] objectAtIndex:0];
     _description.text =[NSString stringWithFormat:@"%@",[job valueForKey:@"description"]];
-    NSLog(@"Description: %@", [job valueForKey:@"description"]);
-    NSLog(@"%@", _description.text);
     _compensation.text = [job valueForKey:@"compensation"];
+    _employerName.text = [NSString stringWithFormat:@"%@ %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"employerLastName"]];
+    NSURL *profileURL = [NSURL URLWithString:[job valueForKey:@"employerProfileImageUrl"]];
+    _employerPicture.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
+    
 }
 
 - (void)didReceiveMemoryWarning
