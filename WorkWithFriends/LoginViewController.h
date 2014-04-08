@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
-#import "ASIFormDataRequest.h"
-
-
+#import "GlobalVariables.h"
+#import "RequestToServer.h"
 
 
 @interface LoginViewController : UIViewController

@@ -1,37 +1,26 @@
 //
-//  LoginViewController.m
+//  FriendProfileViewController.m
 //  WorkWithFriends
 //
-//  Created by Jeremy Wohlwend on 4/5/14.
+//  Created by LUIS SANMIGUEL on 4/7/14.
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "FriendProfileViewController.h"
 
-@interface LoginViewController ()
+@interface FriendProfileViewController ()
+
 @end
 
-
-@implementation LoginViewController
+@implementation FriendProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // Custom initialization
     }
     return self;
-}
-
-// Logged-in user experience
-- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    RequestToServer *loginRequest = [[RequestToServer alloc] init];
-    [loginRequest setRequestType:@"loginWithFacebook"];
-    NSDictionary *data = [loginRequest makeRequest];
-    if (data != NULL){
-        GlobalVariables *globals = [GlobalVariables sharedInstance];
-        globals.ME=data;
-        [self performSegueWithIdentifier:@"login_success" sender:self];
-    }
 }
 
 - (void)viewDidLoad
@@ -56,4 +45,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (IBAction)backButton:(id)sender {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 @end

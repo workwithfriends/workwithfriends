@@ -46,9 +46,9 @@
     lastName=[me valueForKey:@"lastName"];;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)Daecoder
 {
-    self = [super initWithCoder:aDecoder];
+    self = [super initWithCoder:Daecoder];
     if (self) {
         GlobalVariables *globals = [GlobalVariables sharedInstance];
         [self setFirstName: globals.ME];
