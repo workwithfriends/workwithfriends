@@ -1,5 +1,5 @@
 //
-//  MySkillsTableViewController.h
+//  SwitchViewController.h
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/8/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MySkillsTableViewController : UITableViewController
+@interface SwitchViewController : UIViewController
 
 @end

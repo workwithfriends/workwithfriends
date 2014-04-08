@@ -1,5 +1,5 @@
 //
-//  MyJobsTableViewController.h
+//  SwitchUviewControllerViewController.h
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/8/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyJobsTableViewController : UITableViewController
+@interface SwitchUviewControllerViewController : UIViewController
 
 @end
