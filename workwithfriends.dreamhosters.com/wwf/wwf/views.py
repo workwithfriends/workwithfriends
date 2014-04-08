@@ -309,13 +309,6 @@ def loginWithFacebook(request):
         skills = userModel['skills']
         jobs = userModel['jobs']
 
-    # get models of user's friends that have Work With Friends
-    try:
-        friendsWithApp = getFriendsWithAppByModel(accessToken)
-    except:
-        errorMessage = 'Bad access token'
-        return formattedResponse(isError=True, errorMessage=errorMessage)
-
     userModel = {
         'userId': userId,
         'isNewUser': isAccountCreated,
@@ -325,7 +318,6 @@ def loginWithFacebook(request):
         'aboutMe': aboutMe,
         'skills': skills,
         'jobs': jobs,
-        'friends': friendsWithApp
     }
 
     return formattedResponse(data=userModel)
@@ -975,7 +967,11 @@ def getFriends(request):
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
-    return formattedResponse(data=friends)
+    friendsDict = {
+        'friends' : friends
+    }
+
+    return formattedResponse(data=friendsDict)
 
 
 def pushUpdateToNewsFeed(account, updateType, updateData):
