@@ -7,6 +7,7 @@
 //
 
 #import "FriendProfileViewController.h"
+#import "GlobalVariables.h"
 
 @interface FriendProfileViewController ()
 
@@ -23,10 +24,22 @@
     return self;
 }
 
+- (int *) rowSelected{
+    return rowSelected;
+}
+- (void) setRowSelected: (int*) rowNumber{
+    rowSelected=rowNumber;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    friend = [globals.FRIENDS objectAtIndex: self.rowSelected];
+    _friendName.text = [NSString stringWithFormat:@"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
+    NSURL *profileURL = [NSURL URLWithString:[friend valueForKey:@"friendProfileImageUrl"]];
+    _friendProfileImage.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,4 +63,6 @@
 - (IBAction)backButton:(id)sender {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 @end

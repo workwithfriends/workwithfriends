@@ -65,17 +65,11 @@
 
 
 - (IBAction)backButton:(id)sender {
-    NSLog(@"%@", _description.text);
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)acceptButton:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void) setJobForm: (int*) rowNumber
-{
-    self.rowSelected=rowNumber;
 }
 
 @end

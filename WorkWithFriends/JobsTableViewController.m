@@ -134,7 +134,7 @@
         NSLog(@"number is %d", (int) self.rowSelected);
         
         // Pass the information to your destination view
-        [vc setJobForm:((int) self.rowSelected)];
+        [vc setRowSelected:((int) self.rowSelected)];
     }
 }
 
