@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "GlobalVariables.h"
 #import "JobFormViewController.h"
-#import "SwitchViewController.h"
-@class SwitchViewController;
+//#import "SwitchViewController.h"
+//@class SwitchViewController;
 
-@interface MyJobsTableView : UITableView{
+@interface MyJobsTableView : UITableViewController{
     NSMutableArray *jobStringList;
     NSInteger *rowSelected;
-    SwitchViewController *tableHolder;
+    //SwitchViewController *tableHolder;
 }
 - (NSMutableArray *) jobStringList;
 - (void) setJobStringList: (NSMutableArray *)stringList;
 - (NSInteger *) rowSelected;
 - (void) setRowSelected: (NSInteger *)rowNumber;
-- (SwitchViewController *) tableHolder;
-- (void) setTableHolder: (SwitchViewController *)holder;
+//- (SwitchViewController *) tableHolder;
+//- (void) setTableHolder: (SwitchViewController *)holder;
 @end

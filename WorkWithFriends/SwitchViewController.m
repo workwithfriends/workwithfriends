@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [_jobTable setTableHolder:self];
+    //[_jobTable setTableHolder:self];
     // Do any additional setup after loading the view.
 }
 
@@ -47,6 +47,7 @@
 }
 */
 
+/*
 - (IBAction)switchButton:(id)sender {
     switch ([sender selectedSegmentIndex]){
         case 0:
@@ -61,6 +62,7 @@
             break;
     }
 }
+ */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
