@@ -975,7 +975,11 @@ def getFriends(request):
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
-    return formattedResponse(data=friends)
+    friendsDict = {
+        'friends' : friends
+    }
+
+    return formattedResponse(data=friendsDict)
 
 
 def pushUpdateToNewsFeed(account, updateType, updateData):
