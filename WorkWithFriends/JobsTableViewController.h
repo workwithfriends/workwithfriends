@@ -19,4 +19,5 @@
 - (NSInteger*) rowSelected;
 - (void) setRowSelected:(NSInteger *) row;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
+-(void)refresh;
 @end
