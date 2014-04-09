@@ -15,6 +15,8 @@
     int *rowSelected;
 }
 - (int*) rowSelected;
+- (NSDictionary*) job;
+- (void) setJob: (NSDictionary*) job;
 - (void) setRowSelected: (int*) rowNumber;
 - (IBAction)backButton:(id)sender;
 - (IBAction)acceptButton:(id)sender;

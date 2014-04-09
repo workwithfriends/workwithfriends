@@ -10,5 +10,6 @@
 //#import <FacebookSDK/FacebookSDK.h>
 
 @interface NewsFeedViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIImageView *commingSoon;
 
 @end

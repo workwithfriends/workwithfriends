@@ -26,6 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSURL *imageURL = [NSURL URLWithString:@"http://www.colourbox.com/preview/8107599-254269-coming-soon-grunge-blue-stamp.jpg"];
+    _commingSoon.image= [UIImage imageWithData: [NSData dataWithContentsOfURL: imageURL]];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

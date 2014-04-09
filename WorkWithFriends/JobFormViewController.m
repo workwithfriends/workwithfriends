@@ -7,6 +7,8 @@
 //
 
 #import "JobFormViewController.h"
+#import "RequestToServer.h"
+
 
 @interface JobFormViewController ()
 
@@ -29,13 +31,19 @@
 - (void) setRowSelected: (int*) rowNumber{
     rowSelected=rowNumber;
 }
+- (NSDictionary*) job{
+    return job;
+}
+- (void) setJob: (NSDictionary*) theJob{
+    job=theJob;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     GlobalVariables *globals = [GlobalVariables sharedInstance];
-    job = [globals.JOBPOSTS objectAtIndex: self.rowSelected];
+    self.job = [globals.JOBPOSTS objectAtIndex: self.rowSelected];
     _skills.text = [[job valueForKey:@"skills"] objectAtIndex:0];
     _description.text =[NSString stringWithFormat:@"%@",[job valueForKey:@"description"]];
     _compensation.text = [job valueForKey:@"compensation"];
@@ -69,7 +77,15 @@
 }
 
 - (IBAction)acceptButton:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    RequestToServer *acceptJobRequest = [[RequestToServer alloc] init];
+    [acceptJobRequest setRequestType:@"takeJob"];
+    [acceptJobRequest addParameter:@"jobId" withValue:[self.job valueForKey:@"jobId"]];
+    [acceptJobRequest addParameter:@"employerId" withValue:[self.job valueForKey:@"employerId"]];
+    NSDictionary *data=[acceptJobRequest makeRequest];
+    if (data != [NSNull null]){
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 @end
