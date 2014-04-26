@@ -72,6 +72,10 @@ urlpatterns = patterns('',
                        url(
                            r'viewJob',
                            'wwf.views.viewJob'
+                       ),
+                       url(
+                           r'logAction',
+                           'wwf.views.logAction'
                        )
 
 )

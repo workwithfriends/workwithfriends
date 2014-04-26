@@ -1,8 +1,6 @@
 from django.http import HttpResponse
 
-from models import Account, ProfileImage, PostedJob, CurrentJob, CompletedJob, \
-    UserSkill, PostedJobSkill, \
-    CurrentJobSkill, CompletedJobSkill, NewsFeed
+from models import *
 
 from django.forms.util import ValidationError
 from open_facebook.api import FacebookAuthorization, OpenFacebook
@@ -22,6 +20,7 @@ NEWSFEED_CURRENT_JOB_TYPE = 'currentJob'
 NEWSFEED_COMPLETED_JOB_TYPE = 'completedJob'
 NEWSFEED_SKILLS_UPDATE_TYPE = 'addedSkills'
 NEWS_ABOUTME_UPDATE_TYPE = 'updatedAboutMe'
+
 
 def verifyRequest(request, requiredFields):
     params = request.POST
@@ -561,7 +560,9 @@ def deleteJob(request):
 
             # delete job from news feed if it exists
             jobNewsfeedData = formatJobForNewsfeed(jobToDelete)
-            if NewsFeed.objects.filter(account=account, type=NEWSFEED_POSTED_JOB_TYPE, data=jobNewsfeedData).exists():
+            if NewsFeed.objects.filter(account=account,
+                                       type=NEWSFEED_POSTED_JOB_TYPE,
+                                       data=jobNewsfeedData).exists():
                 newsfeedItemToDelete = NewsFeed.objects.get(
                     account=account,
                     type=NEWSFEED_POSTED_JOB_TYPE,
@@ -889,7 +890,7 @@ def getPostedJobs(request):
                         Account.objects.filter(userId=person['id']).exists():
                     validPeople[person['id']] = person['name']
         '''
-        
+
         postedJobs = PostedJob.objects.all()
         validPostedJobs = []
         for job in postedJobs:
@@ -968,14 +969,15 @@ def getFriends(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     friendsDict = {
-        'friends' : friends
+        'friends': friends
     }
 
     return formattedResponse(data=friendsDict)
 
 
 def pushUpdateToNewsFeed(account, updateType, updateData):
-    NewsFeed.objects.create(account=account, type=updateType, data=json.dumps(updateData))
+    NewsFeed.objects.create(account=account, type=updateType,
+                            data=json.dumps(updateData))
 
 
 def getNewsfeed(request):
@@ -1105,3 +1107,53 @@ def viewJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     return formattedResponse(data=jobToView)
+
+
+def logAction(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        action
+    '''
+    requiredFields = ['accessToken', 'currentState', 'nextState', 'action',
+                      'userId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    action = request['action']
+    currentState = request['currentState']
+    nextState = request['nextState']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+        newDataPoint = DataPoint.objects.create(
+            account=account,
+            action=action,
+            currentState=currentState,
+            nextState=nextState
+        )
+
+        newDataPointModel = {
+            'userId': str(newDataPoint.account.userId),
+            'action': str(newDataPoint.action),
+            'oldState': str(newDataPoint.currentState),
+            'newState': str(newDataPoint.nextState)
+        }
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    logData = {
+        'newDataPoint' : newDataPointModel
+    }
+
+    return formattedResponse(data=logData)
