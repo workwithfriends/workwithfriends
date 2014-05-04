@@ -18,7 +18,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -26,14 +25,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[_jobTable setTableHolder:self];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setSegueToChose: (int *) theSegue
+{
+    self.selectedIndex=(NSUInteger) theSegue;
 }
 
 /*
@@ -64,18 +66,4 @@
 }
  */
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"jobDetailsFromProfile"]) {
-        
-        // Get destination view
-        JobFormViewController *vc = [segue destinationViewController];
-        
-        // Pass the information to your destination view
-        [vc setRowSelected:((int *)_jobTable.rowSelected)];
-    }
-}
-- (void) performSegueJobs{
-    [self performSegueWithIdentifier:@"jobDetailsFromProfile" sender:self];
-}
 @end

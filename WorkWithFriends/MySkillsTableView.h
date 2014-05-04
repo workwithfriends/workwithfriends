@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GlobalVariables.h"
+#import "JobFormViewController.h"
 
-@interface MySkillsTableView : UITableView
-
+@interface MySkillsTableView : UITableViewController{
+    NSArray *skillsStringList;
+    NSInteger *rowSelected;
+    
+}
+- (NSArray *) skillsStringList;
+- (void) setSkillsStringList: (NSArray *)stringList;
+- (NSInteger *) rowSelected;
+- (void) setRowSelected: (NSInteger *)rowNumber;
 @end

@@ -13,14 +13,12 @@
 //@class SwitchViewController;
 
 @interface MyJobsTableView : UITableViewController{
-    NSMutableArray *jobStringList;
+    NSArray *jobStringList;
     NSInteger *rowSelected;
-    //SwitchViewController *tableHolder;
+
 }
-- (NSMutableArray *) jobStringList;
-- (void) setJobStringList: (NSMutableArray *)stringList;
+- (NSArray *) jobStringList;
+- (void) setJobStringList: (NSArray *)stringList;
 - (NSInteger *) rowSelected;
 - (void) setRowSelected: (NSInteger *)rowNumber;
-//- (SwitchViewController *) tableHolder;
-//- (void) setTableHolder: (SwitchViewController *)holder;
 @end

@@ -29,6 +29,12 @@
 - (UIImage*) profilePicture{
     return profilePicture;
 }
+- (UITabBarController*) destinationView{
+    return destinationView;
+}
+-(void) setDestinationView: (UITabBarController*) theController{
+    destinationView=theController;
+}
 - (void) setAboutMe: (NSDictionary*) me {
     aboutMe=[me valueForKey:@"aboutMe"];
 }
@@ -81,15 +87,20 @@
 }
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    //Saves the tabbarController
+    self.destinationView = [segue destinationViewController];
 }
-*/
+
+
+- (IBAction)jobsSkillsSwitch:(UISegmentedControl *)sender {
+    // Set the good tab index
+    [self.destinationView setSelectedIndex:[sender selectedSegmentIndex]];
+    }
 
 @end

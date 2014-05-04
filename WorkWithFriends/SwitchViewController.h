@@ -8,16 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MyJobsTableView.h"
-#import "MySkillsTableView.h"
-@class MyJobsTableView;
-@class MySkillsTableView;
 
-@interface SwitchViewController : UIViewController
-- (IBAction)switchButton:(id)sender;
-- (void) performSegueJobs;
 
-@property (strong, nonatomic) IBOutlet MyJobsTableView *jobTable;
-@property (strong, nonatomic) IBOutlet MySkillsTableView *skillsTable;
+@interface SwitchViewController : UITabBarController
+{
+    int* segueToChose;
+}
+- (int*) segueToChose;
+- (void) setSegueToChose: (int*) theSegue;
 
 @end
 

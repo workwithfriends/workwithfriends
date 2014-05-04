@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SwitchViewController.h"
 #import "GlobalVariables.h"
 
 
@@ -17,6 +18,8 @@
     NSString* aboutMe;
     NSArray* mySkills;
     UIImage* profilePicture;
+    UITabBarController* destinationView;
+    
 }
 
 - (NSString*) aboutMe;
@@ -24,6 +27,8 @@
 - (NSString*) firstName;
 - (NSString*) lastName;
 - (UIImage*) profilePicture;
+- (UITabBarController*) destinationView;
+-(void) setDestinationView: (UITabBarController*) theController;
 - (void) setAboutMe:(NSDictionary*) me;
 - (void) setMySkills:(NSDictionary*) me;
 - (void) setFirstName:(NSDictionary*) me;
@@ -34,5 +39,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *firstNameLabel;
 @property (weak, nonatomic) IBOutlet UITextView *aboutMeLabel;
+- (IBAction)jobsSkillsSwitch:(UISegmentedControl *)sender;
 
 @end
