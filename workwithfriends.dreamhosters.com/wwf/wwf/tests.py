@@ -19,8 +19,7 @@ TEST_JOB = {"type": "photography", "skills": ["photography", "writer"],
 
 
 def responseIsSuccess(response):
-    lenToRemove = len('Content-Type: application/json')
-    obj = json.loads(str(response)[lenToRemove:])
+    obj = getResponseObject(response)
     return not obj['isError']
 
 

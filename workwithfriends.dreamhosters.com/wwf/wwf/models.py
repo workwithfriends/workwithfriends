@@ -81,3 +81,13 @@ class NewsFeed(models.Model):
 
     def __unicode__(self):
         return str(self.account) + ' ' + str(self.type)
+
+class DataPoint(models.Model):
+    account = models.ForeignKey(Account)
+    action = models.CharField(max_length=200)
+    currentState = models.CharField(max_length=200, default='')
+    nextState = models.CharField(max_length=200, default='')
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return str(self.account) + ', ' + str(self.action)
