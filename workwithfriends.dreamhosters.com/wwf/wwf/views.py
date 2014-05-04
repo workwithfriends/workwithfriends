@@ -233,7 +233,7 @@ def getUserModel(account):
     # get skills
     skills = None if not UserSkill.objects.filter(
         account=account).exists() else formatSkills(
-        UserSkill.objects.get(account=account), hasStrength=True)
+        UserSkill.objects.filter(account=account), hasStrength=True)
 
     userModel = {
         'userId': userId,
@@ -878,7 +878,7 @@ def getPostedJobs(request):
 
         # get user's immediate friends that have an account
         for friend in friendsDegreeOne:
-            if (Account.objects.filter(userId=friend['id']).exists()):
+            if Account.objects.filter(userId=friend['id']).exists():
                 validPeople[friend['id']] = friend['name']
 
         '''
