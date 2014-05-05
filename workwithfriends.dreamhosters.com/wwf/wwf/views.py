@@ -289,9 +289,14 @@ def loginWithFacebook(request):
 
         profileImageUrl = userInfo['picture']['data']['url']
 
-        aboutMe = None
-        skills = None
-        jobs = None
+        aboutMe = ''
+        skills = []
+        jobs = {
+            'postedJobs': None,
+            'currentJobsAsEmployee': None,
+            'currentJobsAsEmployer': None,
+            'completedJobs': None
+        }
         account.firstName = firstName
         account.lastName = lastName
         account.save()
@@ -399,11 +404,11 @@ def addSkillsToAccount(request):
 
     userId = request['userId']
     print str(request['skills'])
-    skills = json.loads(request['skills'])
+    skills = json.loads(request['skills'])[::-1]
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
-
+        UserSkill.objects.filter(account=account).delete()
         # add skills to account
         for skill in skills:
             addSkillToAccount(skill, account)
@@ -412,7 +417,8 @@ def addSkillsToAccount(request):
 
         updatedUserSkills = formatSkills(
             UserSkill.objects.filter(account=account),
-            hasStrength=True)
+            hasStrength=True
+        )
 
         pushUpdateToNewsFeed(
             account=account,
