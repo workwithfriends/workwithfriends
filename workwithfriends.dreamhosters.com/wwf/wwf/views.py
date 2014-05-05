@@ -1048,8 +1048,8 @@ def getNewsfeed(request):
                                            .get(account=friendAccount)
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
-                    'newsfeedItemTime': celendar.timegm(newsfeedItem
-                        .timeCreated.utctimetuple()),
+                    'newsfeedItemTime': int(calendar.timegm(newsfeedItem
+                        .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
 
