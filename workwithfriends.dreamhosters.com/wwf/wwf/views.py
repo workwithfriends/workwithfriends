@@ -399,7 +399,7 @@ def addSkillsToAccount(request):
 
     userId = request['userId']
     print str(request['skills'])
-    skills = json.loads(request['skills'])
+    skills = json.loads(request['skills'])[::-1]
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
@@ -412,7 +412,8 @@ def addSkillsToAccount(request):
 
         updatedUserSkills = formatSkills(
             UserSkill.objects.filter(account=account),
-            hasStrength=True)
+            hasStrength=True
+        )
 
         pushUpdateToNewsFeed(
             account=account,
