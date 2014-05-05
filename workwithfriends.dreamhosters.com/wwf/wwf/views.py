@@ -233,7 +233,7 @@ def getUserModel(account):
     # get skills
     skills = None if not UserSkill.objects.filter(
         account=account).exists() else formatSkills(
-        UserSkill.objects.get(account=account), hasStrength=True)
+        UserSkill.objects.filter(account=account), hasStrength=True)
 
     userModel = {
         'userId': userId,
@@ -878,7 +878,7 @@ def getPostedJobs(request):
 
         # get user's immediate friends that have an account
         for friend in friendsDegreeOne:
-            if (Account.objects.filter(userId=friend['id']).exists()):
+            if Account.objects.filter(userId=friend['id']).exists():
                 validPeople[friend['id']] = friend['name']
 
         '''
@@ -1031,7 +1031,7 @@ def getNewsfeed(request):
 
     # get newsfeed updates from friends with app
     for friendId in friendsWithAppById:
-        friendAccount = Account.objects.get(userid=friendId)
+        friendAccount = Account.objects.get(userId=friendId)
 
         if NewsFeed.objects.filter(account=friendAccount).exists():
 
@@ -1040,6 +1040,8 @@ def getNewsfeed(request):
             for newsfeedItem in friendNewsfeedItems:
                 newsfeed.append({
                     'userId': str(friendAccount.userId),
+                    'userFirstName': str(friendAccount.firstName),
+                    'userLastName': str(friendAccount.lastName),
                     'profileImageUrl': str(ProfileImage
                                            .objects
                                            .get(account=friendAccount)
