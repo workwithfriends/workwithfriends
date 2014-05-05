@@ -20,13 +20,13 @@
     return self;
 }
 
-- (NSArray *) skillsStringList{
+- (NSMutableArray *) skillsStringList{
     return skillsStringList;
 }
 - (NSMutableArray *) skillsStrengthsList{
     return skillsStrengthsList;
 }
-- (void) setSkillsStringList: (NSArray *)stringList{
+- (void) setSkillsStringList: (NSMutableArray *)stringList{
     skillsStringList=stringList;
 }
 - (void) setSkillsStrengthsList: (NSMutableArray *)stringList{
@@ -54,7 +54,7 @@
             [skillsStrings addObject:skillString];
             [skillsStrengths addObject:skillStrength];
         }
-        self.skillsStringList=[NSArray arrayWithArray:skillsStrings];
+        self.skillsStringList=[NSMutableArray arrayWithArray:skillsStrings];
         self.skillsStrengthsList=[NSMutableArray arrayWithArray:skillsStrengths];
     }
 }
@@ -81,14 +81,13 @@
 {
     static NSString *MyIdentifier = @"editSkillCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    if (cell == nil)
-        cell = [[UITableViewCell alloc]
+    cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     // Configure the cell
     NSString *theSkillString = [self.skillsStringList objectAtIndex:indexPath.row];
     NSString *theSkillStrength = [self.skillsStrengthsList objectAtIndex:indexPath.row];
-    UILabel *labelOne = [[UILabel alloc]initWithFrame:CGRectMake(20, 22, 100, 20)];
-    labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(80, 22, 140, 20)];
+    UILabel *labelOne = [[UILabel alloc]initWithFrame:CGRectMake(20, 22, 140, 20)];
+    labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(100, 22, 100, 20)];
     
     labelOne.text = theSkillString;
     labelTwo.textAlignment = UITextAlignmentRight;
@@ -97,7 +96,6 @@
     labelTwo.tag=456;
     stepper = [[UIStepper alloc] init];
     stepper.frame = CGRectMake(220, 10, 160, 10);
-    stepper.transform = CGAffineTransformMakeScale(0.5, 0.5);
     stepper.value=[labelTwo.text intValue];
     [stepper addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventValueChanged];
     [cell.contentView addSubview: stepper];

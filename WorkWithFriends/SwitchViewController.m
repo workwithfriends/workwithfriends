@@ -25,6 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tabBar.hidden=YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,21 +50,5 @@
 }
 */
 
-/*
-- (IBAction)switchButton:(id)sender {
-    switch ([sender selectedSegmentIndex]){
-        case 0:
-            _jobTable.hidden=NO;
-            _skillsTable.hidden=YES;
-            break;
-        case 1:
-            _jobTable.hidden=YES;
-            _skillsTable.hidden=NO;
-            break;
-        default:
-            break;
-    }
-}
- */
 
 @end

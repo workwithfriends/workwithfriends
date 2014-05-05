@@ -11,7 +11,7 @@
 #import "JobFormViewController.h"
 
 @interface EditMySkillsTableViewController : UITableViewController{
-    NSArray *skillsStringList;
+    NSMutableArray *skillsStringList;
     NSMutableArray *skillsStrengthsList;
     NSInteger *rowSelected;
     UILabel *labelTwo;
@@ -19,8 +19,8 @@
     
 }
 - (void)changeValue:(UIStepper *)sender;
-- (NSArray *) skillsStringList;
-- (void) setSkillsStringList: (NSArray *)stringList;
+- (NSMutableArray *) skillsStringList;
+- (void) setSkillsStringList: (NSMutableArray *)stringList;
 - (NSMutableArray *) skillsStrengthsList;
 - (void) setSkillsStrengthsList: (NSMutableArray *)stringList;
 - (NSInteger *) rowSelected;
