@@ -1,14 +1,14 @@
 //
-//  MySkillsTableView.m
+//  EditMySkillsTableViewController.m
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/8/14.
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
-#import "MySkillsTableView.h"
+#import "EditMySkillsTableViewController.h"
 
-@implementation MySkillsTableView
+@implementation EditMySkillsTableViewController
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -79,7 +79,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"skillCell";
+    static NSString *MyIdentifier = @"editSkillCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     if (cell == nil)
         cell = [[UITableViewCell alloc]
@@ -87,14 +87,17 @@
     // Configure the cell
     NSString *theSkillString = [self.skillsStringList objectAtIndex:indexPath.row];
     NSString *theSkillStrength = [self.skillsStrengthsList objectAtIndex:indexPath.row];
-    UILabel *labelOne = [[UILabel alloc]initWithFrame:CGRectMake(20, 22, 140, 20)];
-    UILabel *labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(160, 22, 140, 20)];
+    UILabel *labelOne = [[UILabel alloc]initWithFrame:CGRectMake(20, 22, 100, 20)];
+    UILabel *labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(80, 22, 140, 20)];
     
     labelOne.text = theSkillString;
     labelTwo.textAlignment = UITextAlignmentRight;
     labelTwo.text = theSkillStrength;
     labelTwo.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
-    
+    UIStepper* stepper = [[UIStepper alloc] init];
+    stepper.frame = CGRectMake(220, 10, 160, 10);
+    stepper.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    [cell.contentView addSubview: stepper];
     [cell.contentView addSubview:labelOne];
     [cell.contentView addSubview:labelTwo];
     return cell;

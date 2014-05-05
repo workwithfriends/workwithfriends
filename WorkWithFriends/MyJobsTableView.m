@@ -22,9 +22,13 @@
 - (NSArray *) jobStringList{
     return jobStringList;
 }
+- (NSInteger *) sectionLength{
+    return sectionLength;
+}
 - (void) setJobStringList: (NSArray *)stringList{
     jobStringList=stringList;
 }
+
 - (NSInteger *) rowSelected{
     return rowSelected;
 }
@@ -46,18 +50,14 @@
             NSString *jobString=[NSString stringWithFormat: @"You hired %@ as a %@", [[myCurrentJobsAsEmployer objectAtIndex: i] valueForKey:@"employeeFirstName"], [[myCurrentJobsAsEmployer objectAtIndex: i] valueForKey:@"type"]];
             [theJobStringList addObject:jobString];
         }
+        self.sectionLength[0]=[myCurrentJobsAsEmployer count];
     }
     if (myCurrentJobsAsEmployee != [NSNull null]){
         for(NSDictionary *job in myCurrentJobsAsEmployee){
             NSString *jobString=[NSString stringWithFormat: @"%@ hired you as a %@ !", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"]];
             [theJobStringList addObject:jobString];
         }
-    }
-    if (myCompletedJobs != [NSNull null]){
-        for(NSDictionary *job in myCompletedJobs){
-            NSString *jobString=[NSString stringWithFormat: @"You have completed a job for %@", [job valueForKey:@"employerFirstName"]];
-            [theJobStringList addObject:jobString];
-        }
+        self.sectionLength[1]=[myCurrentJobsAsEmployee count];
     }
     if (myPostedJobs != [NSNull null]){
         for(NSDictionary *job in myPostedJobs){
@@ -65,8 +65,15 @@
             NSLog(@"%@",jobString);
             [theJobStringList addObject:jobString];
         }
+        self.sectionLength[2]=[myPostedJobs count];
     }
-    NSLog(@"This code has run succesfully");
+    if (myCompletedJobs != [NSNull null]){
+        for(NSDictionary *job in myCompletedJobs){
+            NSString *jobString=[NSString stringWithFormat: @"You have completed a job for %@", [job valueForKey:@"employerFirstName"]];
+            [theJobStringList addObject:jobString];
+        }
+        self.sectionLength[3]=[myCompletedJobs count];
+    }
     self.jobStringList=[NSArray arrayWithArray:theJobStringList];
 }
 
@@ -82,11 +89,6 @@
     return 3;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [self.jobStringList count];
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,7 +122,23 @@
  {
  }
  */
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section==0)
+        return @"Current jobs as employer";
+    else if(section==1)
+        return @"Current jobs as employee";
+    else if(section==2)
+        return @"My posted jobs";
+    else if(section==3)
+        return @"Completed jobs";
+    return nil;
+}
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.sectionLength[section];
+}
 
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath

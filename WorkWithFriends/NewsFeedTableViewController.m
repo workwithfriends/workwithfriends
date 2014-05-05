@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
+
 #import "NewsFeedTableViewController.h"
+#import "RequestToServer.h"
 
 @interface NewsFeedTableViewController ()
 
@@ -18,11 +20,17 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
 
+- (NSInteger*) rowSelected{
+    return rowSelected;
+}
+- (void) setRowSelected:(NSInteger *) row{
+    rowSelected=row;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,6 +40,71 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    RequestToServer *newsFeedRequest = [[RequestToServer alloc] init];
+    [newsFeedRequest setRequestType:@"getNewsfeed"];
+    NSDictionary *data = [newsFeedRequest makeRequest];
+    newsfeedItems = [data valueForKey:@"newsfeed"];
+    newsfeedItemsStringList = [[NSMutableArray alloc] init];
+    newsfeedPictures = [[NSMutableArray alloc] init];
+    for(NSDictionary *newsfeedItem in newsfeedItems){
+        NSString *type = [newsfeedItem valueForKey:@"newsfeedItemType"];
+        NSString *newsfeedItemString;
+        NSString *fullName = [NSString stringWithFormat:@"%@ %@", [newsfeedItem valueForKey:@"userFirstName"], [newsfeedItem valueForKey:@"userLastName"]];
+        if ([type isEqualToString:@"postedJob"]) {
+            newsfeedItemString = [NSString stringWithFormat: @"%@ posted a job.", fullName];
+            [newsfeedItemsStringList addObject:newsfeedItemString];
+            [newsfeedPictures addObject: [newsfeedItem valueForKey:@"profileImageUrl"]];
+        }
+        else if ([type isEqualToString:@"completedJob"]) {
+            newsfeedItemString = [NSString stringWithFormat: @"%@ completed a job.", fullName];
+            [newsfeedItemsStringList addObject:newsfeedItemString];
+            [newsfeedPictures addObject: [newsfeedItem valueForKey:@"profileImageUrl"]];
+        }
+        else if ([type isEqualToString:@"updatedAboutMe"]) {
+            newsfeedItemString = [NSString stringWithFormat: @"%@ updated his about me.", fullName];
+            [newsfeedItemsStringList addObject:newsfeedItemString];
+            [newsfeedPictures addObject: [newsfeedItem valueForKey:@"profileImageUrl"]];
+        }
+    }
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh)
+             forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
+    
+}
+
+-(void)refresh {
+    NSLog(@"Yay Refreshed");
+    RequestToServer *newsFeedRequest = [[RequestToServer alloc] init];
+    [newsFeedRequest setRequestType:@"getNewsfeed"];
+    NSDictionary *data = [newsFeedRequest makeRequest];
+    newsfeedItems = [data valueForKey:@"newsfeed"];
+    newsfeedItemsStringList = [[NSMutableArray alloc] init];
+    for(NSDictionary *newsfeedItem in newsfeedItems){
+        NSString *type = [newsfeedItem valueForKey:@"newsfeedItemType"];
+        NSString *newsfeedItemString;
+        NSString *fullName = [NSString stringWithFormat:@"%@ %@", [newsfeedItem valueForKey:@"userFirstName"], [newsfeedItem valueForKey:@"userLastName"]];
+        if ([type isEqualToString:@"postedJob"]) {
+            newsfeedItemString = [NSString stringWithFormat: @"%@ posted a job.", fullName];
+            [newsfeedItemsStringList addObject:newsfeedItemString];
+            [newsfeedPictures addObject: [newsfeedItem valueForKey:@"profileImageUrl"]];
+        }
+        else if ([type isEqualToString:@"completedJob"]) {
+            newsfeedItemString = [NSString stringWithFormat: @"%@ completed a job.", fullName];
+            [newsfeedItemsStringList addObject:newsfeedItemString];
+            [newsfeedPictures addObject: [newsfeedItem valueForKey:@"profileImageUrl"]];
+        }
+        else if ([type isEqualToString:@"updatedAboutMe"]) {
+            newsfeedItemString = [NSString stringWithFormat: @"%@ updated his about me.", fullName];
+            [newsfeedItemsStringList addObject:newsfeedItemString];
+            [newsfeedPictures addObject: [newsfeedItem valueForKey:@"profileImageUrl"]];
+        }
+    }
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,76 +117,36 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [newsfeedItemsStringList count];
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 54;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsfeedItem" forIndexPath:indexPath];
     
+    NSString *cellTextName= [newsfeedItemsStringList objectAtIndex:indexPath.row];
+    cell.textLabel.text = cellTextName;
+    cell.textLabel.font = [cell.textLabel.font fontWithSize:12.0];
+    
+    NSString *urlString=[newsfeedPictures objectAtIndex:indexPath.row];
+    NSURL *imageURL=[NSURL URLWithString:urlString];
+    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
     // Configure the cell...
-    
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -62,7 +62,12 @@
     [request setShouldUseRFC2616RedirectBehaviour:YES];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
-    [request startSynchronous];
+    if (![self.requestType isEqualToString:@"loginWithFacebook"]){
+        [request startSynchronous];
+    }
+    else{
+        [request startSynchronous];
+    }
     NSError *error = [request error];
     if (!error) {
         NSString *response = [request responseString];
