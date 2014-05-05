@@ -289,9 +289,14 @@ def loginWithFacebook(request):
 
         profileImageUrl = userInfo['picture']['data']['url']
 
-        aboutMe = None
-        skills = None
-        jobs = None
+        aboutMe = ''
+        skills = []
+        jobs = {
+            'postedJobs': None,
+            'currentJobsAsEmployee': None,
+            'currentJobsAsEmployer': None,
+            'completedJobs': None
+        }
         account.firstName = firstName
         account.lastName = lastName
         account.save()
