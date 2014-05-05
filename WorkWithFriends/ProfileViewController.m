@@ -94,7 +94,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     //Saves the tabbarController
-    self.destinationView = [segue destinationViewController];
+    if (self.destinationView==nil){
+        self.destinationView = [segue destinationViewController];
+    }
 }
 
 
