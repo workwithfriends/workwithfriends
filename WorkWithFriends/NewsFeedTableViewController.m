@@ -127,12 +127,19 @@
     return [newsfeedItemsStringList count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 54;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsfeedItem" forIndexPath:indexPath];
     
     NSString *cellTextName= [newsfeedItemsStringList objectAtIndex:indexPath.row];
     cell.textLabel.text = cellTextName;
+    cell.textLabel.font = [cell.textLabel.font fontWithSize:12.0];
+    
     NSString *urlString=[newsfeedPictures objectAtIndex:indexPath.row];
     NSURL *imageURL=[NSURL URLWithString:urlString];
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
@@ -140,13 +147,6 @@
     return cell;
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.rowSelected=(NSInteger *)indexPath.row;
-    [self performSegueWithIdentifier:@"jobDetails" sender:self];
-    
-}
 
 
 @end
