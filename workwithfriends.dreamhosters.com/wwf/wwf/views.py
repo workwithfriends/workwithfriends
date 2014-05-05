@@ -9,6 +9,7 @@ from django_facebook.auth_backends import FacebookBackend
 import json
 import time
 import ast
+import calendar
 
 FBAuth = FacebookAuthorization
 FBOpen = OpenFacebook
@@ -397,6 +398,7 @@ def addSkillsToAccount(request):
     request = request.POST
 
     userId = request['userId']
+    print str(request['skills'])
     skills = json.loads(request['skills'])
 
     if Account.objects.filter(userId=userId).exists():
@@ -407,11 +409,16 @@ def addSkillsToAccount(request):
             addSkillToAccount(skill, account)
 
         # push skills to newsfeed
+
+        updatedUserSkills = formatSkills(
+            UserSkill.objects.filter(account=account),
+            hasStrength=True)
+
         pushUpdateToNewsFeed(
             account=account,
             updateType=NEWSFEED_SKILLS_UPDATE_TYPE,
             updateData={
-                'skillsAdded': skills
+                'skillsAdded': updatedUserSkills
             }
         )
 
@@ -419,8 +426,7 @@ def addSkillsToAccount(request):
         return formattedResponse(isError=True, errorMessage='Unknown user')
 
     userSkills = {
-        'skills': formatSkills(UserSkill.objects.filter(account=account),
-                               hasStrength=True)
+        'skills': updatedUserSkills
     }
     return formattedResponse(data=userSkills)
 
@@ -1022,7 +1028,8 @@ def getNewsfeed(request):
                                            .get(account=account)
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
-                    'newsfeedItemTime': str(newsfeedItem.timeCreated),
+                    'newsfeedItemTime': int(calendar.timegm(newsfeedItem
+                                                            .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
     else:
@@ -1047,12 +1054,14 @@ def getNewsfeed(request):
                                            .get(account=friendAccount)
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
-                    'newsfeedItemTime': str(newsfeedItem.timeCreated),
+                    'newsfeedItemTime': int(calendar.timegm(newsfeedItem
+                                                            .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
 
     newsfeedResponseObject = {
-        'newsfeed': newsfeed
+        'newsfeed': sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
+            'newsfeedItemTime'])[::-1]
     }
 
     return formattedResponse(data=newsfeedResponseObject)
@@ -1155,7 +1164,7 @@ def logAction(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     logData = {
-        'newDataPoint' : newDataPointModel
+        'newDataPoint': newDataPointModel
     }
 
     return formattedResponse(data=logData)
