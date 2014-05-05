@@ -1,5 +1,5 @@
 //
-//  MySkillsTableView.h
+//  EditMySkillsTableViewController.h
 //  WorkWithFriends
 //
 //  Created by Jeremy Wohlwend on 4/8/14.
@@ -10,7 +10,7 @@
 #import "GlobalVariables.h"
 #import "JobFormViewController.h"
 
-@interface MySkillsTableView : UITableViewController{
+@interface EditMySkillsTableViewController : UITableViewController{
     NSArray *skillsStringList;
     NSArray *skillsStrengthsList;
     NSInteger *rowSelected;
