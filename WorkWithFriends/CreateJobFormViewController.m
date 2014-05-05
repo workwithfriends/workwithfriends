@@ -33,9 +33,15 @@
     NSURL *profileURL = [NSURL URLWithString:[globals.ME valueForKey:@"profileImageUrl"]];
     _myProfilePicture.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
     
-    
-    
 }
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_type resignFirstResponder];
+    [_skills resignFirstResponder];
+    [_description resignFirstResponder];
+    [_compensation resignFirstResponder];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

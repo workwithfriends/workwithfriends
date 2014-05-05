@@ -71,6 +71,13 @@
 
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_theNewSkill resignFirstResponder];
+    [_theNewRate resignFirstResponder];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -133,5 +140,7 @@
     _theNewSkill.text=@"";
     _theNewRate.text=@"";
     [self.mySkillsTable.tableView reloadData];
+    [_theNewSkill resignFirstResponder];
+    [_theNewRate resignFirstResponder];
 }
 @end
