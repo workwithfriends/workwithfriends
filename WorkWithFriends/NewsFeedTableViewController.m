@@ -83,6 +83,7 @@
     NSDictionary *data = [newsFeedRequest makeRequest];
     newsfeedItems = [data valueForKey:@"newsfeed"];
     newsfeedItemsStringList = [[NSMutableArray alloc] init];
+    newsfeedPictures = [[NSMutableArray alloc] init];
     for(NSDictionary *newsfeedItem in newsfeedItems){
         NSString *type = [newsfeedItem valueForKey:@"newsfeedItemType"];
         NSString *newsfeedItemString;
@@ -129,7 +130,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 54;
+    return 56;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
