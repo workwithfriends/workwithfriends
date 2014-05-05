@@ -99,8 +99,7 @@
 {
     static NSString *MyIdentifier = @"skillCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    if (cell == nil)
-        cell = [[UITableViewCell alloc]
+    cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     // Configure the cell
     NSString *theSkillString = [self.skillsStringList objectAtIndex:indexPath.row];
@@ -112,7 +111,6 @@
     labelTwo.textAlignment = UITextAlignmentRight;
     labelTwo.text = theSkillStrength;
     labelTwo.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
-    
     [cell.contentView addSubview:labelOne];
     [cell.contentView addSubview:labelTwo];
     return cell;
