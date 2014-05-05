@@ -64,7 +64,6 @@
 }
 
 -(void)refresh {
-    NSLog(@"Yay Refreshed");
     RequestToServer *jobsRequest = [[RequestToServer alloc] init];
     [jobsRequest setRequestType:@"getPostedJobs"];
     [jobsRequest addParameter:@"query" withValue:@""];
