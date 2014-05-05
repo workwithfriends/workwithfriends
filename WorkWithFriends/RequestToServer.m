@@ -30,7 +30,7 @@
 - (void) setParameterDict{
     parameterDict = [[NSMutableDictionary alloc] init];
 }
-- (void) addParameter:(NSString *)key withValue:(NSString *)value{
+- (void) addParameter:(NSString *)key withValue:(NSObject *)value{
     [self.parameterDict setValue:value forKey:key];
 }
 -(NSDictionary*)makeRequest{

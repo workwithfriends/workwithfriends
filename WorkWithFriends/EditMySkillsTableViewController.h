@@ -12,14 +12,17 @@
 
 @interface EditMySkillsTableViewController : UITableViewController{
     NSArray *skillsStringList;
-    NSArray *skillsStrengthsList;
+    NSMutableArray *skillsStrengthsList;
     NSInteger *rowSelected;
+    UILabel *labelTwo;
+    UIStepper *stepper;
     
 }
+- (void)changeValue:(UIStepper *)sender;
 - (NSArray *) skillsStringList;
 - (void) setSkillsStringList: (NSArray *)stringList;
-- (NSArray *) skillsStrengthsList;
-- (void) setSkillsStrengthsList: (NSArray *)stringList;
+- (NSMutableArray *) skillsStrengthsList;
+- (void) setSkillsStrengthsList: (NSMutableArray *)stringList;
 - (NSInteger *) rowSelected;
 - (void) setRowSelected: (NSInteger *)rowNumber;
 @end

@@ -22,7 +22,7 @@
 - (NSMutableDictionary*) parameterDict;
 - (void) setRequestType:(NSString*) type;
 - (void) setParameterDict;
-- (void) addParameter:(NSString *)key withValue:(NSString *)value;
+- (void) addParameter:(NSString *)key withValue:(NSObject *)value;
 - (NSDictionary*) makeRequest;
 
 @end
