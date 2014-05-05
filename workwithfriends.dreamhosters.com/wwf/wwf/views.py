@@ -1047,7 +1047,7 @@ def getNewsfeed(request):
                                            .get(account=friendAccount)
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
-                    'newsfeedItemTime': str(newsfeedItem.timeCreated),
+                    'newsfeedItemTime': newsfeedItem.timeCreated,
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
 
