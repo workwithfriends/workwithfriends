@@ -77,7 +77,6 @@
 }
 
 -(void)refresh {
-    NSLog(@"Yay Refreshed");
     RequestToServer *newsFeedRequest = [[RequestToServer alloc] init];
     [newsFeedRequest setRequestType:@"getNewsfeed"];
     NSDictionary *data = [newsFeedRequest makeRequest];
@@ -126,6 +125,10 @@
 {
     // Return the number of rows in the section.
     return [newsfeedItemsStringList count];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
