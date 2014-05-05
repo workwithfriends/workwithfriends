@@ -1052,7 +1052,8 @@ def getNewsfeed(request):
                 })
 
     newsfeedResponseObject = {
-        'newsfeed': newsfeed
+        'newsfeed': sorted(newsfeed, lambda newsfeedItem: newsfeedItem[
+            'newsfeedItemTime'])
     }
 
     return formattedResponse(data=newsfeedResponseObject)
