@@ -1040,6 +1040,8 @@ def getNewsfeed(request):
             for newsfeedItem in friendNewsfeedItems:
                 newsfeed.append({
                     'userId': str(friendAccount.userId),
+                    'userFirstName': str(friendAccount.firstName),
+                    'userLastName': str(friendAccount.lastName),
                     'profileImageUrl': str(ProfileImage
                                            .objects
                                            .get(account=friendAccount)
