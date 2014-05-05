@@ -50,7 +50,7 @@
     for(NSDictionary *newsfeedItem in newsfeedItems){
         NSString *type = [newsfeedItem valueForKey:@"newsfeedItemType"];
         NSString *newsfeedItemString;
-        NSString *fullName = [NSString stringWithFormat:@"%@ %@", [newsfeedItem valueForKey:@"userFirstName"], [newsfeedItem valueForKey:@"userLastName"]];
+        NSString *fullName = [NSString stringWithFormat:@"%@ %@", [newsfeedItem valueForKey:@"userFirstName"], [[newsfeedItem valueForKey:@"userLastName"] substringToIndex:1]];
         if ([type isEqualToString:@"postedJob"]) {
             newsfeedItemString = [NSString stringWithFormat: @"%@ posted a job.", fullName];
             [newsfeedItemsStringList addObject:newsfeedItemString];
