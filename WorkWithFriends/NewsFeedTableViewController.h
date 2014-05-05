@@ -9,5 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface NewsFeedTableViewController : UITableViewController
-
+{
+    NSArray *newsfeedItems;
+    NSMutableArray *newsfeedItemsStringList;
+    NSInteger *rowSelected;
+    NSMutableArray *newsfeedPictures;
+}
+- (NSInteger*) rowSelected;
+- (void) setRowSelected:(NSInteger *) row;
+-(void)refresh;
 @end
