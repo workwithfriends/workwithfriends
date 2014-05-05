@@ -1023,7 +1023,8 @@ def getNewsfeed(request):
                                            .get(account=account)
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
-                    'newsfeedItemTime': str(newsfeedItem.timeCreated),
+                    'newsfeedItemTime': int(calendar.timegm(newsfeedItem
+                                                            .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
     else:
@@ -1049,7 +1050,7 @@ def getNewsfeed(request):
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
                     'newsfeedItemTime': int(calendar.timegm(newsfeedItem
-                        .timeCreated.utctimetuple())),
+                                                            .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
 
@@ -1158,7 +1159,7 @@ def logAction(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     logData = {
-        'newDataPoint' : newDataPointModel
+        'newDataPoint': newDataPointModel
     }
 
     return formattedResponse(data=logData)
