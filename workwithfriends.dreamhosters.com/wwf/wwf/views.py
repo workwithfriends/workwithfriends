@@ -9,6 +9,7 @@ from django_facebook.auth_backends import FacebookBackend
 import json
 import time
 import ast
+import calendar
 
 FBAuth = FacebookAuthorization
 FBOpen = OpenFacebook
@@ -1047,7 +1048,8 @@ def getNewsfeed(request):
                                            .get(account=friendAccount)
                                            .profileImageUrl),
                     'newsfeedItemType': str(newsfeedItem.type),
-                    'newsfeedItemTime': newsfeedItem.timeCreated,
+                    'newsfeedItemTime': celendar.timegm(newsfeedItem
+                        .timeCreated.utctimetuple()),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
 
