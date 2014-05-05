@@ -1031,7 +1031,7 @@ def getNewsfeed(request):
 
     # get newsfeed updates from friends with app
     for friendId in friendsWithAppById:
-        friendAccount = Account.objects.get(userid=friendId)
+        friendAccount = Account.objects.get(userId=friendId)
 
         if NewsFeed.objects.filter(account=friendAccount).exists():
 
