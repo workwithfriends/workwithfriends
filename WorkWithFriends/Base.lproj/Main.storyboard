@@ -862,51 +862,23 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="who's good at:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8a-Ar-jzM">
-                                <rect key="frame" x="22" y="241" width="136" height="21"/>
+                                <rect key="frame" x="22" y="224" width="136" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Compensation:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUS-LT-lfC">
-                                <rect key="frame" x="22" y="377" width="101" height="16"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="for:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUS-LT-lfC">
+                                <rect key="frame" x="167" y="389" width="28" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="and can help me:" translatesAutoresizingMaskIntoConstraints="NO" id="ri4-ht-8j2">
-                                <rect key="frame" x="20" y="305" width="138" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter Compensation" translatesAutoresizingMaskIntoConstraints="NO" id="8EU-jK-llS">
-                                <rect key="frame" x="146" y="369" width="165" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Skill 1, Skill 2, Skill 3, ..." translatesAutoresizingMaskIntoConstraints="NO" id="6Wc-BI-u40">
-                                <rect key="frame" x="51" y="263" width="226" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I need a:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-Cx-pa7">
-                                <rect key="frame" x="22" y="174" width="151" height="21"/>
+                                <rect key="frame" x="20" y="157" width="68" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="interactive" text="Enter Type" translatesAutoresizingMaskIntoConstraints="NO" id="3Oq-ss-Hok">
-                                <rect key="frame" x="51" y="198" width="249" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OeH-eX-qCg">
                                 <rect key="frame" x="0.0" y="465" width="320" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -936,7 +908,7 @@
                                 <rect key="frame" x="0.0" y="78" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bouncesZoom="NO" editable="NO" text="First Last Name" translatesAutoresizingMaskIntoConstraints="NO" id="6qE-fX-BG6">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bouncesZoom="NO" editable="NO" text="First Last Name" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6qE-fX-BG6">
                                         <rect key="frame" x="94" y="5" width="218" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -957,9 +929,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzV-vZ-0OJ">
                                         <rect key="frame" x="127" y="8" width="53" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="22"/>
                                         <state key="normal" title="Post">
-                                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="postButton:" destination="Xzw-I9-i2e" eventType="touchUpInside" id="uCT-Bt-Klx"/>
@@ -968,18 +940,50 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.36952134889999999" green="0.70116109100000001" blue="0.86894955839999999" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tutor, Babysitter, Designer" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qUc-wN-qA2">
+                                <rect key="frame" x="20" y="186" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Algebra, Salsa Dancing, Web Design" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dyu-vl-JgI">
+                                <rect key="frame" x="22" y="253" width="278" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Accomplish my Goal." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YHa-yT-YhS">
+                                <rect key="frame" x="20" y="320" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="and can help me:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oa6-Bb-74k">
+                                <rect key="frame" x="20" y="291" width="133" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Free" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oKg-5v-5dt">
+                                <rect key="frame" x="203" y="389" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="compensation" destination="8EU-jK-llS" id="4Ra-lq-IfI"/>
+                        <outlet property="compensation" destination="oKg-5v-5dt" id="G8k-Uk-FVk"/>
                         <outlet property="compensationLabel" destination="xUS-LT-lfC" id="x8B-Da-1us"/>
-                        <outlet property="description" destination="ri4-ht-8j2" id="4Ku-mZ-81k"/>
+                        <outlet property="description" destination="YHa-yT-YhS" id="G93-tA-PCF"/>
+                        <outlet property="descriptionLabel" destination="Oa6-Bb-74k" id="MG8-wc-1Vx"/>
                         <outlet property="myName" destination="6qE-fX-BG6" id="rJI-Wk-add"/>
                         <outlet property="myProfilePicture" destination="an6-vo-ss2" id="IcS-5h-35C"/>
-                        <outlet property="skills" destination="6Wc-BI-u40" id="4Fa-lj-TPW"/>
+                        <outlet property="skills" destination="dyu-vl-JgI" id="Y7u-6M-Ij5"/>
                         <outlet property="skillsLabel" destination="r8a-Ar-jzM" id="xIc-u3-R4y"/>
-                        <outlet property="type" destination="3Oq-ss-Hok" id="BzF-xB-kPl"/>
+                        <outlet property="type" destination="qUc-wN-qA2" id="si4-A8-kga"/>
                         <outlet property="typeLabel" destination="fd8-Cx-pa7" id="kSz-hj-oXq"/>
                     </connections>
                 </viewController>
