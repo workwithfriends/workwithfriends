@@ -133,6 +133,10 @@
     }   
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 56;
+}
 
 /*
 // Override to support rearranging the table view.
