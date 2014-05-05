@@ -23,8 +23,14 @@
 - (NSArray *) skillsStringList{
     return skillsStringList;
 }
+- (NSArray *) skillsStrengthsList{
+    return skillsStrengthsList;
+}
 - (void) setSkillsStringList: (NSArray *)stringList{
     skillsStringList=stringList;
+}
+- (void) setSkillsStrengthsList: (NSArray *)stringList{
+    skillsStrengthsList=stringList;
 }
 - (NSInteger *) rowSelected{
     return rowSelected;
@@ -39,15 +45,17 @@
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     NSArray *mySkills = [globals.ME objectForKey:@"skills"];
     NSMutableArray *skillsStrings = [[NSMutableArray alloc] init];
+    NSMutableArray *skillsStrengths = [[NSMutableArray alloc] init];
     self.skillsStringList=[[NSArray alloc]init];
     if (mySkills != [NSNull null]){
         for (NSDictionary *skill in mySkills){
             NSString *skillString = [skill valueForKey:@"skill"];
             NSString *skillStrength =[skill valueForKey:@"strength"];
-            NSString *newString=[[skillString stringByAppendingString:@"  %@"]stringByAppendingString:skillStrength];
-            [skillsStrings addObject:newString];
+            [skillsStrings addObject:skillString];
+            [skillsStrengths addObject:skillStrength];
         }
         self.skillsStringList=[NSArray arrayWithArray:skillsStrings];
+        self.skillsStrengthsList=[NSArray arrayWithArray:skillsStrengths];
     }
 }
 
@@ -77,9 +85,18 @@
         cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     // Configure the cell
-    NSString *cellValue = [self.skillsStringList objectAtIndex:indexPath.row];
-    cell.textLabel.text = cellValue;
+    NSString *theSkillString = [self.skillsStringList objectAtIndex:indexPath.row];
+    NSString *theSkillStrength = [self.skillsStrengthsList objectAtIndex:indexPath.row];
+    UILabel *labelOne = [[UILabel alloc]initWithFrame:CGRectMake(20, 22, 140, 20)];
+    UILabel *labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(160, 22, 140, 20)];
     
+    labelOne.text = theSkillString;
+    labelTwo.textAlignment = UITextAlignmentRight;
+    labelTwo.text = theSkillStrength;
+    labelTwo.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+    
+    [cell.contentView addSubview:labelOne];
+    [cell.contentView addSubview:labelTwo];
     return cell;
 }
 

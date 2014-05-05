@@ -12,11 +12,14 @@
 
 @interface MySkillsTableView : UITableViewController{
     NSArray *skillsStringList;
+    NSArray *skillsStrengthsList;
     NSInteger *rowSelected;
     
 }
 - (NSArray *) skillsStringList;
 - (void) setSkillsStringList: (NSArray *)stringList;
+- (NSArray *) skillsStrengthsList;
+- (void) setSkillsStrengthsList: (NSArray *)stringList;
 - (NSInteger *) rowSelected;
 - (void) setRowSelected: (NSInteger *)rowNumber;
 @end
