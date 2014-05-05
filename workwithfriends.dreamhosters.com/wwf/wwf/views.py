@@ -403,7 +403,7 @@ def addSkillsToAccount(request):
 
     if Account.objects.filter(userId=userId).exists():
         account = Account.objects.get(userId=userId)
-
+        UserSkill.objects.filter(account=account).delete()
         # add skills to account
         for skill in skills:
             addSkillToAccount(skill, account)
