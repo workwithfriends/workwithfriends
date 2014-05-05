@@ -65,8 +65,8 @@
     _profilePictureLabel.image = self.profilePicture;
     _firstNameLabel.text = [[self.firstName stringByAppendingString:@" "] stringByAppendingString:self.lastName];
     _aboutMeLabel.text = self.aboutMe;
-    _aboutMeLabel.layer.borderWidth = 2.0f;
-    _aboutMeLabel.layer.borderColor = [[UIColor grayColor] CGColor];
+    _aboutMeLabel.layer.borderWidth = 0.5f;
+    _aboutMeLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     _aboutMeLabel.layer.cornerRadius = 8;
 
 }
@@ -92,8 +92,6 @@
     if (self.mySkillsTable !=nil){
         NSMutableArray *newSkillArray=[[NSMutableArray alloc] init];
         for (int i=0; i < [self.mySkillsTable.skillsStringList count];i++){
-            NSLog([self.mySkillsTable.skillsStringList objectAtIndex:i]);
-            NSLog([self.mySkillsTable.skillsStrengthsList objectAtIndex:i]);
             NSMutableDictionary *newSkill=[[NSMutableDictionary alloc]init];
             [newSkill setValue:[self.mySkillsTable.skillsStringList objectAtIndex:i] forKey:@"skill"];
             [newSkill setValue:[self.mySkillsTable.skillsStrengthsList objectAtIndex:i] forKey:@"strength"];
@@ -121,5 +119,19 @@
             self.mySkillsTable=vc;
         }
     }
+}
+- (IBAction)addSkill:(id)sender {
+    if([_theNewRate.text intValue] > 10){
+        _theNewRate.text=@"10";
+    }
+    else if ([_theNewRate.text intValue] < 0){
+        _theNewRate.text=@"0";
+    }
+    [self.mySkillsTable.skillsStringList addObject:_theNewSkill.text];
+    
+    [self.mySkillsTable.skillsStrengthsList addObject:_theNewRate.text];
+    _theNewSkill.text=@"";
+    _theNewRate.text=@"";
+    [self.mySkillsTable.tableView reloadData];
 }
 @end

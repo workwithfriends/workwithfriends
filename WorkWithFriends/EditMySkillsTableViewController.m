@@ -20,13 +20,13 @@
     return self;
 }
 
-- (NSArray *) skillsStringList{
+- (NSMutableArray *) skillsStringList{
     return skillsStringList;
 }
 - (NSMutableArray *) skillsStrengthsList{
     return skillsStrengthsList;
 }
-- (void) setSkillsStringList: (NSArray *)stringList{
+- (void) setSkillsStringList: (NSMutableArray *)stringList{
     skillsStringList=stringList;
 }
 - (void) setSkillsStrengthsList: (NSMutableArray *)stringList{
@@ -54,7 +54,7 @@
             [skillsStrings addObject:skillString];
             [skillsStrengths addObject:skillStrength];
         }
-        self.skillsStringList=[NSArray arrayWithArray:skillsStrings];
+        self.skillsStringList=[NSMutableArray arrayWithArray:skillsStrings];
         self.skillsStrengthsList=[NSMutableArray arrayWithArray:skillsStrengths];
     }
 }

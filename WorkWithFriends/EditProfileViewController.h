@@ -19,7 +19,9 @@
     EditMySkillsTableViewController* mySkillsTable;
     UIImage* profilePicture;
 }
-
+- (IBAction)addSkill:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextField *theNewSkill;
+@property (strong, nonatomic) IBOutlet UITextField *theNewRate;
 - (NSString*) aboutMe;
 - (EditMySkillsTableViewController*) mySkillsTable;
 - (NSString*) firstName;
