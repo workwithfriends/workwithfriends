@@ -23,13 +23,13 @@
 - (NSArray *) skillsStringList{
     return skillsStringList;
 }
-- (NSArray *) skillsStrengthsList{
+- (NSMutableArray *) skillsStrengthsList{
     return skillsStrengthsList;
 }
 - (void) setSkillsStringList: (NSArray *)stringList{
     skillsStringList=stringList;
 }
-- (void) setSkillsStrengthsList: (NSArray *)stringList{
+- (void) setSkillsStrengthsList: (NSMutableArray *)stringList{
     skillsStrengthsList=stringList;
 }
 - (NSInteger *) rowSelected{
@@ -55,7 +55,7 @@
             [skillsStrengths addObject:skillStrength];
         }
         self.skillsStringList=[NSArray arrayWithArray:skillsStrings];
-        self.skillsStrengthsList=[NSArray arrayWithArray:skillsStrengths];
+        self.skillsStrengthsList=[NSMutableArray arrayWithArray:skillsStrengths];
     }
 }
 
@@ -88,18 +88,22 @@
     NSString *theSkillString = [self.skillsStringList objectAtIndex:indexPath.row];
     NSString *theSkillStrength = [self.skillsStrengthsList objectAtIndex:indexPath.row];
     UILabel *labelOne = [[UILabel alloc]initWithFrame:CGRectMake(20, 22, 100, 20)];
-    UILabel *labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(80, 22, 140, 20)];
+    labelTwo = [[UILabel alloc]initWithFrame:CGRectMake(80, 22, 140, 20)];
     
     labelOne.text = theSkillString;
     labelTwo.textAlignment = UITextAlignmentRight;
     labelTwo.text = theSkillStrength;
     labelTwo.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
-    UIStepper* stepper = [[UIStepper alloc] init];
+    labelTwo.tag=456;
+    stepper = [[UIStepper alloc] init];
     stepper.frame = CGRectMake(220, 10, 160, 10);
     stepper.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    stepper.value=[labelTwo.text intValue];
+    [stepper addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventValueChanged];
     [cell.contentView addSubview: stepper];
     [cell.contentView addSubview:labelOne];
     [cell.contentView addSubview:labelTwo];
+    [cell.contentView setTag:indexPath.row];
     return cell;
 }
 
@@ -136,4 +140,12 @@
     //[self.tableHolder performSegueJobs];
 }
 
+- (void)changeValue:(UIStepper *)sender {
+    double value = [sender value];
+    int row = [sender.superview tag];
+    NSString *newValue=[NSString stringWithFormat:@"%d",(int)value];
+    self.skillsStrengthsList[row]=newValue;
+    [(UILabel*)[(UITableViewCell *)sender.superview viewWithTag:456] setText:newValue];
+
+}
 @end

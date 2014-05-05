@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Jeremy Wohlwend. All rights reserved.
 //
 
-#import "EditProfileViewController.h"
 
+#import "EditProfileViewController.h"
 @interface EditProfileViewController ()
 
 @end
@@ -17,8 +17,8 @@
 - (NSString*) aboutMe{
     return aboutMe;
 }
-- (NSArray*) mySkills{
-    return mySkills;
+- (EditMySkillsTableViewController*) mySkillsTable{
+    return mySkillsTable;
 }
 - (NSString*) firstName{
     return firstName;
@@ -32,8 +32,8 @@
 - (void) setAboutMe: (NSDictionary*) me {
     aboutMe=[me valueForKey:@"aboutMe"];
 }
-- (void) setMySkills: (NSDictionary*) me{
-    mySkills=[NSArray arrayWithObjects:@"Maths",@"Soccer","blabla", nil];
+- (void) setMySkillsTable: (EditMySkillsTableViewController*) other{
+    mySkillsTable=other;
 }
 - (void) setProfilePicture: (NSDictionary*) me{
     NSURL *profileURL = [NSURL URLWithString:[me valueForKey:@"profileImageUrl"]];
@@ -83,10 +83,43 @@
     [modifyAboutMeRequest addParameter:@"aboutMe" withValue:_aboutMeLabel.text];
     [modifyAboutMeRequest setRequestType:@"addAboutMeToAccount"];
     NSDictionary *data = [modifyAboutMeRequest makeRequest];
+    
     if ([[data valueForKey:@"aboutMe"] isEqualToString :_aboutMeLabel.text]){
          [globals.ME setValue:_aboutMeLabel.text forKey:@"aboutMe"];
          [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
+    
+    if (self.mySkillsTable !=nil){
+        NSMutableArray *newSkillArray=[[NSMutableArray alloc] init];
+        for (int i=0; i < [self.mySkillsTable.skillsStringList count];i++){
+            NSLog([self.mySkillsTable.skillsStringList objectAtIndex:i]);
+            NSLog([self.mySkillsTable.skillsStrengthsList objectAtIndex:i]);
+            NSMutableDictionary *newSkill=[[NSMutableDictionary alloc]init];
+            [newSkill setValue:[self.mySkillsTable.skillsStringList objectAtIndex:i] forKey:@"skill"];
+            [newSkill setValue:[self.mySkillsTable.skillsStrengthsList objectAtIndex:i] forKey:@"strength"];
+            [newSkillArray addObject:newSkill];
+        }
+        RequestToServer *modifySkills = [[RequestToServer alloc] init];
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:newSkillArray
+                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        [modifySkills addParameter:@"skills" withValue:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
+        [modifySkills setRequestType:@"addSkillsToAccount"];
+        NSDictionary *data = [modifySkills makeRequest];
+        [globals.ME setValue:[data valueForKey:@"skills"] forKey:@"skills"];
+    }
 
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"skillsTable"]) {
+        
+        // Get destination view
+        if (self.mySkillsTable ==nil){
+            EditMySkillsTableViewController *vc = [segue destinationViewController];
+            self.mySkillsTable=vc;
+        }
+    }
 }
 @end

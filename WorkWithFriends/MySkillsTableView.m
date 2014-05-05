@@ -38,6 +38,24 @@
 - (void) setRowSelected: (NSInteger *)rowNumber{
     rowSelected=rowNumber;
 }
+-(void) viewDidAppear:(BOOL)animated{
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    NSArray *mySkills = [globals.ME objectForKey:@"skills"];
+    NSMutableArray *skillsStrings = [[NSMutableArray alloc] init];
+    NSMutableArray *skillsStrengths = [[NSMutableArray alloc] init];
+    self.skillsStringList=[[NSArray alloc]init];
+    if (mySkills != [NSNull null]){
+        for (NSDictionary *skill in mySkills){
+            NSString *skillString = [skill valueForKey:@"skill"];
+            NSString *skillStrength =[skill valueForKey:@"strength"];
+            [skillsStrings addObject:skillString];
+            [skillsStrengths addObject:skillStrength];
+        }
+        self.skillsStringList=[NSArray arrayWithArray:skillsStrings];
+        self.skillsStrengthsList=[NSArray arrayWithArray:skillsStrengths];
+    }
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad
 {

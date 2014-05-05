@@ -409,7 +409,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="nen-31-V9x" kind="embed" id="mlS-RZ-FXN"/>
+                                    <segue destination="nen-31-V9x" kind="embed" identifier="skillsTable" id="mlS-RZ-FXN"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -419,6 +419,7 @@
                         <outlet property="aboutMeLabel" destination="jet-DB-fy5" id="66c-zQ-HR6"/>
                         <outlet property="firstNameLabel" destination="Z4N-lb-m9c" id="TgD-uk-wTb"/>
                         <outlet property="profilePictureLabel" destination="MuR-kj-6ym" id="MhC-aH-SKu"/>
+                        <outlet property="skillsTable" destination="Pyy-4U-ZRA" id="Kfb-86-Gqo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dse-xx-CLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
