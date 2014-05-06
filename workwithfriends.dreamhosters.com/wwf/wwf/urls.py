@@ -78,8 +78,12 @@ urlpatterns = patterns('',
                            'wwf.views.logAction'
                        ),
                        url(
-                           r'getMyJobs',
+                           r'getMyJobs/',
                            'wwf.views.getMyJobs'
+                       ),
+                       url(
+                           r'logFeedback/',
+                           'wwf.views.logFeedback'
                        )
 
 )
