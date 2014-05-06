@@ -179,23 +179,7 @@ def formatSkills(skills, hasStrength=False):
     return formattedSkills
 
 
-'''
-getUserModel:
-    Helper method that gets the entire person model
-    formatted into a JSON for easy message passing
-'''
-
-
-def getUserModel(account):
-    userId = str(account.userId)
-    firstName = str(account.firstName)
-    lastName = str(account.lastName)
-    aboutMe = str(account.aboutMe)
-    profileImageUrl = str(
-        ProfileImage.objects.get(account=account).profileImageUrl
-    )
-
-    # get jobs
+def getJobsModel(account):
     postedJobs = None if not PostedJob.objects.filter(
         employer=account).exists() else \
         formatJobs(
@@ -230,6 +214,61 @@ def getUserModel(account):
         'currentJobsAsEmployer': currentJobsAsEmployer,
         'completedJobs': completedJobs
     }
+
+    return jobs
+
+
+def getMyJobs(request):
+    '''
+        Required fields:
+
+            accessToken
+            userId
+
+    '''
+    requiredFields = ['accessToken', 'userId']
+
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+    userId = request['userId']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+        jobsModel = getJobsModel(account)
+
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    myJobs = {
+        'myJobs': jobsModel
+    }
+
+    return formattedResponse(data=myJobs)
+
+
+'''
+getUserModel:
+    Helper method that gets the entire person model
+    formatted into a JSON for easy message passing
+'''
+
+
+def getUserModel(account):
+    userId = str(account.userId)
+    firstName = str(account.firstName)
+    lastName = str(account.lastName)
+    aboutMe = str(account.aboutMe)
+    profileImageUrl = str(
+        ProfileImage.objects.get(account=account).profileImageUrl
+    )
+
+    # get jobs
+    jobs = getJobsModel(account)
 
     # get skills
     skills = None if not UserSkill.objects.filter(
