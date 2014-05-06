@@ -24,25 +24,25 @@
     }
     return self;
 }
-- (id) initWithCoder:(NSCoder *) coder{
-    self = [super initWithCoder:coder];
-    if (self) {
-        RequestToServer *friendsRequest = [[RequestToServer alloc] init];
-        [friendsRequest setRequestType:@"getFriends"];
-        NSDictionary *data = [friendsRequest makeRequest];
-        friends = [data valueForKey:@"friends"];
-        GlobalVariables *globals = [GlobalVariables sharedInstance];
-        globals.FRIENDS = friends;
-    }
-    return self;
-}
-
+/*
+RequestToServer *friendsRequest = [[RequestToServer alloc] init];
+[friendsRequest setRequestType:@"getFriends"];
+NSDictionary *data = [friendsRequest makeRequest];
+friends = [data valueForKey:@"friends"];
+GlobalVariables *globals = [GlobalVariables sharedInstance];
+globals.FRIENDS = friends;
+ 
+ */
 - (NSInteger*) rowSelected{
     return rowSelected;
 }
 
 - (NSArray*) friendStringListSorted{
     return friendStringListSorted;
+}
+
+- (NSArray*) friendStringList{
+    return friendStringList;
 }
 
 - (NSMutableDictionary*) friendPictures{
@@ -56,6 +56,11 @@
 - (void) setFriendStringListSorted:(NSArray *) array{
     friendStringListSorted=array;
 }
+
+- (void) setFriendStringList:(NSArray *) array{
+    friendStringList=array;
+}
+
 - (void) setFriendPictures:(NSMutableDictionary *) pictures{
     friendPictures=pictures;
 }
@@ -64,9 +69,13 @@
 {
     [super viewDidLoad];
     GlobalVariables *globals = [GlobalVariables sharedInstance];
-    NSArray *friends=globals.FRIENDS;
+    RequestToServer *friendsRequest = [[RequestToServer alloc] init];
+    [friendsRequest setRequestType:@"getFriends"];
+    NSDictionary *data = [friendsRequest makeRequest];
+    friends = [data valueForKey:@"friends"];
+    globals.FRIENDS = friends;
     self.friendPictures=[[NSMutableDictionary alloc ]init];
-    NSMutableArray *friendStringList = [[NSMutableArray alloc] init];
+    friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
         NSString *friendString=[NSString stringWithFormat: @"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
         [friendStringList addObject:friendString];
@@ -111,7 +120,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friend" forIndexPath:indexPath];
     
-    NSString *cellTextName= [self.friendStringListSorted objectAtIndex:indexPath.row];
+    NSString *cellTextName= [self.friendStringList objectAtIndex:indexPath.row];
     cell.textLabel.text = cellTextName;
     NSString *urlString=[self.friendPictures valueForKey:cellTextName];
     NSURL *imageURL=[NSURL URLWithString:urlString];
@@ -153,7 +162,12 @@
     return NO;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.rowSelected=(NSInteger *)indexPath.row;
+    [self performSegueWithIdentifier:@"friendDetails" sender:self];
+    
+}
 
 #pragma mark - Navigation
 
@@ -167,6 +181,8 @@
         
         // Pass the information to your destination view
         [vc setRowSelected:((int) self.rowSelected)];
+        NSLog(@"The row selected was %d", self.rowSelected);
+
     }
 }
 

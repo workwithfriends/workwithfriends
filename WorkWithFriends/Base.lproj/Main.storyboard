@@ -543,9 +543,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="297" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="HKa-d5-Mzc" kind="modal" identifier="friendDetails" id="55k-1X-aue"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -553,6 +550,9 @@
                             <outlet property="delegate" destination="xSc-3X-IA4" id="bpr-o5-Z9u"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="HKa-d5-Mzc" kind="modal" identifier="friendDetails" id="Lde-A6-dZZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUo-g5-qwm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

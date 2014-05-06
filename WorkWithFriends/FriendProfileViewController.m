@@ -42,6 +42,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     GlobalVariables *globals = [GlobalVariables sharedInstance];
+    NSLog(@"The row passed through is %d", self.rowSelected);
     friend = [globals.FRIENDS objectAtIndex: self.rowSelected];
     _friendName.text = [NSString stringWithFormat:@"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
     NSURL *profileURL = [NSURL URLWithString:[friend valueForKey:@"friendProfileImageUrl"]];
