@@ -24,23 +24,6 @@
     }
     return self;
 }
-<<<<<<< HEAD
-- (id) initWithCoder:(NSCoder *) coder{
-    self = [super initWithCoder:coder];
-    if (self) {
-        RequestToServer *friendsRequest = [[RequestToServer alloc] init];
-        [friendsRequest setRequestType:@"getFriends"];
-        NSDictionary *data = [friendsRequest makeRequest];
-        friends = [data valueForKey:@"friends"];
-        GlobalVariables *globals = [GlobalVariables sharedInstance];
-        globals.FRIENDS = friends;
-    }
-    return self;
-}
-
-- (NSInteger*) friendSelected{
-    return friendSelected;
-=======
 /*
 RequestToServer *friendsRequest = [[RequestToServer alloc] init];
 [friendsRequest setRequestType:@"getFriends"];
@@ -52,7 +35,6 @@ globals.FRIENDS = friends;
  */
 - (NSInteger*) rowSelected{
     return rowSelected;
->>>>>>> 2e279bd177e5340f8c42dc7bc16e2639c8f898c5
 }
 
 - (NSArray*) friendStringListSorted{
@@ -67,8 +49,8 @@ globals.FRIENDS = friends;
     return friendPictures;
 }
 
-- (void) setFriendSelected:(NSInteger *) friend{
-    friendSelected=friend;
+- (void) setRowSelected:(NSInteger *) row{
+    rowSelected=row;
 }
 
 - (void) setFriendStringListSorted:(NSArray *) array{
@@ -86,29 +68,21 @@ globals.FRIENDS = friends;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    GlobalVariables *globals = [GlobalVariables sharedInstance];
-<<<<<<< HEAD
-    NSArray *friends=globals.FRIENDS;
-    friendToID = [[NSMutableDictionary alloc] init];
-=======
     RequestToServer *friendsRequest = [[RequestToServer alloc] init];
     [friendsRequest setRequestType:@"getFriends"];
     NSDictionary *data = [friendsRequest makeRequest];
     friends = [data valueForKey:@"friends"];
-    globals.FRIENDS = friends;
->>>>>>> 2e279bd177e5340f8c42dc7bc16e2639c8f898c5
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
-        
         NSString *friendString=[NSString stringWithFormat: @"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
         [friendStringList addObject:friendString];
-        [friendToID setValue:[friend objectForKey:@"friendId"] forKey:friendString];
         [self.friendPictures setValue:[friend valueForKey:@"friendProfileImageUrl"] forKey:friendString];
         
     }
     self.friendStringListSorted=[friendStringList sortedArrayUsingSelector:
                                  @selector(localizedCaseInsensitiveCompare:)];
+    [self.tableView setDelegate:self];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -149,7 +123,6 @@ globals.FRIENDS = friends;
     NSString *urlString=[self.friendPictures valueForKey:cellTextName];
     NSURL *imageURL=[NSURL URLWithString:urlString];
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
-    cell.tag=[[friendToID valueForKey:cellTextName] intValue];
     // Configure the cell...
     return cell;
 }
@@ -189,12 +162,7 @@ globals.FRIENDS = friends;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-<<<<<<< HEAD
-    UITableViewCell *theCell = (UITableViewCell *)[(UITableView *)self.view cellForRowAtIndexPath:indexPath];
-    self.friendSelected=(NSInteger*)theCell.tag;
-=======
     self.rowSelected=(NSInteger *)indexPath.row;
->>>>>>> 2e279bd177e5340f8c42dc7bc16e2639c8f898c5
     [self performSegueWithIdentifier:@"friendDetails" sender:self];
     
 }
@@ -208,15 +176,11 @@ globals.FRIENDS = friends;
         
         // Get destination view
         FriendProfileViewController *vc = [segue destinationViewController];
-<<<<<<< HEAD
-        [vc setFriendID:self.friendSelected];
-=======
         
         // Pass the information to your destination view
         [vc setRowSelected:((int) self.rowSelected)];
         NSLog(@"The row selected was %d", self.rowSelected);
 
->>>>>>> 2e279bd177e5340f8c42dc7bc16e2639c8f898c5
     }
 }
 

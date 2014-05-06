@@ -15,14 +15,20 @@
 
 @implementation FriendProfileViewController
 
-
-
-
-- (NSInteger *) friendID{
-    return friendID;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
 }
-- (void) setFriendID: (NSInteger*) theFriendID{
-    friendID=theFriendID;
+
+- (int *) rowSelected{
+    return rowSelected;
+}
+- (void) setRowSelected: (int*) rowNumber{
+    rowSelected=rowNumber;
 }
 - (SwitchViewController*) destinationView{
     return destinationView;
@@ -31,24 +37,17 @@
     destinationView=theController;
 }
 
--(void) viewDidAppear:(BOOL)animated{
-    NSLog(@"Sending request");
-    RequestToServer *viewFriend = [[RequestToServer alloc] init];
-    [viewFriend setRequestType:@"viewFriendProfile"];
-    NSString *stringID=[NSString stringWithFormat:@"%d",(int)self.friendID];
-    NSLog(stringID);
-    [viewFriend addParameter:@"friendId" withValue:stringID];
-    friend = [viewFriend makeRequest];
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     // Do any additional setup after loading the view.
     GlobalVariables *globals = [GlobalVariables sharedInstance];
+    NSLog(@"The row passed through is %d", self.rowSelected);
+    friend = [globals.FRIENDS objectAtIndex: self.rowSelected];
     _friendName.text = [NSString stringWithFormat:@"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
     NSURL *profileURL = [NSURL URLWithString:[friend valueForKey:@"friendProfileImageUrl"]];
     _friendProfileImage.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
     _friendDescription.text=[friend valueForKey:@"aboutMe"];
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,13 +76,13 @@
 {
     //Saves the tabbarController
     if (self.destinationView==nil){
-        //self.destinationView = [segue destinationViewController];
-        //[self.destinationView setFriend: friend];
+        self.destinationView = [segue destinationViewController];
+        [self.destinationView setFriend: friend];
     }
 }
 
 - (IBAction)jobsSkillsSwitch:(UISegmentedControl *)sender {
     // Set the good tab index
-    //[self.destinationView setSelectedIndex:[sender selectedSegmentIndex]];
+    [self.destinationView setSelectedIndex:[sender selectedSegmentIndex]];
 }
 @end
