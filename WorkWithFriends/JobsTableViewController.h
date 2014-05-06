@@ -15,9 +15,12 @@
     NSArray *searchResults;
     NSMutableArray *jobStringList;
     NSInteger *rowSelected;
+    NSMutableDictionary *profilePictures;
 }
+- (NSMutableDictionary*) profilePictures;
 - (NSInteger*) rowSelected;
 - (void) setRowSelected:(NSInteger *) row;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
+- (void) setProfilePictures:(NSMutableDictionary *) pictures;
 -(void)refresh;
 @end

@@ -74,6 +74,7 @@ globals.FRIENDS = friends;
     NSDictionary *data = [friendsRequest makeRequest];
     friends = [data valueForKey:@"friends"];
     globals.FRIENDS = friends;
+    //^ this should be globals.FRIENDS = friends
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
@@ -122,6 +123,7 @@ globals.FRIENDS = friends;
     
     NSString *cellTextName= [self.friendStringList objectAtIndex:indexPath.row];
     cell.textLabel.text = cellTextName;
+    cell.textLabel.font = [cell.textLabel.font fontWithSize:14.0];
     NSString *urlString=[self.friendPictures valueForKey:cellTextName];
     NSURL *imageURL=[NSURL URLWithString:urlString];
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
@@ -188,3 +190,4 @@ globals.FRIENDS = friends;
 
 
 @end
+
