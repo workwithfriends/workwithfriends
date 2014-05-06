@@ -1116,8 +1116,7 @@ def getNewsfeed(request):
     newsfeed = sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
             'newsfeedItemTime'])[::-1]
     newsfeedResponseObject = {
-        'newsfeed' : newsfeed
-        #'newsfeed': newsfeed[0:25] if len(newsfeed) > 26 else newsfeed
+        'newsfeed': newsfeed[0:25] if len(newsfeed) > 26 else newsfeed
     }
 
     return formattedResponse(data=newsfeedResponseObject)
