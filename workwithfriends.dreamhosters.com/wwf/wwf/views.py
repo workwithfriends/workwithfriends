@@ -945,10 +945,8 @@ def getPostedJobs(request):
         '''
 
         postedJobs = PostedJob.objects.all()
-        validPostedJobs = []
-        for job in postedJobs:
-            if job.employer.userId in validPeople:
-                validPostedJobs.append(job)
+        validPostedJobs = filter(lambda job: job.employer.userId in
+                                             validPeople, postedJobs)
 
         formattedPostedJobs = formatJobs(validPostedJobs)
 
