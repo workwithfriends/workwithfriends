@@ -37,4 +37,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the item to be re-orderable.
+    return NO;
+}
+
 @end

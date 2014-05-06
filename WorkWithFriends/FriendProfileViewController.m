@@ -40,6 +40,7 @@
     _friendName.text = [NSString stringWithFormat:@"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
     NSURL *profileURL = [NSURL URLWithString:[friend valueForKey:@"friendProfileImageUrl"]];
     _friendProfileImage.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
+    _friendDescription.text=[friend valueForKey:@"aboutMe"];
 }
 
 - (void)didReceiveMemoryWarning
