@@ -30,10 +30,12 @@
     [super viewDidLoad];
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     _myName.text = [NSString stringWithFormat:@"%@ %@",[globals.ME valueForKey: @"firstName"],[globals.ME valueForKey: @"lastName"]];
+    [_myName setFont:[_myName.font fontWithSize:20]];
     NSURL *profileURL = [NSURL URLWithString:[globals.ME valueForKey:@"profileImageUrl"]];
     _myProfilePicture.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
     
 }
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [_type resignFirstResponder];
@@ -42,6 +44,15 @@
     [_compensation resignFirstResponder];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_type resignFirstResponder];
+    [_skills resignFirstResponder];
+    [_description resignFirstResponder];
+    [_compensation resignFirstResponder];
+    
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning
 {

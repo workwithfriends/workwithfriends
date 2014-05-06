@@ -12,7 +12,7 @@
 - (IBAction)postButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *myProfilePicture;
-@property (weak, nonatomic) IBOutlet UITextView *myName;
+@property (weak, nonatomic) IBOutlet UILabel *myName;
 @property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
 @property (weak, nonatomic) IBOutlet UITextField *skills;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
