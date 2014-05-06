@@ -44,7 +44,9 @@
     // Do any additional setup after loading the view.
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     self.job = [globals.JOBPOSTS objectAtIndex: self.rowSelected];
+    
     _skills.text = [[job valueForKey:@"skills"] objectAtIndex:0];
+    _type.text = [job valueForKey:@"type"];
     _description.text =[NSString stringWithFormat:@"%@",[job valueForKey:@"description"]];
     _compensation.text = [job valueForKey:@"compensation"];
     _employerName.text = [NSString stringWithFormat:@"%@ %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"employerLastName"]];
