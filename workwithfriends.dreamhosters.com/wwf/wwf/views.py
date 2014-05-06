@@ -928,9 +928,11 @@ def getPostedJobs(request):
         validPeople = {}
 
         # get user's immediate friends that have an account
+        friendsDegreeOne = filter(lambda friend: Account.objects.filter(
+            userId=friend['id']).exists(), friendsDegreeOne)
+
         for friend in friendsDegreeOne:
-            if Account.objects.filter(userId=friend['id']).exists():
-                validPeople[friend['id']] = friend['name']
+            validPeople[friend['id']] = friend['name']
 
         '''
         # get user's friends of friends that have an account
