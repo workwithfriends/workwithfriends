@@ -36,18 +36,23 @@
 -(void) setDestinationView: (SwitchViewController*) theController{
     destinationView=theController;
 }
-
-- (void)viewDidLoad
-{
+- (void) viewDidLoad{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    GlobalVariables *globals = [GlobalVariables sharedInstance];
-    NSLog(@"The row passed through is %d", self.rowSelected);
-    friend = [globals.FRIENDS objectAtIndex: self.rowSelected];
     _friendName.text = [NSString stringWithFormat:@"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
     NSURL *profileURL = [NSURL URLWithString:[friend valueForKey:@"friendProfileImageUrl"]];
     _friendProfileImage.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
-    _friendDescription.text=[friend valueForKey:@"aboutMe"];
+    _friendDescription.text=[friend valueForKey:@"friendAboutMe"];
+}
+- (void)startFriend{
+    // Do any additional setup after loading the view.
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    NSLog(@"The row passed through is %d", self.rowSelected);
+    NSDictionary *friendTemp = [globals.FRIENDS objectAtIndex:(int) self.rowSelected];
+    RequestToServer *friendsRequest = [[RequestToServer alloc] init];
+    [friendsRequest setRequestType:@"viewFriendProfile"];
+    [friendsRequest addParameter:@"friendId" withValue:[friendTemp valueForKey:@"friendId"]];
+    NSDictionary *data = [friendsRequest makeRequest];
+    friend=[NSDictionary dictionaryWithDictionary:data];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,11 +79,14 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if (friend==nil){
+        [self startFriend];
+    }
     //Saves the tabbarController
     if (self.destinationView==nil){
         self.destinationView = [segue destinationViewController];
-        [self.destinationView setFriend: friend];
     }
+    [self.destinationView setFriend: friend];
 }
 
 - (IBAction)jobsSkillsSwitch:(UISegmentedControl *)sender {
