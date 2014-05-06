@@ -9,17 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "GlobalVariables.h"
 #import "JobFormViewController.h"
-//#import "SwitchViewController.h"
-//@class SwitchViewController;
+#import "RequestToServer.h"
 
 @interface FriendJobTableViewController : UITableViewController{
-    NSArray *jobStringList;
+    NSMutableDictionary *jobStringList;
     NSInteger sectionLength[4];
     NSInteger *rowSelected;
+    NSDictionary *friend;
     
 }
-- (NSArray *) jobStringList;
-- (void) setJobStringList: (NSArray *)stringList;
+-(NSDictionary *) friend;
+- (void) setFriend: (NSDictionary *)friend;
+- (NSMutableDictionary *) jobStringList;
+- (void) setJobStringList: (NSMutableDictionary *)stringList;
 - (NSInteger *) sectionLength;
 - (NSInteger *) rowSelected;
 - (void) setRowSelected: (NSInteger *)rowNumber;

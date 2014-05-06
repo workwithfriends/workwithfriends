@@ -19,13 +19,13 @@
     return self;
 }
 
-- (NSArray *) jobStringList{
+- (NSMutableDictionary *) jobStringList{
     return jobStringList;
 }
 - (NSInteger *) sectionLength{
     return sectionLength;
 }
-- (void) setJobStringList: (NSArray *)stringList{
+- (void) setJobStringList: (NSMutableDictionary *)stringList{
     jobStringList=stringList;
 }
 
@@ -35,46 +35,72 @@
 - (void) setRowSelected: (NSInteger *)rowNumber{
     rowSelected=rowNumber;
 }
+-(void)refresh {
+    RequestToServer *getMyJobsRequest = [[RequestToServer alloc] init];
+    [getMyJobsRequest setRequestType:@"getMyJobs"];
+    NSDictionary *data = [getMyJobsRequest makeRequest];
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    [globals.ME setValue:[data valueForKey:@"myJobs"] forKey:@"jobs"];
+    [self populateTable];
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self populateTable];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh)
+             forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+}
+
+- (void) populateTable {
+    self.jobStringList=[[NSMutableDictionary alloc]init];
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     NSArray *myCurrentJobsAsEmployer = [[globals.ME objectForKey:@"jobs"] objectForKey:@"currentJobsAsEmployer"];
     NSArray *myCurrentJobsAsEmployee = [[globals.ME objectForKey:@"jobs"] objectForKey:@"currentJobsAsEmployee"];
     NSArray *myCompletedJobs = [[globals.ME objectForKey:@"jobs"] objectForKey:@"completedJobs"];
     NSArray *myPostedJobs= [[globals.ME objectForKey:@"jobs"] objectForKey:@"postedJobs"];
-    NSMutableArray *theJobStringList = [[NSMutableArray alloc] init];
+    
     if (myCurrentJobsAsEmployer != [NSNull null]){
+        NSMutableArray *theJobStringList = [[NSMutableArray alloc] init];
         for(int i=0; i < [myCurrentJobsAsEmployer count];i++){
             NSString *jobString=[NSString stringWithFormat: @"You hired %@ as a %@", [[myCurrentJobsAsEmployer objectAtIndex: i] valueForKey:@"employeeFirstName"], [[myCurrentJobsAsEmployer objectAtIndex: i] valueForKey:@"type"]];
             [theJobStringList addObject:jobString];
         }
         self.sectionLength[0]=[myCurrentJobsAsEmployer count];
+        [self.jobStringList setValue:theJobStringList forKey:@"0"];
     }
     if (myCurrentJobsAsEmployee != [NSNull null]){
+        NSMutableArray *theJobStringList = [[NSMutableArray alloc] init];
         for(NSDictionary *job in myCurrentJobsAsEmployee){
             NSString *jobString=[NSString stringWithFormat: @"%@ hired you as a %@ !", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"]];
             [theJobStringList addObject:jobString];
         }
         self.sectionLength[1]=[myCurrentJobsAsEmployee count];
+        [self.jobStringList setValue:theJobStringList forKey:@"1"];
     }
     if (myPostedJobs != [NSNull null]){
+        NSMutableArray *theJobStringList = [[NSMutableArray alloc] init];
         for(NSDictionary *job in myPostedJobs){
             NSString *jobString=[NSString stringWithFormat: @"You need a %@ who's good at %@", [job valueForKey:@"type"], [[job valueForKey:@"skills"] objectAtIndex:0]];
-            NSLog(@"%@",jobString);
             [theJobStringList addObject:jobString];
         }
         self.sectionLength[2]=[myPostedJobs count];
+        [self.jobStringList setValue:theJobStringList forKey:@"2"];
     }
     if (myCompletedJobs != [NSNull null]){
+        NSMutableArray *theJobStringList = [[NSMutableArray alloc] init];
         for(NSDictionary *job in myCompletedJobs){
             NSString *jobString=[NSString stringWithFormat: @"You have completed a job for %@", [job valueForKey:@"employerFirstName"]];
             [theJobStringList addObject:jobString];
         }
         self.sectionLength[3]=[myCompletedJobs count];
+        [self.jobStringList setValue:theJobStringList forKey:@"3"];
     }
-    self.jobStringList=[NSArray arrayWithArray:theJobStringList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,7 +112,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return 4;
 }
 
 
@@ -94,11 +120,11 @@
 {
     static NSString *MyIdentifier = @"jobCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    if (cell == nil)
-        cell = [[UITableViewCell alloc]
+    cell = [[UITableViewCell alloc]
                 initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     // Configure the cell
-    NSString *cellValue = [self.jobStringList objectAtIndex:indexPath.row];
+    NSArray *array=[self.jobStringList objectForKey:[NSString stringWithFormat:@"%d",indexPath.section]];
+    NSString *cellValue = [array objectAtIndex :indexPath.row];
     cell.textLabel.text = cellValue;
     
     return cell;
