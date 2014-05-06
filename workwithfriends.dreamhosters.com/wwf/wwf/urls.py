@@ -62,20 +62,24 @@ urlpatterns = patterns('',
                            'wwf.views.getPostedJobs'
                        ),
                        url(
-                           r'^getFriends',
+                           r'^getFriends/',
                            'wwf.views.getFriends'
                        ),
                        url(
-                           r'getNewsfeed',
+                           r'getNewsfeed/',
                            'wwf.views.getNewsfeed'
                        ),
                        url(
-                           r'viewJob',
+                           r'viewJob/',
                            'wwf.views.viewJob'
                        ),
                        url(
-                           r'logAction',
+                           r'logAction/',
                            'wwf.views.logAction'
+                       ),
+                       url(
+                           r'getMyJobs',
+                           'wwf.views.getMyJobs'
                        )
 
 )
