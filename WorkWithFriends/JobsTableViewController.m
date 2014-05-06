@@ -82,9 +82,11 @@
     NSDictionary *data = [jobsRequest makeRequest];
     jobs= [data valueForKey:@"jobs"];
     jobStringList = [[NSMutableArray alloc] init];
+    profilePictures = [[NSMutableDictionary alloc] init];
     for(NSDictionary *job in jobs){
-        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@ who's good at %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"], [((NSArray*)[job valueForKey:@"skills"]) objectAtIndex:0]];
+        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"]];
         [jobStringList addObject:jobString];
+        [self.profilePictures setValue:[job valueForKey:@"employerProfileImageUrl"] forKey:jobString];
         
     }
     GlobalVariables *globals = [GlobalVariables sharedInstance];
