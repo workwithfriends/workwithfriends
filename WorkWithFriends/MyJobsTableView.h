@@ -8,15 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "GlobalVariables.h"
-#import "JobFormViewController.h"
+#import "MyJobFormViewController.h"
 #import "RequestToServer.h"
 //#import "SwitchViewController.h"
 //@class SwitchViewController;
 
 @interface MyJobsTableView : UITableViewController{
     NSMutableDictionary *jobStringList;
-    NSInteger sectionLength[4];
+    NSInteger sectionLength[5];
     NSInteger *rowSelected;
+    NSInteger *sectionSelected;
 
 }
 - (NSMutableDictionary *) jobStringList;
@@ -24,4 +25,6 @@
 - (NSInteger *) sectionLength;
 - (NSInteger *) rowSelected;
 - (void) setRowSelected: (NSInteger *)rowNumber;
+- (NSInteger *) sectionSelected;
+- (void) setSectionSelected: (NSInteger *)sectionNumber;
 @end
