@@ -224,7 +224,6 @@ def getMyJobs(request):
 
             accessToken
             userId
-
     '''
     requiredFields = ['accessToken', 'userId']
 
@@ -1213,3 +1212,38 @@ def logAction(request):
     }
 
     return formattedResponse(data=logData)
+
+
+def logFeedback(request):
+    '''
+    Required fields:
+
+        accessToken
+        userId
+        feedback
+    '''
+    requiredFields = ['accessToken', 'feedback', 'userId']
+
+    # verify request
+    verifiedRequestResponse = verifyRequest(request, requiredFields)
+    if verifiedRequestResponse['isMissingFields']:
+        errorMessage = verifiedRequestResponse['errorMessage']
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    request = request.POST
+
+    userId = request['userId']
+    feedback = request['feedback']
+
+    if Account.objects.filter(userId=userId).exists():
+        account = Account.objects.get(userId=userId)
+        UserFeedback.objects.create(
+            account=account,
+            feedback=feedback
+        )
+
+    else:
+        errorMessage = 'Unknown user'
+        return formattedResponse(isError=True, errorMessage=errorMessage)
+
+    return formattedResponse(data='success')
