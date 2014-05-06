@@ -37,8 +37,8 @@
     return self;
 }
 
-- (NSInteger*) rowSelected{
-    return rowSelected;
+- (NSInteger*) friendSelected{
+    return friendSelected;
 }
 
 - (NSArray*) friendStringListSorted{
@@ -49,8 +49,8 @@
     return friendPictures;
 }
 
-- (void) setRowSelected:(NSInteger *) row{
-    rowSelected=row;
+- (void) setFriendSelected:(NSInteger *) friend{
+    friendSelected=friend;
 }
 
 - (void) setFriendStringListSorted:(NSArray *) array{
@@ -65,17 +65,19 @@
     [super viewDidLoad];
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     NSArray *friends=globals.FRIENDS;
+    friendToID = [[NSMutableDictionary alloc] init];
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     NSMutableArray *friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
+        
         NSString *friendString=[NSString stringWithFormat: @"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
         [friendStringList addObject:friendString];
+        [friendToID setValue:[friend objectForKey:@"friendId"] forKey:friendString];
         [self.friendPictures setValue:[friend valueForKey:@"friendProfileImageUrl"] forKey:friendString];
         
     }
     self.friendStringListSorted=[friendStringList sortedArrayUsingSelector:
                                  @selector(localizedCaseInsensitiveCompare:)];
-    [self.tableView setDelegate:self];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -116,6 +118,7 @@
     NSString *urlString=[self.friendPictures valueForKey:cellTextName];
     NSURL *imageURL=[NSURL URLWithString:urlString];
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+    cell.tag=[[friendToID valueForKey:cellTextName] intValue];
     // Configure the cell...
     return cell;
 }
@@ -153,7 +156,13 @@
     return NO;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *theCell = (UITableViewCell *)[(UITableView *)self.view cellForRowAtIndexPath:indexPath];
+    self.friendSelected=(NSInteger*)theCell.tag;
+    [self performSegueWithIdentifier:@"friendDetails" sender:self];
+    
+}
 
 #pragma mark - Navigation
 
@@ -164,9 +173,7 @@
         
         // Get destination view
         FriendProfileViewController *vc = [segue destinationViewController];
-        
-        // Pass the information to your destination view
-        [vc setRowSelected:((int) self.rowSelected)];
+        [vc setFriendID:self.friendSelected];
     }
 }
 

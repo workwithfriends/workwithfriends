@@ -11,13 +11,13 @@
 
 @interface FriendProfileViewController : UIViewController
 {
-    int *rowSelected;
+    NSInteger *friendID;
     NSDictionary *friend;
     SwitchViewController  *destinationView;
 }
 - (IBAction)backButton:(id)sender;
-- (int *) rowSelected;
-- (void) setRowSelected: (int*) rowNumber;
+- (NSInteger *) friendID;
+- (void) setFriendID: (NSInteger*) theFriendID;
 - (SwitchViewController*) destinationView;
 -(void) setDestinationView: (SwitchViewController*) theController;
 @property (weak, nonatomic) IBOutlet UIImageView *friendProfileImage;
