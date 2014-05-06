@@ -74,6 +74,7 @@ globals.FRIENDS = friends;
     NSDictionary *data = [friendsRequest makeRequest];
     friends = [data valueForKey:@"friends"];
     globals.FRIENDS = friends;
+    //^ this should be globals.FRIENDS = friends
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
