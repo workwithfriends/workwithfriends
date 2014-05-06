@@ -91,3 +91,11 @@ class DataPoint(models.Model):
 
     def __unicode__(self):
         return str(self.account) + ', ' + str(self.action)
+
+class UserFeedback(models.Model):
+    account = models.ForeignKey(Account)
+    feedback = models.CharField(max_length=200)
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return str(self.account)

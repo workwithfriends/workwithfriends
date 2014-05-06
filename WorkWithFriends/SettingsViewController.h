@@ -11,6 +11,8 @@
 
 @interface SettingsViewController : UIViewController
 @property (weak, nonatomic) IBOutlet FBLoginView *FBlogout;
+@property (weak, nonatomic) IBOutlet UITextField *feedbackText;
+- (IBAction)submit:(id)sender;
 
 
 @end

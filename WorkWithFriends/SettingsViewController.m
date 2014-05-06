@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "RequestToServer.h"
 
 @interface SettingsViewController ()
 
@@ -51,4 +52,12 @@
 }
 */
 
+- (IBAction)submit:(id)sender {
+
+    RequestToServer *submitFeedbackRequest = [[RequestToServer alloc] init];
+    [submitFeedbackRequest setRequestType:@"logFeedback"];
+    [submitFeedbackRequest addParameter:@"feedback" withValue: _feedbackText.text];
+    NSDictionary *data=[submitFeedbackRequest makeRequest];
+    _feedbackText.text = @"Thank you!";
+}
 @end

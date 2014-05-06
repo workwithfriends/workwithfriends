@@ -13,6 +13,7 @@
 {
     NSArray *friends;
     NSArray *friendStringListSorted;
+    NSMutableArray *friendStringList;
     NSMutableDictionary *friendPictures;
     NSInteger *friendSelected;
     NSMutableDictionary *friendToID;
@@ -20,6 +21,7 @@
 - (NSInteger*) friendSelected;
 - (NSMutableDictionary *) friendPictures;
 - (NSArray *) friendStringListSorted;
+- (NSArray *) friendStringList;
 - (void) setFriendPictures:(NSMutableDictionary *) pictures;
 - (void) setFriendSelected:(NSInteger *) friend;
 

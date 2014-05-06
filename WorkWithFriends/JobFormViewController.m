@@ -79,7 +79,6 @@
 }
 
 - (IBAction)acceptButton:(id)sender {
-    GlobalVariables *globals = [GlobalVariables sharedInstance];
     RequestToServer *acceptJobRequest = [[RequestToServer alloc] init];
     [acceptJobRequest setRequestType:@"takeJob"];
     [acceptJobRequest addParameter:@"jobId" withValue:[self.job valueForKey:@"jobId"]];
