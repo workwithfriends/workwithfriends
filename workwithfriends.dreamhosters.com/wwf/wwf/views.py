@@ -201,10 +201,17 @@ def getJobsModel(account):
             hasEmployee=True
         )
 
-    completedJobs = None if not CompletedJob.objects.filter(
+    completedJobsAsEmployee = None if not CompletedJob.objects.filter(
         employee=account).exists() else \
         formatJobs(
             CompletedJob.objects.filter(employee=account),
+            hasEmployee=True
+        )
+
+    completedJobsAsEmployer = None if not CompletedJob.objects.filter(
+        employer=account).exists() else \
+        formatJobs(
+            CompletedJob.objects.filter(employer=account),
             hasEmployee=True
         )
 
@@ -212,7 +219,8 @@ def getJobsModel(account):
         'postedJobs': postedJobs,
         'currentJobsAsEmployee': currentJobsAsEmployee,
         'currentJobsAsEmployer': currentJobsAsEmployer,
-        'completedJobs': completedJobs
+        'completedJobsAsEmployee': completedJobsAsEmployee,
+        'completedJobsAsEmployer': completedJobsAsEmployer
     }
 
     return jobs
@@ -333,7 +341,8 @@ def loginWithFacebook(request):
             'postedJobs': None,
             'currentJobsAsEmployee': None,
             'currentJobsAsEmployer': None,
-            'completedJobs': None
+            'completedJobsAsEmployee': None,
+            'completedJobsAsEmployer': None
         }
         account.firstName = firstName
         account.lastName = lastName
@@ -757,6 +766,7 @@ def viewFriendProfile(request):
 
     request = request.POST
 
+    print str(request)
     userId = request['userId']
     friendId = request['friendId']
     accessToken = request['accessToken']
@@ -823,6 +833,7 @@ def completeJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
+    print str(request)
     userId = request['userId']
     jobId = request['jobId']
 
@@ -836,7 +847,7 @@ def completeJob(request):
             jobSkills = CurrentJobSkill.objects.filter(job=jobToComplete)
             jobType = str(jobToComplete.jobType)
             jobDescription = str(jobToComplete.jobDescription)
-            jobCompensation = str(jobToComplete.jobCompenstation)
+            jobCompensation = str(jobToComplete.jobCompensation)
             jobLat = float(jobToComplete.lat)
             jobLong = float(jobToComplete.long)
 
