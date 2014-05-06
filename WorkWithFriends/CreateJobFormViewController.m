@@ -33,7 +33,7 @@
     [_myName setFont:[_myName.font fontWithSize:20]];
     NSURL *profileURL = [NSURL URLWithString:[globals.ME valueForKey:@"profileImageUrl"]];
     _myProfilePicture.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: profileURL]];
-    
+
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -100,4 +100,5 @@
 - (IBAction)cancelButton:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
+    
 @end
