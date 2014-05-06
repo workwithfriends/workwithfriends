@@ -838,7 +838,7 @@ def completeJob(request):
             jobSkills = CurrentJobSkill.objects.filter(job=jobToComplete)
             jobType = str(jobToComplete.jobType)
             jobDescription = str(jobToComplete.jobDescription)
-            jobCompensation = str(jobToComplete.jobCompenstation)
+            jobCompensation = str(jobToComplete.jobCompensation)
             jobLat = float(jobToComplete.lat)
             jobLong = float(jobToComplete.long)
 
