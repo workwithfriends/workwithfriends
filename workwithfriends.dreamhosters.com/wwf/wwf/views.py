@@ -757,6 +757,7 @@ def viewFriendProfile(request):
 
     request = request.POST
 
+    print str(request)
     userId = request['userId']
     friendId = request['friendId']
     accessToken = request['accessToken']
@@ -823,6 +824,7 @@ def completeJob(request):
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
     request = request.POST
+    print str(request)
     userId = request['userId']
     jobId = request['jobId']
 
