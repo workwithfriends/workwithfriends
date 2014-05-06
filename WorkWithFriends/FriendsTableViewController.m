@@ -68,10 +68,12 @@ globals.FRIENDS = friends;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
     RequestToServer *friendsRequest = [[RequestToServer alloc] init];
     [friendsRequest setRequestType:@"getFriends"];
     NSDictionary *data = [friendsRequest makeRequest];
     friends = [data valueForKey:@"friends"];
+    globals.FRIENDS = friends;
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
