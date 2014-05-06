@@ -24,15 +24,6 @@
     }
     return self;
 }
-/*
-RequestToServer *friendsRequest = [[RequestToServer alloc] init];
-[friendsRequest setRequestType:@"getFriends"];
-NSDictionary *data = [friendsRequest makeRequest];
-friends = [data valueForKey:@"friends"];
-GlobalVariables *globals = [GlobalVariables sharedInstance];
-globals.FRIENDS = friends;
- 
- */
 - (NSInteger*) rowSelected{
     return rowSelected;
 }
@@ -68,13 +59,26 @@ globals.FRIENDS = friends;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self refresh];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh)
+             forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
+}
+- (void) refresh{
     GlobalVariables *globals = [GlobalVariables sharedInstance];
     RequestToServer *friendsRequest = [[RequestToServer alloc] init];
     [friendsRequest setRequestType:@"getFriends"];
     NSDictionary *data = [friendsRequest makeRequest];
     friends = [data valueForKey:@"friends"];
     globals.FRIENDS = friends;
-    //^ this should be globals.FRIENDS = friends
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
@@ -86,15 +90,9 @@ globals.FRIENDS = friends;
     self.friendStringListSorted=[friendStringList sortedArrayUsingSelector:
                                  @selector(localizedCaseInsensitiveCompare:)];
     [self.tableView setDelegate:self];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
