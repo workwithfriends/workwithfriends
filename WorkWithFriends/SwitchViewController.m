@@ -26,6 +26,16 @@
 {
     [super viewDidLoad];
     self.tabBar.hidden=YES;
+    if (self.friend !=nil){
+        for(UITableViewController *table in self.viewControllers){
+            if ([[[table class] description] isEqualToString:@"FriendJobTableViewController"]){
+                [(FriendJobTableViewController*)table setFriend:self.friend];
+            }
+            else{
+                [(FriendJobTableViewController*)table setFriend:self.friend];
+            }
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,6 +47,12 @@
 - (void)setSegueToChose: (int *) theSegue
 {
     self.selectedIndex=(NSUInteger) theSegue;
+}
+-(NSDictionary *) friend{
+    return friend;
+}
+- (void) setFriend:(NSDictionary *) theFriend{
+    friend=theFriend;
 }
 
 /*

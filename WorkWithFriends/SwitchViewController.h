@@ -7,15 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyJobsTableView.h"
+#import "FriendJobTableViewController.h"
+
 
 
 @interface SwitchViewController : UITabBarController
 {
     int* segueToChose;
+    NSDictionary *friend;
 }
-- (int*) segueToChose;
-- (void) setSegueToChose: (int*) theSegue;
+//- (int*) segueToChose;
+//- (void) setSegueToChose: (int*) theSegue;
 
+-(NSDictionary *) friend;
+- (void) setFriend:(NSDictionary *) friend;
 @end
 

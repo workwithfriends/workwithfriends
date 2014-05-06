@@ -862,6 +862,9 @@
                                     <segment title="Jobs"/>
                                     <segment title="Skills"/>
                                 </segments>
+                                <connections>
+                                    <action selector="jobsSkillsSwitch:" destination="HKa-d5-Mzc" eventType="valueChanged" id="fno-Ar-TJA"/>
+                                </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YGi-h3-5P5">
                                 <rect key="frame" x="0.0" y="252" width="330" height="1"/>
@@ -1082,10 +1085,10 @@
             </objects>
             <point key="canvasLocation" x="686" y="-1550"/>
         </scene>
-        <!--My Jobs Table View - Item-->
+        <!--Friend Job Table View Controller - Item-->
         <scene sceneID="Vsi-EI-rDa">
             <objects>
-                <tableViewController id="lVt-AB-OIi" customClass="MyJobsTableView" sceneMemberID="viewController">
+                <tableViewController id="lVt-AB-OIi" customClass="FriendJobTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vNL-AS-umv" customClass="Jobs">
                         <rect key="frame" x="0.0" y="0.0" width="330" height="260"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

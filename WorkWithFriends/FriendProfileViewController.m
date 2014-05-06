@@ -30,6 +30,12 @@
 - (void) setRowSelected: (int*) rowNumber{
     rowSelected=rowNumber;
 }
+- (SwitchViewController*) destinationView{
+    return destinationView;
+}
+-(void) setDestinationView: (SwitchViewController*) theController{
+    destinationView=theController;
+}
 
 - (void)viewDidLoad
 {
@@ -65,5 +71,17 @@
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //Saves the tabbarController
+    if (self.destinationView==nil){
+        self.destinationView = [segue destinationViewController];
+        [self.destinationView setFriend: friend];
+    }
+}
 
+- (IBAction)jobsSkillsSwitch:(UISegmentedControl *)sender {
+    // Set the good tab index
+    [self.destinationView setSelectedIndex:[sender selectedSegmentIndex]];
+}
 @end

@@ -20,6 +20,19 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+        
+    }
+    return self;
+}
+- (id) initWithCoder:(NSCoder *) coder{
+    self = [super initWithCoder:coder];
+    if (self) {
+        RequestToServer *friendsRequest = [[RequestToServer alloc] init];
+        [friendsRequest setRequestType:@"getFriends"];
+        NSDictionary *data = [friendsRequest makeRequest];
+        friends = [data valueForKey:@"friends"];
+        GlobalVariables *globals = [GlobalVariables sharedInstance];
+        globals.FRIENDS = friends;
     }
     return self;
 }
@@ -50,10 +63,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    RequestToServer *friendsRequest = [[RequestToServer alloc] init];
-    [friendsRequest setRequestType:@"getFriends"];
-    NSDictionary *data = [friendsRequest makeRequest];
-    friends = [data valueForKey:@"friends"];
+    GlobalVariables *globals = [GlobalVariables sharedInstance];
+    NSArray *friends=globals.FRIENDS;
     self.friendPictures=[[NSMutableDictionary alloc ]init];
     NSMutableArray *friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
@@ -64,8 +75,6 @@
     }
     self.friendStringListSorted=[friendStringList sortedArrayUsingSelector:
                                  @selector(localizedCaseInsensitiveCompare:)];
-    GlobalVariables *globals = [GlobalVariables sharedInstance];
-    globals.FRIENDS = friends;
     [self.tableView setDelegate:self];
     
     // Uncomment the following line to preserve selection between presentations.
