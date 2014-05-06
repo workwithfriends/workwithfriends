@@ -1113,10 +1113,10 @@ def getNewsfeed(request):
                                                             .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
-
-    newsfeedResponseObject = {
-        'newsfeed': sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
+    newsfeed = sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
             'newsfeedItemTime'])[::-1]
+    newsfeedResponseObject = {
+        'newsfeed': newsfeed[0:25] if len(newsfeed) > 26 else newsfeed
     }
 
     return formattedResponse(data=newsfeedResponseObject)
