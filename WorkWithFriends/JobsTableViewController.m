@@ -28,9 +28,19 @@
 - (NSInteger*) rowSelected{
     return rowSelected;
 }
+
+- (NSMutableDictionary*) profilePictures{
+    return profilePictures;
+}
+
 - (void) setRowSelected:(NSInteger *) row{
     rowSelected=row;
 }
+
+- (void) setFriendPictures:(NSMutableDictionary *) pictures{
+    profilePictures=pictures;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,9 +57,11 @@
     NSDictionary *data = [jobsRequest makeRequest];
     jobs= [data valueForKey:@"jobs"];
     jobStringList = [[NSMutableArray alloc] init];
+    profilePictures = [[NSMutableDictionary alloc] init];
     for(NSDictionary *job in jobs){
-        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@ who's good at %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"], [((NSArray*)[job valueForKey:@"skills"]) objectAtIndex:0]];
+        NSString *jobString=[NSString stringWithFormat: @"%@ needs a %@", [job valueForKey:@"employerFirstName"], [job valueForKey:@"type"]];
         [jobStringList addObject:jobString];
+        [self.profilePictures setValue:[job valueForKey:@"employerProfileImageUrl"] forKey:jobString];
 
     }
     GlobalVariables *globals = [GlobalVariables sharedInstance];
@@ -117,9 +129,17 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         NSString *cellValue = [searchResults objectAtIndex:indexPath.row];
         cell.textLabel.text = cellValue;
+        cell.textLabel.font = [cell.textLabel.font fontWithSize:14.0];
+        NSString *urlString=[self.profilePictures valueForKey:cellValue];
+        NSURL *imageURL=[NSURL URLWithString:urlString];
+        cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
     } else {
         NSString *cellValue = [jobStringList objectAtIndex:indexPath.row];
         cell.textLabel.text = cellValue;
+        cell.textLabel.font = [cell.textLabel.font fontWithSize:14.0];
+        NSString *urlString=[self.profilePictures valueForKey:cellValue];
+        NSURL *imageURL=[NSURL URLWithString:urlString];
+        cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
     }
     return cell;
 }
@@ -138,6 +158,11 @@
                                                      selectedScopeButtonIndex]]];
     
     return YES;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 56;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
