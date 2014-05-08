@@ -71,12 +71,6 @@
 
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [_theNewSkill resignFirstResponder];
-    [_theNewRate resignFirstResponder];
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -143,4 +137,18 @@
     [_theNewSkill resignFirstResponder];
     [_theNewRate resignFirstResponder];
 }
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_theNewSkill resignFirstResponder];
+    [_theNewRate resignFirstResponder];
+    [_aboutMeLabel resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_theNewSkill resignFirstResponder];
+    [_theNewRate resignFirstResponder];
+    return YES;
+}
+
 @end

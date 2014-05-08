@@ -26,7 +26,10 @@
 {
     [super viewDidLoad];
     self.tabBar.hidden=YES;
+    NSLog(@"%@",friend);
+    NSLog(@"checking for nullity");
     if (self.friend !=nil){
+        NSLog(@"this is called");
         for(UITableViewController *table in self.viewControllers){
             if ([[[table class] description] isEqualToString:@"FriendJobTableViewController"]){
                 [(FriendJobTableViewController*)table setFriend:self.friend];

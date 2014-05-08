@@ -52,6 +52,17 @@
 }
 */
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_feedbackText resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_feedbackText resignFirstResponder];
+    return YES;
+}
+
 - (IBAction)submit:(id)sender {
 
     RequestToServer *submitFeedbackRequest = [[RequestToServer alloc] init];

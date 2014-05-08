@@ -180,35 +180,35 @@ def formatSkills(skills, hasStrength=False):
 
 
 def getJobsModel(account):
-    postedJobs = None if not PostedJob.objects.filter(
+    postedJobs = [] if not PostedJob.objects.filter(
         employer=account).exists() else \
         formatJobs(
             PostedJob.objects.filter(
                 employer=account)
         )
 
-    currentJobsAsEmployee = None if not CurrentJob.objects.filter(
+    currentJobsAsEmployee = [] if not CurrentJob.objects.filter(
         employee=account).exists() else \
         formatJobs(
             CurrentJob.objects.filter(employee=account),
             hasEmployee=True
         )
 
-    currentJobsAsEmployer = None if not CurrentJob.objects.filter(
+    currentJobsAsEmployer = [] if not CurrentJob.objects.filter(
         employer=account).exists() else \
         formatJobs(
             CurrentJob.objects.filter(employer=account),
             hasEmployee=True
         )
 
-    completedJobsAsEmployee = None if not CompletedJob.objects.filter(
+    completedJobsAsEmployee = [] if not CompletedJob.objects.filter(
         employee=account).exists() else \
         formatJobs(
             CompletedJob.objects.filter(employee=account),
             hasEmployee=True
         )
 
-    completedJobsAsEmployer = None if not CompletedJob.objects.filter(
+    completedJobsAsEmployer = [] if not CompletedJob.objects.filter(
         employer=account).exists() else \
         formatJobs(
             CompletedJob.objects.filter(employer=account),
@@ -1114,10 +1114,10 @@ def getNewsfeed(request):
                                                             .timeCreated.utctimetuple())),
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
-
-    newsfeedResponseObject = {
-        'newsfeed': sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
+    newsfeed = sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
             'newsfeedItemTime'])[::-1]
+    newsfeedResponseObject = {
+        'newsfeed': newsfeed[0:25] if len(newsfeed) > 26 else newsfeed
     }
 
     return formattedResponse(data=newsfeedResponseObject)

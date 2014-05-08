@@ -24,25 +24,16 @@
     }
     return self;
 }
-- (id) initWithCoder:(NSCoder *) coder{
-    self = [super initWithCoder:coder];
-    if (self) {
-        RequestToServer *friendsRequest = [[RequestToServer alloc] init];
-        [friendsRequest setRequestType:@"getFriends"];
-        NSDictionary *data = [friendsRequest makeRequest];
-        friends = [data valueForKey:@"friends"];
-        GlobalVariables *globals = [GlobalVariables sharedInstance];
-        globals.FRIENDS = friends;
-    }
-    return self;
-}
-
 - (NSInteger*) rowSelected{
     return rowSelected;
 }
 
 - (NSArray*) friendStringListSorted{
     return friendStringListSorted;
+}
+
+- (NSArray*) friendStringList{
+    return friendStringList;
 }
 
 - (NSMutableDictionary*) friendPictures{
@@ -56,6 +47,11 @@
 - (void) setFriendStringListSorted:(NSArray *) array{
     friendStringListSorted=array;
 }
+
+- (void) setFriendStringList:(NSArray *) array{
+    friendStringList=array;
+}
+
 - (void) setFriendPictures:(NSMutableDictionary *) pictures{
     friendPictures=pictures;
 }
@@ -63,10 +59,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self refresh];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh)
+             forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
+}
+- (void) refresh{
     GlobalVariables *globals = [GlobalVariables sharedInstance];
-    NSArray *friends=globals.FRIENDS;
+    RequestToServer *friendsRequest = [[RequestToServer alloc] init];
+    [friendsRequest setRequestType:@"getFriends"];
+    NSDictionary *data = [friendsRequest makeRequest];
+    friends = [data valueForKey:@"friends"];
+    globals.FRIENDS = friends;
     self.friendPictures=[[NSMutableDictionary alloc ]init];
-    NSMutableArray *friendStringList = [[NSMutableArray alloc] init];
+    friendStringList = [[NSMutableArray alloc] init];
     for(NSDictionary *friend in friends){
         NSString *friendString=[NSString stringWithFormat: @"%@ %@", [friend valueForKey:@"friendFirstName"], [friend valueForKey:@"friendLastName"]];
         [friendStringList addObject:friendString];
@@ -76,15 +90,9 @@
     self.friendStringListSorted=[friendStringList sortedArrayUsingSelector:
                                  @selector(localizedCaseInsensitiveCompare:)];
     [self.tableView setDelegate:self];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -111,8 +119,9 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friend" forIndexPath:indexPath];
     
-    NSString *cellTextName= [self.friendStringListSorted objectAtIndex:indexPath.row];
+    NSString *cellTextName= [self.friendStringList objectAtIndex:indexPath.row];
     cell.textLabel.text = cellTextName;
+    cell.textLabel.font = [cell.textLabel.font fontWithSize:14.0];
     NSString *urlString=[self.friendPictures valueForKey:cellTextName];
     NSURL *imageURL=[NSURL URLWithString:urlString];
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
@@ -153,7 +162,12 @@
     return NO;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.rowSelected=(NSInteger *)indexPath.row;
+    [self performSegueWithIdentifier:@"friendDetails" sender:self];
+    
+}
 
 #pragma mark - Navigation
 
@@ -167,8 +181,11 @@
         
         // Pass the information to your destination view
         [vc setRowSelected:((int) self.rowSelected)];
+        NSLog(@"The row selected was %d", self.rowSelected);
+
     }
 }
 
 
 @end
+

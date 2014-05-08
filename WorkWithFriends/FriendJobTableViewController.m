@@ -18,9 +18,6 @@
     }
     return self;
 }
--(NSDictionary *) friend{
-    return friend;
-}
 
 - (NSMutableDictionary *) jobStringList{
     return jobStringList;
@@ -33,6 +30,9 @@
 }
 - (void) setFriend: (NSDictionary *)theFriend{
     friend=theFriend;
+}
+-(NSDictionary *) friend{
+    return friend;
 }
 
 - (NSInteger *) rowSelected{
@@ -118,14 +118,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"jobCell";
+    static NSString *MyIdentifier = @"jobCellFriend";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     cell = [[UITableViewCell alloc]
             initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     // Configure the cell
-    NSArray *array=[self.jobStringList objectForKey:[NSString stringWithFormat:@"%d",indexPath.section]];
+    NSArray *array=[self.jobStringList objectForKey:[NSString stringWithFormat:@"%d",(int)indexPath.section]];
     NSString *cellValue = [array objectAtIndex :indexPath.row];
     cell.textLabel.text = cellValue;
+    cell.textLabel.font = [UIFont systemFontOfSize:12.0];
     
     return cell;
 }
