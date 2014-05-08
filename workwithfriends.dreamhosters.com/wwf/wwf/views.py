@@ -332,7 +332,7 @@ def loginWithFacebook(request):
     # if new user, create blank user model
     if isAccountCreated:
 
-        profileImageUrl = graph.my_image_url(size='large').split(
+        profileImageUrl = str(graph.my_image_url(size='large')).split(
             'type=large')[0] + 'height=961'
 
         aboutMe = ''
@@ -354,8 +354,7 @@ def loginWithFacebook(request):
     else:
         userModel = getUserModel(account)
 
-        profileImageUrl = graph.my_image_url(size='large').split(
-            'type=large')[0] + 'height=961'
+        profileImageUrl = userModel['profileImageUrl']
         firstName = userModel['firstName']
         lastName = userModel['lastName']
         aboutMe = userModel['aboutMe']
