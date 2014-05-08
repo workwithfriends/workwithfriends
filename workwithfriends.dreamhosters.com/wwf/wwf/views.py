@@ -322,6 +322,7 @@ def loginWithFacebook(request):
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
 
+    print userInfo
     firstName = userInfo['first_name']
     lastName = userInfo['last_name']
     userId = userInfo['id']
