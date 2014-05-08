@@ -317,8 +317,7 @@ def loginWithFacebook(request):
     graph = FBOpen(access_token=accessToken)
 
     try:
-        userInfo = graph.get('me', fields='first_name, last_name, '
-                                          'picture, id')
+        userInfo = graph.get('me', fields='first_name, last_name, id')
     except:
         errorMessage = 'Bad access token'
         return formattedResponse(isError=True, errorMessage=errorMessage)
@@ -333,7 +332,8 @@ def loginWithFacebook(request):
     # if new user, create blank user model
     if isAccountCreated:
 
-        profileImageUrl = userInfo['picture']['data']['url']
+        profileImageUrl = graph.my_image_url(size='large').split(
+            'type=large')[0] + 'height=961'
 
         aboutMe = ''
         skills = []
@@ -354,7 +354,8 @@ def loginWithFacebook(request):
     else:
         userModel = getUserModel(account)
 
-        profileImageUrl = userModel['profileImageUrl']
+        profileImageUrl = graph.my_image_url(size='large').split(
+            'type=large')[0] + 'height=961'
         firstName = userModel['firstName']
         lastName = userModel['lastName']
         aboutMe = userModel['aboutMe']
