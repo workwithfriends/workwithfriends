@@ -326,7 +326,7 @@ def loginWithFacebook(request):
     firstName = userInfo['first_name']
     lastName = userInfo['last_name']
     userId = userInfo['id']
-
+    print graph.my_image_url(size='large');
     account, isAccountCreated = Account.objects.get_or_create(userId=userId)
 
 
