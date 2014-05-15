@@ -326,16 +326,14 @@ def loginWithFacebook(request):
     firstName = userInfo['first_name']
     lastName = userInfo['last_name']
     userId = userInfo['id']
-    print graph.my_image_url(size='large');
     account, isAccountCreated = Account.objects.get_or_create(userId=userId)
 
 
     # if new user, create blank user model
     if isAccountCreated:
 
-        profileImageUrl = str(graph.my_image_url(size='large')).split(
-            'type=large')[0] + 'height=961'
-
+        profileImageUrl = 'http://graph.facebook.com/' + userId + \
+                          '/picture?height=961'
         aboutMe = ''
         skills = []
         jobs = {
@@ -1115,7 +1113,7 @@ def getNewsfeed(request):
                     'newsfeedItemData': str(newsfeedItem.data)
                 })
     newsfeed = sorted(newsfeed, key=lambda newsfeedItem: newsfeedItem[
-            'newsfeedItemTime'])[::-1]
+        'newsfeedItemTime'])[::-1]
     newsfeedResponseObject = {
         'newsfeed': newsfeed[0:25] if len(newsfeed) > 26 else newsfeed
     }
